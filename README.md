@@ -297,8 +297,9 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-   <!-- * URL: /properties/:userId -->
-  * URL: /users/:userId/hosting
+   <!-- * this is silly overcomplicated URL: /users/:userId/hosting  -->
+  * URL: /properties
+   <!-- query parameters of userId???-->
   * Body: none
 
 * Successful Response
@@ -404,7 +405,8 @@ Creates and returns a new spot.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /users/:userId/hosting/
+  * URL: /properties
+   <!-- * this is silly overcomplicated URL: /users/:userId/hosting  -->
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -479,7 +481,8 @@ Create and return a new image for a spot specified by id.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: POST
-  * URL:  /users/:userId/hosting/:propertyId
+  * URL:  /properties/propertyId
+  <!-- * also silly overcomplicated URL: /users/:userId/hosting/:propertyId  -->
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -526,7 +529,8 @@ Updates and returns an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: PUT
-  * URL: /users/:userId/hosting/:propertyId
+  * URL: /properties/:propertyId
+  <!-- * also silly overcomplicated URL: /users/:userId/hosting/:propertyId  -->
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -614,7 +618,8 @@ Deletes an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL:  /users/:userId/hosting/:propertyId
+  * URL:  /properties/:propertyId
+    <!-- * also silly overcomplicated URL: /users/:userId/hosting/:propertyId  -->
   * Body: none
 
 * Successful Response
