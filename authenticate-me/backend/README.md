@@ -1478,4 +1478,3 @@ Return spots filtered by query parameters.
         "maxPrice": "Minimum price must be greater than or equal to 0"
       }
     }
-    ```
