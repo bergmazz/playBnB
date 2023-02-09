@@ -6,8 +6,8 @@ const bcrypt = require("bcryptjs");
 module.exports = (sequelize, DataTypes) => {
 class User extends Model {
   toSafeObject() {
-    const { id, username, email } = this; // context will be the User instance
-    return { id, username, email };
+    const { id, firstName, lastName, username, email } = this; // context will be the User instance
+    return { id, firstName, lastName, username, email };
   }
 
   validatePassword(password) {
@@ -33,11 +33,13 @@ class User extends Model {
     }
   }
 
-  static async signup({ username, email, password }) {
+  static async signup({ username, email, password, firstName, lastName }) {
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({
       username,
       email,
+      firstName,
+      lastName,
       hashedPassword,
     });
     return await User.scope("currentUser").findByPk(user.id);
@@ -62,6 +64,12 @@ class User extends Model {
           },
         },
       },
+      firstName: {
+        type: DataTypes.STRING,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -77,6 +85,16 @@ class User extends Model {
           len: [60, 60],
         },
       },
+      // createdAt: {
+      //   allowNull: false,
+      //   type: DataTypes.DATE,
+      //   //   defaultValue: "CURRENT_TIMESTAMP",  ////not sure syntax and is populating correctly
+      // },
+      // updatedAt: {
+      //   allowNull: false,
+      //   type: DataTypes.DATE,
+      //   //   defaultValue: "CURRENT_TIMESTAMP", ////not sure syntax and is populating correctly
+      // },
     },
     {
       sequelize,
