@@ -6,43 +6,80 @@ module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
 
     static associate(models) {
-      // define association here
+            Spot.belongsTo( models.User, {
+                              foreignKey: 'ownerId',
+             })
     }
   }
-  Spot.init({
-        ownerId: {
-              type: DataTypes.INTEGER
+  Spot.init(
+    {
+      ownerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
         },
-        address: {
-              type: DataTypes.STRING,
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
         },
-        city: {
-              type: DataTypes.STRING,
+      },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
         },
-        state: {
-              type: DataTypes.STRING,
+      },
+      country: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
         },
-        country: {
-              type: DataTypes.STRING,
+      },
+      lat: {
+        type: DataTypes.FLOAT,
+        validate: {
+          min: -90,
+          max: 90,
         },
-        lat: {
-              type: DataTypes.FLOAT,
+      },
+      lng: {
+        type: DataTypes.FLOAT,
+        validate: {
+          min: -180,
+          max: 180,
         },
-        lng: {
-              type: DataTypes.FLOAT,
+      },
+      name: {
+        type: DataTypes.STRING,
+        validate: {
+          len: [0, 50],
         },
-        name: {
-              type: DataTypes.STRING,
+      },
+      description: {
+        type: DataTypes.STRING,
+      },
+      price: {
+        type: DataTypes.NUMERIC,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
         },
-        description: {
-              type: DataTypes.STRING,
-        },
-        price: {
-              type: DataTypes.NUMERIC
-        },
-  }, {
-    sequelize,
-    modelName: 'Spot',
-  });
+      },
+    },
+    {
+      sequelize,
+      modelName: "Spot",
+    }
+  );
   return Spot;
 };
