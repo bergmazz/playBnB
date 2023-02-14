@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-module.exports = (sequelize, { type: DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
      * Helper method for defining associations.

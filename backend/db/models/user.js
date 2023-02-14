@@ -46,7 +46,7 @@ class User extends Model {
   }
 
   static associate(models) {
-     Owner.hasMany(models.Spot, {
+     User.hasMany(models.Spot, {
        foreignKey: "ownerId",
        onDelete: "CASCADE",
        hooks: true,
