@@ -13,7 +13,7 @@ class User extends Model {
   validatePassword(password) {
     return bcrypt.compareSync(password, this.hashedPassword.toString());
   }
-
+// get current user // get currentUser
   static getCurrentUserById(id) {
     return User.scope("currentUser").findByPk(id);
   }
