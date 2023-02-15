@@ -50,7 +50,12 @@ class User extends Model {
        foreignKey: "ownerId",
        onDelete: "CASCADE",
        hooks: true,
-     });
+     } );
+      User.hasMany(models.Spot, {
+        foreignKey: "ownerId",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
   }
 }
 
