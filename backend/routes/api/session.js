@@ -36,8 +36,8 @@ router.post("/", validateLogin, async (req, res, next) => {
   await setTokenCookie(res, user);
 
       return res.json( {
-        user : { id, firstName, lastName, email, userName }
-      //   user: user.toSafeObject()
+      //   user : { id, firstName, lastName, email, userName }
+        user: user.toSafeObject()
       //  should return  { id, firstName, lastName, email, userName },
   });
 });
@@ -51,7 +51,7 @@ router.delete(
   }
 );
 
-// Restore session user
+// Get current User // Restore session user
 router.get(
   '/',
   restoreUser,

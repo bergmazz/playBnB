@@ -45,6 +45,7 @@ class User extends Model {
     return await User.scope("currentUser").findByPk(user.id);
   }
 
+<<<<<<< HEAD
   static associate(models) {
      User.hasMany(models.Spot, {
        foreignKey: "ownerId",
@@ -52,6 +53,15 @@ class User extends Model {
        hooks: true,
      });
   }
+=======
+      static associate ( models ) {
+            User.hasMany( models.Spot, {
+                  foreignKey: "ownerId",
+                  onDelete: "CASCADE",
+                  hooks: true,
+            } );
+      }
+>>>>>>> main
 }
 
   User.init(
