@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: "userId"
           } );
           Review.belongsTo( models.Spot, {
-                foreignKey: "spotId", onDelete: "CASCADE"
+                foreignKey: "spotId",
+            //     onDelete: "CASCADE" //pretty sure this caused following errors
+            //     ERROR: cannot drop table airbnb."Spots" because other objects depend on it
+            //        ERROR DETAIL: constraint Reviews_spotId_fkey on table airbnb."Reviews" depends on table airbnb."Spots"
           } );
        Review.hasMany(models.ReviewImage, {
          foreignKey: "reviewId",
