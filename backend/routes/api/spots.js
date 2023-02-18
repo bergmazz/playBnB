@@ -17,10 +17,31 @@ router.get( "/", async ( req, res ) => {
   res.json({ Spots });
 } );
 
+router.get("/current", requireAuth, async (req, res) => {
+
+      const Spots = await Spot.findAll({ //default scope
+        where: {
+          ownerId: req.user.id,
+        },
+        group: ["Spot.id"],
+      });
+  res.json({ Spots });
+});
+
+
 router.get( "/:spotId", async ( req, res ) => {
       let id = req.params.spotId
- let thisSpot = await Spot.scope(["defaultScope", "allDetails"]).findByPk(id);
-      res.json(  thisSpot  );
+      let thisSpot = await Spot.scope( [ "defaultScope", "allDetails" ] ).findByPk( id );
+
+      if ( thisSpot.id ) {
+                  res.json(thisSpot);
+      } else {
+                  res.json({ // CHECK BACK maybe next(err) instead?
+                    message: "Spot couldn't be found",
+                    statusCode: 404,
+                  });
+      }
+
 });
 
 
