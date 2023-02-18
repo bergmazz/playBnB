@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-            Spot.belongsTo( models.User, {
-              foreignKey: 'ownerId',
-            } )
+          Spot.belongsTo(models.User, {
+            as: "Owner",
+            foreignKey: "ownerId",
+          });
 
           Spot.hasMany(models.Review, {
             foreignKey: "spotId",
@@ -113,12 +114,12 @@ module.exports = (sequelize, DataTypes) => {
         include: [
           {
             //gotta include the models in order for fn to recognize the columns
-            association: 'Reviews',
+            association: "Reviews",
             required: false,
             attributes: [],
           },
           {
-            association: 'SpotImages',
+            association: "SpotImages",
             required: false,
             where: { preview: true },
             attributes: [],
@@ -155,6 +156,36 @@ module.exports = (sequelize, DataTypes) => {
             "previewImage",
           ],
         ],
+      },
+      scopes: {
+        allDetails: {
+          include: [
+            {
+                  association:"Owner",
+              required: false,
+              attributes: ["id", "firstName", "lastName"],
+            },
+            {
+              association: "SpotImages",
+              required: false,
+              attributes: ["id", "url", "preview"],
+            },
+            {
+              association: "Reviews",
+              required: false,
+              attributes: [],
+            },
+          ],
+          attributes: [
+            [
+              sequelize.fn(
+                "COALESCE",
+                sequelize.fn("COUNT", sequelize.col("Reviews.id")),
+               0 ), //If no reviews for a spot,  return 0 as a default value
+              "numReviews",
+            ],
+          ],
+        },
       },
     }
   );

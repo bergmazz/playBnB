@@ -15,6 +15,13 @@ router.get( "/", async ( req, res ) => {
         // we only get 1 result without this group specification- bc of coalesce?
       } );
   res.json({ Spots });
+} );
+
+router.get( "/:spotId", async ( req, res ) => {
+      let id = req.params.spotId
+ let thisSpot = await Spot.scope(["defaultScope", "allDetails"]).findByPk(id);
+      res.json(  thisSpot  );
 });
+
 
 module.exports = router;

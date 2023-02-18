@@ -48,9 +48,10 @@ class User extends Model {
   static associate(models) {
      User.hasMany(models.Spot, {
        foreignKey: "ownerId",
+       as: "OwnedSpots", // creates getOwnedSpots method
        onDelete: "CASCADE",
        hooks: true,
-     } );
+     });
       User.hasMany(models.Review, {
         foreignKey: "userId",
         onDelete: "cascade",
