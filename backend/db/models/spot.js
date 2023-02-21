@@ -141,8 +141,8 @@ module.exports = (sequelize, DataTypes) => {
             sequelize.fn(
               "COALESCE", //returns the first non-null value in a list
               sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-              sequelize.literal("'no ratings just yet'")
-            ), //If no reviews for a spot,  return message as a default value
+              0
+            ), //If no reviews for a spot,  return 0 as a default value //returning a message broke it
             "avgRating",
           ],
           [
