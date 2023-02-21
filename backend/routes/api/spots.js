@@ -11,8 +11,7 @@ const router = express.Router();
 
 router.get( "/", async ( req, res ) => {
       const Spots = await Spot.findAll({ //using default scope
-        group: ["Spot.id"], //one row per spot in the result set
-        // we only get 1 result without this group specification- bc of coalesce?
+        group: ["Spot.id", "SpotImages.url"], //one row per spot in the result set
       } );
   res.json({ Spots });
 } );
