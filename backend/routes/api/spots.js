@@ -29,7 +29,10 @@ router.get( "/current", requireAuth, async ( req, res ) => {
 
 router.get( "/:spotId", async ( req, res ) => {
       let id = req.params.spotId
-      let thisSpot = await Spot.scope( [ "defaultScope", "allDetails" ] ).findByPk( id );
+      let thisSpot = await Spot.scope( [ "defaultScope", "allDetails" ] ).findOne({
+    where: { id: req.params.id },
+    group: ["Spot.id", "SpotImages.url"],
+  });
 
       if ( thisSpot.id ) {
                   res.json(thisSpot);
@@ -112,7 +115,7 @@ router.post("/:id/images", requireAuth, async (req, res) => {
   const { url, preview } = req.body;
   const spot = await Spot.findOne({
     where: { id: req.params.id },
-    group: ["Spot.id"],
+    group: ["Spot.id", "SpotImages.url"],
   });
 
       if ( !spot.id ) {
@@ -149,7 +152,7 @@ router.put("/:id", requireAuth, validateNewSpot, async (req, res) => {
 
       let spot = await Spot.findOne({
         where: { id: req.params.id },
-        group: ["Spot.id"],
+        group: ["Spot.id", "SpotImages.url"],
       });
 // can't get correct error message if I assign scope above
       if ( !spot.ownerId ) {
@@ -178,7 +181,10 @@ let freshSpot = await spot.update({
   price: price,
   updatedAt: sequelize.literal("CURRENT_TIMESTAMP"),
 });
-      freshSpot = await Spot.scope( "lessDetail" ).findByPk( freshSpot.id )
+      freshSpot = await Spot.scope( "lessDetail" ).findOne({
+        where: { id: spot.id },
+        group: ["Spot.id"],
+      });
       //CHECK BACK gotta be a better way to assign scope, doing so above wasn't working
   res.json(freshSpot);
 });
@@ -188,7 +194,7 @@ router.delete( "/:id", requireAuth, async ( req, res ) => {
 
       let spot = await Spot.findOne({
         where: { id: req.params.id },
-        group: ["Spot.id"],
+        group: ["Spot.id", "SpotImages.url"],
       });
 
       if ( !spot.ownerId ) {
