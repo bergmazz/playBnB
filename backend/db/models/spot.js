@@ -4,11 +4,9 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
+
+
     static associate(models) {
           Spot.belongsTo(models.User, {
             as: "Owner",
@@ -161,7 +159,7 @@ module.exports = (sequelize, DataTypes) => {
         allDetails: {
           include: [
             {
-                  association:"Owner",
+              association: "Owner",
               required: false,
               attributes: ["id", "firstName", "lastName"],
             },
@@ -181,9 +179,27 @@ module.exports = (sequelize, DataTypes) => {
               sequelize.fn(
                 "COALESCE",
                 sequelize.fn("COUNT", sequelize.col("Reviews.id")),
-               0 ), //If no reviews for a spot,  return 0 as a default value
+                0
+              ), //If no reviews for a spot,  return 0 as a default value
               "numReviews",
             ],
+          ],
+        },
+        lessDetail: {
+          attributes: [
+            "id",
+            "ownerId",
+            "address",
+            "city",
+            "state",
+            "country",
+            "lat",
+            "lng",
+            "name",
+            "description",
+            "price",
+            "createdAt",
+            "updatedAt",
           ],
         },
       },

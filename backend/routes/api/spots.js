@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { setTokenCookie, requireAuth } = require("../../utils/auth");
+const { setTokenCookie, requireAuth, isOwner } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const { Op } = require( "sequelize" );
@@ -17,8 +17,9 @@ router.get( "/", async ( req, res ) => {
   res.json({ Spots });
 } );
 
-router.get("/current", requireAuth, async (req, res) => {
-
+router.get( "/current", requireAuth, async ( req, res ) => {
+      //  let owner = User.findByPk(req.user.id)
+      // let Spots = owner.getOwnedSpots();
       const Spots = await Spot.findAll({ //default scope
         where: {ownerId: req.user.id, },
         group: ["Spot.id"],
@@ -110,16 +111,15 @@ router.post("/", requireAuth, validateNewSpot, async (req, res) => {
 
 router.post("/:id/images", requireAuth, async (req, res) => {
   const { url, preview } = req.body;
-  const spotId = req.params.id;
-  const spot = await Spot.findByPk(spotId);
+  const spot = await Spot.findByPk(req.params.id);
 
-  if (!spot) {
+      if ( !spot.id ) {
     return res.status(404).json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
   }
-  //authorization required
+  //authorization required //CHECK BACK refactor into dynamic function in auth.js?
   //only the spot owner can add an image
   if (spot.ownerId !== req.user.id) {
     return res.status(403).json({
@@ -132,8 +132,76 @@ router.post("/:id/images", requireAuth, async (req, res) => {
     preview,
   });
   spot.addSpotImages([image]);
-  res.json(image);
+  let imageDefaultScope = await SpotImage.scope(["defaultScope"]).findByPk(
+    image.id
+  );
+  //CHECK BACK returning just image also included excluded attributes createdAt updatedAt
+  res.json(imageDefaultScope);
+  // res.json(image.scope()) totally made this up I guessss TypeError: image.scope is not a function
+} );
+
+
+router.put("/:id", requireAuth, validateNewSpot, async (req, res) => {
+  const { name, description, price, address, city, state, country, lat, lng } =
+        req.body;
+
+      let spot = await Spot.findByPk( req.params.id );
+// can't get correct error message if I assign scope above
+      if ( !spot.ownerId ) {
+      return res.status(404).json({
+        message: "Spot couldn't be found",
+        statusCode: 404,
+      });
+      }
+
+        if (spot.ownerId !== req.user.id) {
+          return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403,
+          });
+        }
+
+let freshSpot = await spot.update({
+  address: address,
+  city: city,
+  state: state,
+  country: country,
+  lat: lat,
+  lng: lng,
+  name: name,
+  description: description,
+  price: price,
+  updatedAt: sequelize.literal("CURRENT_TIMESTAMP"),
+});
+      freshSpot = await Spot.scope( "lessDetail" ).findByPk( freshSpot.id )
+      //CHECK BACK gotta be a better way to assign scope, doing so above wasn't working
+  res.json(freshSpot);
 });
 
+
+router.delete( "/:id", requireAuth, async ( req, res ) => {
+
+      let spot = await Spot.findByPk( req.params.id );
+
+      if ( !spot.ownerId ) {
+            return res.status( 404 ).json( {
+                  message: "Spot couldn't be found",
+                  statusCode: 404,
+            } );
+      } else  if ( spot.ownerId !== req.user.id ) {
+            return res.status( 403 ).json( {
+                  message: "Forbidden",
+                  statusCode: 403,
+            } );
+      } else {
+await spot.destroy();
+            res.json({
+              message: "Successfully deleted",
+              statusCode: 200,
+            });
+      }
+
+
+})
 
 module.exports = router;
