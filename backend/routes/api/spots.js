@@ -21,7 +21,7 @@ router.get( "/current", requireAuth, async ( req, res ) => {
       // let Spots = owner.getOwnedSpots();
       const Spots = await Spot.findAll({ //default scope
         where: {ownerId: req.user.id, },
-        group: ["Spot.id"],
+        group: ["Spot.id", "SpotImages.url"],
       });
   res.json({ Spots });
 });
@@ -110,7 +110,10 @@ router.post("/", requireAuth, validateNewSpot, async (req, res) => {
 
 router.post("/:id/images", requireAuth, async (req, res) => {
   const { url, preview } = req.body;
-  const spot = await Spot.findByPk(req.params.id);
+  const spot = await Spot.findOne({
+    where: { id: req.params.id },
+    group: ["Spot.id"],
+  });
 
       if ( !spot.id ) {
     return res.status(404).json({
@@ -144,7 +147,10 @@ router.put("/:id", requireAuth, validateNewSpot, async (req, res) => {
   const { name, description, price, address, city, state, country, lat, lng } =
         req.body;
 
-      let spot = await Spot.findByPk( req.params.id );
+      let spot = await Spot.findOne({
+        where: { id: req.params.id },
+        group: ["Spot.id"],
+      });
 // can't get correct error message if I assign scope above
       if ( !spot.ownerId ) {
       return res.status(404).json({
@@ -180,7 +186,10 @@ let freshSpot = await spot.update({
 
 router.delete( "/:id", requireAuth, async ( req, res ) => {
 
-      let spot = await Spot.findByPk( req.params.id );
+      let spot = await Spot.findOne({
+        where: { id: req.params.id },
+        group: ["Spot.id"],
+      });
 
       if ( !spot.ownerId ) {
             return res.status( 404 ).json( {
