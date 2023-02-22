@@ -4,7 +4,7 @@ const { setTokenCookie, requireAuth, isOwner } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const { Op } = require( "sequelize" );
-const { Spot, Review, SpotImage, User, sequelize } = require("../../db/models");
+const { Spot, Review, ReviewImage, SpotImage, User, sequelize } = require("../../db/models");
 
 const router = express.Router();
 
@@ -17,7 +17,35 @@ router.get( "/current", requireAuth, async ( req, res ) => {
       //   group: ["Spot.id", "SpotImages.url"],
       });
   res.json({ Spots });
-});
+} );
+
+
+// Get all Reviews by a Spot's id
+
+router.get('/:id/reviews', async(req,res)=>{
+
+      let spot = Spot.findByPk( req.params.id )
+          if (!spot) {
+            return res.status(404).json({
+              message: "Spot couldn't be found",
+              statusCode: 404,
+            });
+          }
+    const reviews = await Review.findAll({
+      where: { spotId: req.params.id },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+        {
+          model: ReviewImage,
+          attributes: ["id", "url"],
+        },
+      ],
+    });
+    res.json({reviews})
+})
 
 //get spot details by spot id
 router.get( "/:spotId", async ( req, res ) => {
@@ -228,8 +256,7 @@ await spot.destroy();
               statusCode: 200,
             });
       }
-
-
 })
+
 
 module.exports = router;

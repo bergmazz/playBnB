@@ -45,4 +45,6 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Reviews: reviews });
 });
 
+// See spots.js for Get all Reviews by a Spot's id
+
 module.exports = router;
