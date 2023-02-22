@@ -8,31 +8,26 @@ const { Spot, Review, SpotImage, User, sequelize } = require("../../db/models");
 
 const router = express.Router();
 
-
-router.get( "/", async ( req, res ) => {
-      const Spots = await Spot.findAll({ //using default scope
-        group: ["Spot.id", "SpotImages.url"], //one row per spot in the result set
-      } );
-  res.json({ Spots });
-} );
-
+//get current user spots
 router.get( "/current", requireAuth, async ( req, res ) => {
       //  let owner = User.findByPk(req.user.id)
       // let Spots = owner.getOwnedSpots();
       const Spots = await Spot.findAll({ //default scope
         where: {ownerId: req.user.id, },
-        group: ["Spot.id", "SpotImages.url"],
+      //   group: ["Spot.id", "SpotImages.url"],
       });
   res.json({ Spots });
 });
 
-
+//get spot details by spot id
 router.get( "/:spotId", async ( req, res ) => {
       let id = req.params.spotId
-      let thisSpot = await Spot.scope( [ "defaultScope", "allDetails" ] ).findOne({
-    where: { id: req.params.id },
-    group: ["Spot.id", "SpotImages.url"],
-  });
+      let thisSpot = await Spot.scope( [ "defaultScope", "allDetails" ] ).findByPk(req.params.id)
+
+//             .findOne( {
+//     where: { id: req.params.id },
+//     group: ["Spot.id", "SpotImages.url"],
+//   });
 
       if ( thisSpot.id ) {
                   res.json(thisSpot);
@@ -43,6 +38,15 @@ router.get( "/:spotId", async ( req, res ) => {
                   });
       }
 } );
+
+// get all spots
+router.get( "/", async ( req, res ) => {
+      const Spots = await Spot.findAll({ //using default scope
+      //   group: ["Spot.id", "SpotImages.url"], //one row per spot in the result set
+      } );
+  res.json({ Spots });
+} );
+
 
    const validateNewSpot = [
      check("address")
@@ -81,7 +85,40 @@ router.get( "/:spotId", async ( req, res ) => {
      handleValidationErrors,
    ];
 
+// add image to spot based on id
+router.post("/:id/images", requireAuth, async (req, res) => {
+      const { url, preview } = req.body;
 
+  const spot = await Spot.findByPk(req.params.id);
+// console.log(spot)
+      if ( !spot.id ) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
+  //authorization required //CHECK BACK refactor into dynamic function in auth.js?
+  //only the spot owner can add an image
+  if (spot.ownerId !== req.user.id) {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
+  const image = await SpotImage.create({
+    url,
+    preview,
+  });
+  spot.addSpotImages([image]);
+  let imageDefaultScope = await SpotImage.scope(["defaultScope"]).findByPk(
+    image.id
+  );
+  //CHECK BACK returning just image also included excluded attributes createdAt updatedAt
+  res.json(imageDefaultScope);
+  // res.json(image.scope()) totally made this up I guessss TypeError: image.scope is not a function
+} );
+
+//create new spot
 router.post("/", requireAuth, validateNewSpot, async (req, res) => {
 
       const {
@@ -111,49 +148,16 @@ router.post("/", requireAuth, validateNewSpot, async (req, res) => {
   res.json(spot);
 } );
 
-router.post("/:id/images", requireAuth, async (req, res) => {
-  const { url, preview } = req.body;
-  const spot = await Spot.findOne({
-    where: { id: req.params.id },
-    group: ["Spot.id", "SpotImages.url"],
-  });
-
-      if ( !spot.id ) {
-    return res.status(404).json({
-      message: "Spot couldn't be found",
-      statusCode: 404,
-    });
-  }
-  //authorization required //CHECK BACK refactor into dynamic function in auth.js?
-  //only the spot owner can add an image
-  if (spot.ownerId !== req.user.id) {
-    return res.status(403).json({
-      message: "Forbidden",
-      statusCode: 403,
-    });
-  }
-  const image = await SpotImage.create({
-    url,
-    preview,
-  });
-  spot.addSpotImages([image]);
-  let imageDefaultScope = await SpotImage.scope(["defaultScope"]).findByPk(
-    image.id
-  );
-  //CHECK BACK returning just image also included excluded attributes createdAt updatedAt
-  res.json(imageDefaultScope);
-  // res.json(image.scope()) totally made this up I guessss TypeError: image.scope is not a function
-} );
-
 
 router.put("/:id", requireAuth, validateNewSpot, async (req, res) => {
   const { name, description, price, address, city, state, country, lat, lng } =
         req.body;
 
-      let spot = await Spot.findOne({
-        where: { id: req.params.id },
-        group: ["Spot.id", "SpotImages.url"],
-      });
+      let spot = await Spot.findByPk(req.params.id)
+      //       .findOne( {
+      //   where: { id: req.params.id },
+      //   group: ["Spot.id", "SpotImages.url"],
+      // });
 // can't get correct error message if I assign scope above
       if ( !spot.ownerId ) {
       return res.status(404).json({
@@ -181,10 +185,11 @@ let freshSpot = await spot.update({
   price: price,
   updatedAt: sequelize.literal("CURRENT_TIMESTAMP"),
 });
-      freshSpot = await Spot.scope( "lessDetail" ).findOne({
-        where: { id: spot.id },
-        group: ["Spot.id"],
-      });
+      freshSpot = await Spot.scope( "lessDetail" ).findByPk(req.params.id)
+      //       .findOne( {
+      //   where: { id: req.params.id },
+      //   group: ["Spot.id"],
+      // });
       //CHECK BACK gotta be a better way to assign scope, doing so above wasn't working
   res.json(freshSpot);
 });
@@ -192,10 +197,11 @@ let freshSpot = await spot.update({
 
 router.delete( "/:id", requireAuth, async ( req, res ) => {
 
-      let spot = await Spot.findOne({
-        where: { id: req.params.id },
-        group: ["Spot.id", "SpotImages.url"],
-      });
+      let spot = await Spot.findByPk(req.params.id)
+      //       .findOne( {
+      //   where: { id: req.params.id },
+      //   group: ["Spot.id", "SpotImages.url"],
+      // });
 
       if ( !spot.ownerId ) {
             return res.status( 404 ).json( {

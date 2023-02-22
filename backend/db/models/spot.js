@@ -154,6 +154,7 @@ module.exports = (sequelize, DataTypes) => {
             "previewImage",
           ],
         ],
+        group: ["Spot.id", "SpotImages.url"],
       },
       scopes: {
         allDetails: {
@@ -184,6 +185,7 @@ module.exports = (sequelize, DataTypes) => {
               "numReviews",
             ],
           ],
+          group: ["Spot.id", "SpotImages.url"],
         },
         lessDetail: {
           attributes: [
@@ -201,6 +203,7 @@ module.exports = (sequelize, DataTypes) => {
             "createdAt",
             "updatedAt",
           ],
+          group: ["Spot.id"],
         },
       },
     }
