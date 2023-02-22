@@ -91,7 +91,7 @@ router.post("/:id/images", requireAuth, async (req, res) => {
 
   const spot = await Spot.findByPk(req.params.id);
 // console.log(spot)
-      if ( !spot.id ) {
+      if ( !spot ) {
     return res.status(404).json({
       message: "Spot couldn't be found",
       statusCode: 404,
@@ -107,14 +107,20 @@ router.post("/:id/images", requireAuth, async (req, res) => {
   }
   const image = await SpotImage.create({
     url,
-    preview,
+        preview,
+    spotId: spot.id
   });
   spot.addSpotImages([image]);
   let imageDefaultScope = await SpotImage.scope(["defaultScope"]).findByPk(
     image.id
   );
   //CHECK BACK returning just image also included excluded attributes createdAt updatedAt
-  res.json(imageDefaultScope);
+      // res.json( {
+      //       id: image.id,
+      //       url: image.url,
+      //       preview: image.preview
+      // } );
+      res.json(imageDefaultScope)
   // res.json(image.scope()) totally made this up I guessss TypeError: image.scope is not a function
 } );
 
