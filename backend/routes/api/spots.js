@@ -22,13 +22,14 @@ router.get( "/current", requireAuth, async ( req, res ) => {
 //get spot details by spot id
 router.get( "/:spotId", async ( req, res ) => {
 
-      let thisSpot = await Spot.scope(["defaultScope", "allDetails"]).findByPk(
-        req.params.spotId
-      );
-//             .findOne( {
-//     where: { id: req.params.id },
-//     group: ["Spot.id", "SpotImages.url"],
-//   });
+      let thisSpot = await Spot.scope(["defaultScope", "allDetails"])
+        //       .findByPk(
+        //   req.params.spotId
+        // );
+        .findOne({
+          where: { id: req.params.id },
+          group: ["Spot.id", "SpotImages.id", "Reviews.id", "Owner.id"],
+        });
 
       if ( !thisSpot ) {
                      res.json({ // CHECK BACK maybe next(err) instead?

@@ -185,7 +185,7 @@ module.exports = (sequelize, DataTypes) => {
               "numReviews",
             ],
           ],
-          group: ["Spot.id","SpotImages.id", "Reviews.id"],
+          group: ["Spot.id","SpotImages.id", "Reviews.id", "Owner.id"],
         },
         lessDetail: {
           attributes: [
