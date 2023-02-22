@@ -21,21 +21,22 @@ router.get( "/current", requireAuth, async ( req, res ) => {
 
 //get spot details by spot id
 router.get( "/:spotId", async ( req, res ) => {
-      let id = req.params.spotId
-      let thisSpot = await Spot.scope( [ "defaultScope", "allDetails" ] ).findByPk(req.params.id)
 
+      let thisSpot = await Spot.scope(["defaultScope", "allDetails"]).findByPk(
+        req.params.spotId
+      );
 //             .findOne( {
 //     where: { id: req.params.id },
 //     group: ["Spot.id", "SpotImages.url"],
 //   });
 
-      if ( thisSpot.id ) {
-                  res.json(thisSpot);
+      if ( !thisSpot ) {
+                     res.json({ // CHECK BACK maybe next(err) instead?
+                       message: "Spot couldn't be found",
+                       statusCode: 404,
+                     });
       } else {
-                  res.json({ // CHECK BACK maybe next(err) instead?
-                    message: "Spot couldn't be found",
-                    statusCode: 404,
-                  });
+           res.json(thisSpot);
       }
 } );
 
@@ -165,7 +166,7 @@ router.put("/:id", requireAuth, validateNewSpot, async (req, res) => {
       //   group: ["Spot.id", "SpotImages.url"],
       // });
 // can't get correct error message if I assign scope above
-      if ( !spot.ownerId ) {
+      if ( !spot ) {
       return res.status(404).json({
         message: "Spot couldn't be found",
         statusCode: 404,
@@ -209,7 +210,7 @@ router.delete( "/:id", requireAuth, async ( req, res ) => {
       //   group: ["Spot.id", "SpotImages.url"],
       // });
 
-      if ( !spot.ownerId ) {
+      if ( !spot ) {
             return res.status( 404 ).json( {
                   message: "Spot couldn't be found",
                   statusCode: 404,
