@@ -27,7 +27,7 @@ router.get( "/:spotId", async ( req, res ) => {
         //   req.params.spotId
         // );
         .findOne({
-          where: { id: req.params.id },
+          where: { id: req.params.spotId },
           group: ["Spot.id", "SpotImages.id", "Reviews.id", "Owner.id"],
         });
 
