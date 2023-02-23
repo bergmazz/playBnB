@@ -38,15 +38,15 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       review: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       stars: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-              max: 5,
-              min: 1,
+          max: 5,
+          min: 1,
         },
       },
     },
@@ -56,6 +56,31 @@ module.exports = (sequelize, DataTypes) => {
       defaultScope: {
         attributes: {
           exclude: ["createdAt", "updatedAt"],
+        },
+      },
+      scopes: {
+        perSpot: {
+          attributes: [
+            "id",
+             "userId",
+            "spotId",
+            "review",
+            "stars",
+            "createdAt",
+            "updatedAt",
+          ],
+          include: [
+            {
+              association: "User",
+              required: false,
+              attributes: ["id", "firstName", "lastName"],
+            },
+            {
+              association: "ReviewImages",
+              required: false,
+              attributes: ["id", "url"],
+            },
+          ],
         },
       },
     }

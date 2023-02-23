@@ -24,36 +24,26 @@ router.get( "/current", requireAuth, async ( req, res ) => {
 
 router.get('/:id/reviews', async(req,res)=>{
 
-      let spot = Spot.findByPk( req.params.id )
-          if (!spot) {
-            return res.status(404).json({
-              message: "Spot couldn't be found",
-              statusCode: 404,
-            });
-          }
-    const reviews = await Review.findAll({
-      where: { spotId: req.params.id },
-      include: [
-        {
-          model: User,
-          attributes: ["id", "firstName", "lastName"],
-        },
-        {
-          model: ReviewImage,
-          attributes: ["id", "url"],
-        },
-      ],
-    });
-    res.json({reviews})
+let spot = await Spot.findByPk( req.params.id )
+//  console.log(spot.id)
+          if (spot) {
+               const reviews = await Review.scope("perSpot").findAll({
+                 where: { spotId: req.params.id },
+               });
+               res.json({ reviews });
+          } else {
+                  res.status(404).json({
+                    message: "Spot couldn't be found",
+                    statusCode: 404,
+                  });
+      }
 })
 
 //get spot details by spot id
 router.get( "/:spotId", async ( req, res ) => {
 
       let thisSpot = await Spot.scope(["defaultScope", "allDetails"])
-        //       .findByPk(
-        //   req.params.spotId
-        // );
+
         .findOne({
           where: { id: req.params.spotId },
           group: ["Spot.id", "SpotImages.id", "Reviews.id", "Owner.id"],
