@@ -64,7 +64,9 @@ router.post( '/:id/images', requireAuth, async ( req, res ) => {
                   statusCode: 403,
             } )
       }
-      let numPics = await ReviewImage.count({where:{reviewId: review.id}})
+      let numPics = await ReviewImage.count({
+        where: { reviewId: Number(req.params.id) },
+      });
    if(numPics >= 10){
      res.status(403).json({
         message:"Maximum number of images for this resource was reached",
@@ -73,7 +75,7 @@ router.post( '/:id/images', requireAuth, async ( req, res ) => {
    } else {
            let image = await ReviewImage.create( {
           url,
-          reviewId: review.id,
+          reviewId:Number(req.params.id),
         });
          review.addReviewImages( [ image ] );
          res.json(image)
@@ -108,7 +110,7 @@ router.put( '/:id', requireAuth, validateReview, async ( req, res ) => {
 
       let freshReview = await review.update({
       review: req.body.review,
-      stars: req.body.stars,
+      stars: Number(req.body.stars),
       });
 
       res.json(freshReview);

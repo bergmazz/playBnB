@@ -81,14 +81,7 @@ module.exports = (sequelize, DataTypes) => {
             },
           ],
         },
-      //   justWordnStar: {
-      //     attributes: {
-      //       include: [
-      //         "review",
-      //         "stars",
-      //       ],
-      //     },
-      //   },
+
       },
     }
   );
