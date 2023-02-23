@@ -121,18 +121,19 @@ router.put( '/:id', requireAuth, validateReview, async ( req, res ) => {
        message: "Review couldnt be found",
        statusCode: 404,
      });
-   }
-   if (review.userId !== req.user.id) {
+   } else if (review.userId !== req.user.id) {
         res.status(403).json({
           message: "Forbidden",
           statusCode: 403,
         });
-   }
-   await review.destroy();
+   } else {
+           await review.destroy();
     res.status(200).json({
      message: "Successfully deleted",
      statusCode: 200,
    });
+   }
+
  });
 
 
