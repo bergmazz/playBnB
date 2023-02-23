@@ -52,21 +52,18 @@ router.get("/current", requireAuth, async (req, res) => {
 router.post( '/:id/images', requireAuth, async ( req, res ) => {
       let { url } = req.body;
       let review = await Review.findByPk( req.params.id )
-
     if(!review){
         return res.status(404).json({
             message:"Review couldn't be found",
             statusCode: 404
         })
       }
-
       if ( review.userId !== req.user.id ) {
             res.status( 403 ).json( {
                   message: "Forbidden",
                   statusCode: 403,
             } )
       }
-
       let numPics = await ReviewImage.count({where:{reviewId: review.id}})
    if(numPics >= 10){
      res.status(403).json({
@@ -81,9 +78,63 @@ router.post( '/:id/images', requireAuth, async ( req, res ) => {
          review.addReviewImages( [ image ] );
          res.json(image)
    }
-
-
 })
+const validateReview = [
+  check("review")
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage("Review text is required"),
+  check("stars")
+    .exists({ checkFalsy: true })
+    .isInt({ min: 1, max: 5 })
+    .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors,
+];
+
+router.put( '/:id', requireAuth, validateReview, async ( req, res ) => {
+      let review = await Review.findByPk(req.params.id);
+      if (!review) {
+        return res.status(404).json({
+          message: "Review couldn't be found",
+          statusCode: 404,
+        });
+      }
+      if (review.userId !== req.user.id) {
+        res.status(403).json({
+          message: "Forbidden",
+          statusCode: 403,
+        });
+      }
+
+      let freshReview = await review.update({
+      review: req.body.review,
+      stars: req.body.stars,
+      });
+
+      res.json(freshReview);
+} )
+
+ router.delete("/:id", requireAuth, async (req, res) => {
+   const review = await Review.findByPk(req.params.id);
+   if (!review) {
+    res.status(404).json({
+       message: "Review couldnt be found",
+       statusCode: 404,
+     });
+   }
+   if (review.userId !== req.user.id) {
+        res.status(403).json({
+          message: "Forbidden",
+          statusCode: 403,
+        });
+   }
+   await review.destroy();
+    res.status(200).json({
+     message: "Successfully deleted",
+     statusCode: 200,
+   });
+ });
+
 
 
 
