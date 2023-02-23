@@ -46,5 +46,25 @@ router.get("/current", requireAuth, async (req, res) => {
 });
 
 // See spots.js for Get all Reviews by a Spot's id
+// See spots.js for create reviewfor spot based on a a Spot's id
+
+// Add an Image to a Review based on the Review's id
+router.post( '/:id/images', requireAuth, async ( req, res ) => {
+      let review = await Review.findByPk(reviewId)
+
+    if(!review){
+        return res.status(404).json({
+            message:"Review couldn't be found",
+            statusCode: 404
+        })
+    }
+      let image = await ReviewImage.create( {
+          url,
+          reviewId: review.id,
+        });
+        review.addReviewImages([image]);
+})
+
+
 
 module.exports = router;

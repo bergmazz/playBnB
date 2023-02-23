@@ -27,7 +27,7 @@ router.get('/:id/reviews', async(req,res)=>{
 let spot = await Spot.findByPk( req.params.id )
 //  console.log(spot.id)
           if (spot) {
-               const reviews = await Review.scope("perSpot").findAll({
+               const reviews = await Review.scope(["defaultScope","perSpot"]).findAll({
                  where: { spotId: req.params.id },
                });
                res.json({ reviews });
@@ -143,6 +143,51 @@ router.post("/:id/images", requireAuth, async (req, res) => {
       res.json(imageDefaultScope)
   // res.json(image.scope()) totally made this up I guessss TypeError: image.scope is not a function
 } );
+
+const validateReview = [
+  check("review")
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage("Review text is required"),
+  check("stars")
+    .exists({ checkFalsy: true })
+    .isInt({ min: 1, max: 5 })
+    .toFloat()
+    .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors,
+];
+//create review for spot based on spot id
+router.post( "/:id/reviews", requireAuth, validateReview, async ( req, res ) => {
+      const { review, stars } = req.body;
+
+        const spot = await Spot.findByPk(req.params.id);
+        // console.log(spot)
+        if (!spot) {
+           res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404,
+          });
+        }
+        let alreadyReviewed = await Review.findAll({
+          where: {
+            [Op.and]: [{ userId: req.user.id }, { spotId: req.params.id }],
+          },
+        } );
+      if (alreadyReviewed[0]) {
+        res.status(403).json({
+            message: "User already has a review for this spot",
+            statusCode: 403,
+          });
+      } else {
+            let thisReview = await Review.create( {
+                  userId: req.user.id,
+                  spotId: spot.id,
+                  review: review,
+                  stars: stars,
+            } )
+            res.json( { thisReview  } )
+      }
+ })
 
 //create new spot
 router.post("/", requireAuth, validateNewSpot, async (req, res) => {

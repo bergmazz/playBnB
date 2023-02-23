@@ -55,20 +55,19 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Review",
       defaultScope: {
         attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
-      scopes: {
-        perSpot: {
-          attributes: [
+          include: [
             "id",
-             "userId",
+            "userId",
             "spotId",
             "review",
             "stars",
             "createdAt",
             "updatedAt",
           ],
+        },
+      },
+      scopes: {
+        perSpot: {
           include: [
             {
               association: "User",
@@ -82,6 +81,14 @@ module.exports = (sequelize, DataTypes) => {
             },
           ],
         },
+      //   justWordnStar: {
+      //     attributes: {
+      //       include: [
+      //         "review",
+      //         "stars",
+      //       ],
+      //     },
+      //   },
       },
     }
   );
