@@ -4,7 +4,7 @@ const { setTokenCookie, requireAuth, isOwner } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const { Op } = require( "sequelize" );
-const { Spot, Review, ReviewImage, SpotImage, User, sequelize } = require("../../db/models");
+const { Spot, Review, ReviewImage, Booking, SpotImage, User, sequelize } = require("../../db/models");
 
 const router = express.Router();
 
@@ -39,11 +39,39 @@ let spot = await Spot.findByPk( req.params.id )
       }
 })
 
+//  Get all Bookings for a Spot based on the Spot's id
+router.get( "/:id/bookings", requireAuth, async ( req, res ) => {
+      let spot = await Spot.findByPk( req.params.id )
+
+      if ( !spot ) {
+             res.status(404).json({
+                    message: "Spot couldn't be found",
+                    statusCode: 404,
+                  });
+      }
+//       console.log(spot )
+// console.log( req.user.id)
+      let bookings;
+      if ( spot.ownerId === req.user.id ) {
+               bookings = await Booking.findAll({
+                where: { spotId: req.params.id },
+                include: [
+                  {  model: User.scope("forBooking")  },
+                ],
+              });
+      } else {
+                bookings = await Booking.scope("notOwned").findAll({
+                  where: { spotId: req.params.id },
+                });
+      }
+
+      res.json({"Bookings": bookings})
+})
+
 //get spot details by spot id
 router.get( "/:spotId", async ( req, res ) => {
 
       let thisSpot = await Spot.scope(["defaultScope", "allDetails"])
-
         .findOne({
           where: { id: req.params.spotId },
           group: ["Spot.id", "SpotImages.id", "Reviews.id", "Owner.id"],

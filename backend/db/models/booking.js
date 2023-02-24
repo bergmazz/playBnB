@@ -36,6 +36,26 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Booking",
+      defaultScope: {
+            attributes: [
+                  "id",
+                  "spotId",
+                  "userId",
+          [sequelize.fn("DATE", sequelize.col("startDate")), "startDate"],
+          [sequelize.fn("DATE", sequelize.col("endDate")), "endDate"],
+          "createdAt",
+          "updatedAt",
+        ],
+      },
+      scopes: {
+        notOwned: {
+          attributes: [
+            "spotId",
+            [sequelize.fn("DATE", sequelize.col("startDate")), "startDate"],
+            [sequelize.fn("DATE", sequelize.col("endDate")), "endDate"],
+          ],
+        },
+      },
     }
   );
   return Booking;

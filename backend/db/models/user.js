@@ -126,6 +126,11 @@ class User extends Model {
         loginUser: {
           attributes: {},
         },
+        forBooking: {
+          attributes: {
+            exclude: ["hashedPassword", "username","email", "createdAt", "updatedAt"],
+          },
+        },
       },
     }
   );
