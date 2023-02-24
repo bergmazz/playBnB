@@ -44,7 +44,7 @@ router.get("/current", requireAuth, async (req, res) => {
 });
 
 //see spots.js for Get all Bookings for a Spot based on the Spot's id
-
+// see spots.js for Create a Booking from a Spot based on the Spot's id
 
 
 module.exports = router;

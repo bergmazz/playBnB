@@ -49,8 +49,6 @@ router.get( "/:id/bookings", requireAuth, async ( req, res ) => {
                     statusCode: 404,
                   });
       }
-//       console.log(spot )
-// console.log( req.user.id)
       let bookings;
       if ( spot.ownerId === req.user.id ) {
                bookings = await Booking.findAll({
@@ -64,7 +62,6 @@ router.get( "/:id/bookings", requireAuth, async ( req, res ) => {
                   where: { spotId: req.params.id },
                 });
       }
-
       res.json({"Bookings": bookings})
 })
 
@@ -216,6 +213,89 @@ router.post( "/:id/reviews", requireAuth, validateReview, async ( req, res ) => 
       }
  })
 
+//Create a Booking from a Spot based on the Spot's id
+
+//COME BACK CHECK BACK FOR THE CONFLICTING DATE ERROR
+router.post( "/:id/bookings", requireAuth, async ( req, res ) => {
+      let { startDate, endDate} = req.body;
+
+      let spot = await Spot.findByPk( req.params.id )
+      if ( !spot ) {
+            res.status( 404 ).json( {
+                  message: "Spot couldn't be found",
+                  statusCode: 404,
+            } );
+      }
+      if ( spot.ownerId === req.user.id ) {
+                   res.status(403).json({  message: "Forbidden", statusCode: 403,});
+      }
+
+      if (endDate <= startDate) {
+        res.json({
+          message: "Validation error",
+          statusCode: 400,
+          errors: {
+            endDate: "endDate cannot be on or before startDate",
+          },
+        });
+      }
+const existingBookings = await Booking.findAll({
+  where: {
+    spotId: req.params.id,
+    [Op.or]: [
+      { startDate: { [Op.between]: [startDate, endDate] } },
+      { endDate: { [Op.between]: [startDate, endDate] } },
+      { startDate: { [Op.lte]: startDate }, endDate: { [Op.gte]: endDate } },
+    ],
+  },
+} );
+
+let startDateConflict = false;
+let endDateConflict = false;
+const errors = {};
+
+      if ( existingBookings.length ) {
+        const startDateMilli = new Date(startDate).getTime();
+  const endDateMilli = new Date(endDate).getTime();
+  for (let booking of existingBookings) {
+    let start = new Date(booking.startDate).getTime();
+    let end = new Date(booking.endDate).getTime();
+    for (let i = start; i <= end; i++) {
+      if (startDateMilli === i) {
+        startDateConflict = true;
+      } else if (endDateMilli === i) {
+        endDateConflict = true;
+      } else if ( startDateConflict && endDateConflict ) {
+            break
+      }
+    }
+  }
+}
+
+if (startDateConflict) {
+  errors.startDate = "Start date conflicts with an existing booking";
+}
+if (endDateConflict) {
+  errors.endDate = "End date conflicts with an existing booking";
+}
+
+       if (errors.startDate || errors.endDate) {
+         res.status(403).json({
+           message:
+             "Sorry, this spot is already booked for the specified dates",
+           statusCode: 403,
+           errors,
+         });
+       }
+
+       const booking = await Booking.create({
+         userId: req.user.id,
+         spotId: req.params.id,
+         startDate: new Date(req.body.startDate),
+         endDate: new Date(req.body.endDate)
+       });
+       res.json(booking);
+})
 //create new spot
 router.post("/", requireAuth, validateNewSpot, async (req, res) => {
 
@@ -252,11 +332,7 @@ router.put("/:id", requireAuth, validateNewSpot, async (req, res) => {
         req.body;
 
       let spot = await Spot.findByPk(req.params.id)
-      //       .findOne( {
-      //   where: { id: req.params.id },
-      //   group: ["Spot.id", "SpotImages.url"],
-      // });
-// can't get correct error message if I assign scope above
+
       if ( !spot ) {
       return res.status(404).json({
         message: "Spot couldn't be found",
@@ -284,11 +360,6 @@ let freshSpot = await spot.update({
   updatedAt: sequelize.literal("CURRENT_TIMESTAMP"),
 });
       freshSpot = await Spot.scope( "lessDetail" ).findByPk(req.params.id)
-      //       .findOne( {
-      //   where: { id: req.params.id },
-      //   group: ["Spot.id"],
-      // });
-      //CHECK BACK gotta be a better way to assign scope, doing so above wasn't working
   res.json(freshSpot);
 });
 
@@ -296,11 +367,6 @@ let freshSpot = await spot.update({
 router.delete( "/:id", requireAuth, async ( req, res ) => {
 
       let spot = await Spot.findByPk(req.params.id)
-      //       .findOne( {
-      //   where: { id: req.params.id },
-      //   group: ["Spot.id", "SpotImages.url"],
-      // });
-
       if ( !spot ) {
             return res.status( 404 ).json( {
                   message: "Spot couldn't be found",
