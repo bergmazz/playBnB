@@ -47,5 +47,94 @@ router.get( "/current", requireAuth, async ( req, res ) => {
 //see spots.js for Get all Bookings for a Spot based on the Spot's id
 // see spots.js for Create a Booking from a Spot based on the Spot's id
 
+ const validateBookingReq = [
+    check('startDate').exists().notEmpty().isISO8601().withMessage("Start date is required"),
+    check('endDate').exists().notEmpty().isISO8601().withMessage("End date is required"),
+     handleValidationErrors
+ ]
 
+router.put( '/:id', requireAuth, validateBookingReq, async ( req, res ) => {
+ let { startDate, endDate } = req.body;
+      let bookingToUpdate = await Booking.findByPk( req.params.id )
+
+      if ( !bookingToUpdate ) {
+         return res.status(404).json({
+           message: "Booking couldn't be found",
+           statusCode: 404,
+         });
+       }
+
+ if (bookingToUpdate.userId !== req.user.id) {
+   return res.status(403).json({ message: "Forbidden", statusCode: 403 });
+ }
+ if (endDate <= startDate) {
+   return res.json({
+     message: "Validation error",
+     statusCode: 400,
+     errors: {
+       endDate: "endDate cannot come before startDate",
+     },
+   });
+ }
+
+       if (bookingToUpdate.endDate < new Date().toISOString().slice(0, 10)) {
+         return res.json({
+           message: "Past bookings can't be modified",
+           statusCode: 403,
+         });
+       }
+
+ if (startDate <= new Date().toISOString().slice(0, 10)) {
+   return res.json({
+     message: "Validation error",
+     statusCode: 400,
+     errors: {
+       startDate: "startDate cannot be in the past",
+     },
+   });
+ }
+
+
+
+
+ const existingBookings = await Booking.findAll({
+   where: { spotId: bookingToUpdate.spotId },
+ });
+
+ const errors = {};
+ if (existingBookings.length) {
+   for (let booking of existingBookings) {
+     if (
+       // start is in range or is an exisitng end or is an existing start
+       (startDate >= booking.startDate && startDate <= booking.endDate) ||
+       startDate === booking.startDate ||
+       startDate === booking.endDate
+     ) {
+       errors.startDate = "Start date conflicts with an existing booking";
+     }
+     if (
+       (endDate >= booking.startDate && endDate <= booking.endDate) ||
+       endDate === booking.startDate ||
+       endDate === booking.endDate
+     ) {
+       errors.endDate = "End date conflicts with an existing booking";
+     }
+   }
+ }
+
+ if (Object.keys(errors).length) {
+   return res.status(403).json({
+     message: "Sorry, this spot is already booked for the specified dates",
+     statusCode: 403,
+     errors: errors,
+   });
+ }
+
+  await bookingToUpdate.update({
+   startDate: new Date(req.body.startDate).toISOString().slice(0, 10),
+   endDate: new Date(req.body.endDate).toISOString().slice(0, 10),
+  } );
+
+ return res.json(bookingToUpdate);
+ })
 module.exports = router;

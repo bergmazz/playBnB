@@ -214,9 +214,14 @@ router.post( "/:id/reviews", requireAuth, validateReview, async ( req, res ) => 
       }
  })
 
+ const validateBookingReq = [
+    check('startDate').exists().notEmpty().isISO8601().withMessage("Start date is required"),
+    check('endDate').exists().notEmpty().isISO8601().withMessage("End date is required"),
+     handleValidationErrors
+]
 //Create a Booking from a Spot based on the Spot's id
 
-router.post( "/:id/bookings", requireAuth, async ( req, res ) => {
+router.post( "/:id/bookings", requireAuth, validateBookingReq, async ( req, res ) => {
   let { startDate, endDate } = req.body;
 
   let spot = await Spot.findByPk(req.params.id);
@@ -245,7 +250,7 @@ router.post( "/:id/bookings", requireAuth, async ( req, res ) => {
       message: "Validation error",
       statusCode: 400,
       errors: {
-        endDate: "startDate cannot be in the past",
+        startDate: "startDate cannot be in the past",
       },
     });
   }
