@@ -15,18 +15,19 @@ const { application } = require("express");
 const router = express.Router();
 
 
-router.get("/current", requireAuth, async (req, res) => {
-  const bookings = await Booking.findAll({
-    where: { userId: req.user.id },
-    include: [
-      {
-        model: Spot.scope("lessDetail"),
-        attributes: {
-          exclude: ["description", "createdAt", "updatedAt"],
-        },
-      },
-    ],
-  });
+router.get( "/current", requireAuth, async ( req, res ) => {
+      const bookings = await Booking.findAll({
+         //   const bookings = await Booking.scope("justDateNoSeconds").findAll({
+         where: { userId: req.user.id },
+         include: [
+           {
+             model: Spot.scope("lessDetail"),
+             attributes: {
+               exclude: ["description", "createdAt", "updatedAt"],
+             },
+           },
+         ],
+       });
 
       for ( let booking of bookings ) {
 
@@ -40,7 +41,7 @@ router.get("/current", requireAuth, async (req, res) => {
      booking.Spot.dataValues.previewImage = "No Preview Image";
     }
   }
-  res.json({ Bookings: bookings });
+  return res.json({ Bookings: bookings });
 });
 
 //see spots.js for Get all Bookings for a Spot based on the Spot's id
