@@ -32,6 +32,11 @@ router.get("/current", requireAuth, async (req, res) => {
     ],
   } );
 
+      // for ( let review of reviews ) {
+      //       let images = ReviewImage.findAll( { where: { reviewId: review.id } } );
+      //       review.ReviewImage = images
+      //  }
+
   for (let review of reviews) {
     const previewPic = await SpotImage.findOne({
       where: { spotId: review.Spot.id, preview: true },
@@ -107,8 +112,9 @@ router.put( '/:id', requireAuth, validateReview, async ( req, res ) => {
       }
 
       let freshReview = await review.update({
-      review: req.body.review,
-      stars: req.body.stars,
+        review: req.body.review,
+        stars: req.body.stars,
+        updatedAt: sequelize.literal("CURRENT_TIMESTAMP"),
       });
 
      return res.json(freshReview);

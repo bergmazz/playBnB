@@ -30,7 +30,7 @@ let spot = await Spot.findByPk( req.params.id )
                const reviews = await Review.scope(["defaultScope","perSpot"]).findAll({
                  where: { spotId: req.params.id },
                });
-            return  res.json({ reviews });
+            return  res.json({"Reviews": reviews} );
           } else {
               return  res.status(404).json({
                     message: "Spot couldn't be found",
@@ -148,26 +148,26 @@ router.get( "/", async ( req, res ) => {
 
       for ( let spot of spots ) {
             for ( let image of spot.SpotImages ) {
-                  if ( image.dataValues.previewImage ) {
+                  if ( image.dataValues.preview ) {
                         spot.dataValues.previewImage = image.url;
                   }
-                  delete spot.dataValues.SpotImages;
+                  if ( !spot.dataValues.previewImage ) {
+                      spot.dataValues.previewImage = "No preview image";
+                  }
+                         delete spot.dataValues.SpotImages;
             };
-            if (!spot.dataValues.previewImage) {
-              spot.dataValues.previewImage = "No preview image";
-             delete spot.dataValues.SpotImages;
-            }
+
             let average = 0;
             for ( let review of spot.Reviews ) {
                   average += review.dataValues.stars;
             };
             average = average / spot.Reviews.length;
-            spot.dataValues.avgStarRating = average;
-            if ( !spot.dataValues.avgStarRating ) {
-                  spot.dataValues.avgStarRating = "No reviews yet"
-            } delete spot.dataValues.Reviews;
+            spot.dataValues.avgRating = average;
+            if ( !spot.dataValues.avgRating ) {
+                  spot.dataValues.avgRating = "No reviews yet"
+            }
+            delete spot.dataValues.Reviews;
       }
-
   return res.json({ "Spots": spots, page, size });
 } );
 
@@ -288,7 +288,7 @@ router.post( "/:id/reviews", requireAuth, validateReview, async ( req, res ) => 
                   review: review,
                   stars: stars,
             } )
-        return  res.json( { thisReview  } )
+        return  res.json( thisReview  )
       }
  })
 
