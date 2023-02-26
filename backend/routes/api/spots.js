@@ -86,7 +86,7 @@ router.get( "/:spotId", async ( req, res ) => {
 } );
 
 // get all spots
-router.get( "/", async ( req, res ) => {
+router.get( "/",  async ( req, res ) => {
         let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
       let errors = {};
   if (page < 1){ errors.page = "Page must be greater than or equal to 1" }
@@ -95,19 +95,19 @@ router.get( "/", async ( req, res ) => {
       if ( size < 1 ) { errors.size = "Size must be greater than or equal to 1"; }
     if (!size || Number.isNaN(size) || size > 20) { size = 20 }
 
-      if ( minLat < -90 || minLat > 90 || Number.isNaN( minLat ) ) {
+      if ( minLat < -90 || minLat > 90 ) {
         errors.minLat = "Minimum latitude is invalid"
       } if ( !minLat ) { minLat = -90 }
 
-      if ( maxLat< -90 || maxLat> 90 || Number.isNaN( maxLat ) ) {
+      if ( maxLat < -90 || maxLat > 90 ) {
             errors.maxLat = "Minimum latitude is invalid"
       } if ( !maxLat ) { maxLat = 90 }
 
-       if (minLng < -180 || minLng > 180 || Number.isNaN(minLng)) {
+      if ( minLng < -180 || minLng > 180 ) {
          errors.minLng = "Minimum latitude is invalid";
       } if ( !minLng ) { minLng = -180 }
 
-     if (maxLng < -180 || maxLng > 180 || Number.isNaN(maxLng)) {
+      if ( maxLng < -180 || maxLng > 180 ) {
        errors.maxLng = "Minimum latitude is invalid";
       } if ( !maxLng ) { maxLng = 180 }
 
@@ -117,7 +117,7 @@ router.get( "/", async ( req, res ) => {
 
       if (maxPrice < 0) {
         errors.maxPrice = "Minimum price must be greater than or equal to 0";
-      }  if ( !maxPrice ) { maxPrice = 100000 }
+      }  if ( !maxPrice ) { maxPrice = 100000000 }
 
   if (Object.keys(errors).length) {
     return res.status(400).json({
