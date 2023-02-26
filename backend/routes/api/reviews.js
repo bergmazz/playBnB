@@ -32,6 +32,11 @@ router.get("/current", requireAuth, async (req, res) => {
     ],
   } );
 
+      // for ( let review of reviews ) {
+      //       let images = ReviewImage.findAll( { where: { reviewId: review.id } } );
+      //       review.ReviewImage = images
+      //  }
+
   for (let review of reviews) {
     const previewPic = await SpotImage.findOne({
       where: { spotId: review.Spot.id, preview: true },
@@ -42,7 +47,7 @@ router.get("/current", requireAuth, async (req, res) => {
       review.Spot.dataValues.previewImage = "No Preview Image";
     }
   }
-  res.json({ Reviews: reviews });
+  return res.json({ Reviews: reviews });
 });
 
 // See spots.js for Get all Reviews by a Spot's id
@@ -59,7 +64,7 @@ router.post( '/:id/images', requireAuth, async ( req, res ) => {
         })
       }
       if ( review.userId !== req.user.id ) {
-            res.status( 403 ).json( {
+          return  res.status( 403 ).json( {
                   message: "Forbidden",
                   statusCode: 403,
             } )
@@ -68,7 +73,7 @@ router.post( '/:id/images', requireAuth, async ( req, res ) => {
         where: { reviewId: Number(req.params.id) },
       });
    if(numPics >= 10){
-     res.status(403).json({
+    return  res.status(403).json({
         message:"Maximum number of images for this resource was reached",
         statusCode: 403
     })
@@ -78,7 +83,7 @@ router.post( '/:id/images', requireAuth, async ( req, res ) => {
           reviewId:Number(req.params.id),
         });
          review.addReviewImages( [ image ] );
-         res.json(image)
+        return res.json(image)
    }
 })
 const validateReview = [
@@ -102,35 +107,36 @@ router.put( '/:id', requireAuth, validateReview, async ( req, res ) => {
         });
       }
       if (review.userId !== req.user.id) {
-        res.status(403).json({
+       return res.status(403).json({
           message: "Forbidden",
           statusCode: 403,
         });
       }
 
       let freshReview = await review.update({
-      review: req.body.review,
-      stars: Number(req.body.stars),
+        review: req.body.review,
+        stars: req.body.stars,
+        updatedAt: sequelize.literal("CURRENT_TIMESTAMP"),
       });
 
-      res.json(freshReview);
+     return res.json(freshReview);
 } )
 
  router.delete("/:id", requireAuth, async (req, res) => {
    const review = await Review.findByPk(req.params.id);
    if (!review) {
-    res.status(404).json({
+   return res.status(404).json({
        message: "Review couldnt be found",
        statusCode: 404,
      });
    } else if (review.userId !== req.user.id) {
-        res.status(403).json({
+        return res.status(403).json({
           message: "Forbidden",
           statusCode: 403,
         });
    } else {
            await review.destroy();
-    res.status(200).json({
+   return res.status(200).json({
      message: "Successfully deleted",
      statusCode: 200,
    });
