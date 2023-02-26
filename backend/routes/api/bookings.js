@@ -95,8 +95,6 @@ router.put( '/:id', requireAuth, validateBookingReq, async ( req, res ) => {
  }
 
 
-
-
  const existingBookings = await Booking.findAll({
    where: { spotId: bookingToUpdate.spotId },
  });

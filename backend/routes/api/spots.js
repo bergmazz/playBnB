@@ -87,10 +87,88 @@ router.get( "/:spotId", async ( req, res ) => {
 
 // get all spots
 router.get( "/", async ( req, res ) => {
-      const Spots = await Spot.findAll({ //using default scope
-      //   group: ["Spot.id", "SpotImages.url"], //one row per spot in the result set
-      } );
-  return res.json({ Spots });
+        let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
+      let errors = {};
+  if (page < 1){ errors.page = "Page must be greater than or equal to 1" }
+      if ( !page || Number.isNaN( page ) || page > 10 ) { page = 1 }
+
+      if ( size < 1 ) { errors.size = "Size must be greater than or equal to 1"; }
+    if (!size || Number.isNaN(size) || size > 20) { size = 20 }
+
+      if ( minLat < -90 || minLat > 90 || Number.isNaN( minLat ) ) {
+        errors.minLat = "Minimum latitude is invalid"
+      } if ( !minLat ) { minLat = -90 }
+
+      if ( maxLat< -90 || maxLat> 90 || Number.isNaN( maxLat ) ) {
+            errors.maxLat = "Minimum latitude is invalid"
+      } if ( !maxLat ) { maxLat = 90 }
+
+       if (minLng < -180 || minLng > 180 || Number.isNaN(minLng)) {
+         errors.minLng = "Minimum latitude is invalid";
+      } if ( !minLng ) { minLng = -180 }
+
+     if (maxLng < -180 || maxLng > 180 || Number.isNaN(maxLng)) {
+       errors.maxLng = "Minimum latitude is invalid";
+      } if ( !maxLng ) { maxLng = 180 }
+
+      if ( minPrice < 0 ) {
+          errors.minPrice = "Minimum price must be greater than or equal to 0";
+      } if ( !minPrice ) { minPrice = 1 }
+
+      if (maxPrice < 0) {
+        errors.maxPrice = "Minimum price must be greater than or equal to 0";
+      }  if ( !maxPrice ) { maxPrice = 100000 }
+
+  if (Object.keys(errors).length) {
+    return res.status(400).json({
+      message: "Validation Error",
+      statusCode: 400,
+      errors: errors,
+    });
+  }
+
+      page = Number( page )
+    size = Number(size)
+
+      const spots = await Spot.scope("lessDetail").findAll({
+        where: {
+          lat: { [Op.between]: [minLat, maxLat] },
+          lng: { [Op.between]: [minLng, maxLng] },
+          price: { [Op.between]: [minPrice, maxPrice] },
+            },
+                  include: [{
+            model: Review,
+        },
+        {
+            model: SpotImage,
+        }],
+        offset: (page - 1) * size,
+        limit: size,
+      });
+
+      for ( let spot of spots ) {
+            for ( let image of spot.SpotImages ) {
+                  if ( image.dataValues.previewImage ) {
+                        spot.dataValues.previewImage = image.url;
+                  }
+                  delete spot.dataValues.SpotImages;
+            };
+            if (!spot.dataValues.previewImage) {
+              spot.dataValues.previewImage = "No preview image";
+             delete spot.dataValues.SpotImages;
+            }
+            let average = 0;
+            for ( let review of spot.Reviews ) {
+                  average += review.dataValues.stars;
+            };
+            average = average / spot.Reviews.length;
+            spot.dataValues.avgStarRating = average;
+            if ( !spot.dataValues.avgStarRating ) {
+                  spot.dataValues.avgStarRating = "No reviews yet"
+            } delete spot.dataValues.Reviews;
+      }
+
+  return res.json({ "Spots": spots, page, size });
 } );
 
 
