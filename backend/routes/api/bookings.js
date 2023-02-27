@@ -14,10 +14,10 @@ const { Op } = require("sequelize");
 const { application } = require("express");
 const router = express.Router();
 
-
+//get bookings of current user //Get all of the Current User's Bookings
 router.get( "/current", requireAuth, async ( req, res ) => {
       const bookings = await Booking.findAll({
-         //   const bookings = await Booking.scope("justDateNoSeconds").findAll({
+         //   const bookings = await Booking.scope("justDateNoSeconds").findAll({ //insantiy not needed
          where: { userId: req.user.id },
          include: [
            {
@@ -30,8 +30,6 @@ router.get( "/current", requireAuth, async ( req, res ) => {
        });
 
       for ( let booking of bookings ) {
-
-            // console.log(booking.dataValues.startDate);
     const previewPic = await SpotImage.findOne({
       where: { spotId: booking.Spot.id, preview: true },
     });
@@ -52,7 +50,7 @@ router.get( "/current", requireAuth, async ( req, res ) => {
     check('endDate').exists().notEmpty().isISO8601().withMessage("End date is required"),
      handleValidationErrors
  ]
-
+//Edit a Booking
 router.put( '/:id', requireAuth, validateBookingReq, async ( req, res ) => {
  let { startDate, endDate } = req.body;
       let bookingToUpdate = await Booking.findByPk( req.params.id )
@@ -76,7 +74,6 @@ router.put( '/:id', requireAuth, validateBookingReq, async ( req, res ) => {
      },
    });
  }
-
        if (bookingToUpdate.endDate < new Date().toISOString().slice(0, 10)) {
          return res.json({
            message: "Past bookings can't be modified",
@@ -136,7 +133,7 @@ router.put( '/:id', requireAuth, validateBookingReq, async ( req, res ) => {
  return res.json(bookingToUpdate);
  })
 
-
+//delete booking
  router.delete("/:id", requireAuth, async (req, res) => {
 
    const booking = await Booking.findByPk(req.params.id);

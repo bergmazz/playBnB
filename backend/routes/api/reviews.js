@@ -32,11 +32,6 @@ router.get("/current", requireAuth, async (req, res) => {
     ],
   } );
 
-      // for ( let review of reviews ) {
-      //       let images = ReviewImage.findAll( { where: { reviewId: review.id } } );
-      //       review.ReviewImage = images
-      //  }
-
   for (let review of reviews) {
     const previewPic = await SpotImage.findOne({
       where: { spotId: review.Spot.id, preview: true },
@@ -97,7 +92,7 @@ const validateReview = [
     .withMessage("Stars must be an integer from 1 to 5"),
   handleValidationErrors,
 ];
-
+//edit review
 router.put( '/:id', requireAuth, validateReview, async ( req, res ) => {
       let review = await Review.findByPk(req.params.id);
       if (!review) {

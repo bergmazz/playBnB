@@ -8,24 +8,19 @@ const { Spot, Review, ReviewImage, Booking, SpotImage, User, sequelize } = requi
 
 const router = express.Router();
 
-//get current user spots
+//get current user spots // Get all Spots owned by the Current User
 router.get( "/current", requireAuth, async ( req, res ) => {
-      //  let owner = User.findByPk(req.user.id)
-      // let Spots = owner.getOwnedSpots();
       const Spots = await Spot.findAll({ //default scope
         where: {ownerId: req.user.id, },
-      //   group: ["Spot.id", "SpotImages.url"],
       });
  return res.json({ Spots });
 } );
 
 
 // Get all Reviews by a Spot's id
-
 router.get('/:id/reviews', async(req,res)=>{
 
 let spot = await Spot.findByPk( req.params.id )
-//  console.log(spot.id)
           if (spot) {
                const reviews = await Review.scope(["defaultScope","perSpot"]).findAll({
                  where: { spotId: req.params.id },
@@ -66,7 +61,7 @@ router.get( "/:id/bookings", requireAuth, async ( req, res ) => {
     return  res.json({"Bookings": bookings})
 })
 
-//get spot details by spot id
+//get spot details by spot id // Get details of a Spot from an id
 router.get( "/:spotId", async ( req, res ) => {
 
       let thisSpot = await Spot.scope(["defaultScope", "allDetails"])
@@ -76,7 +71,7 @@ router.get( "/:spotId", async ( req, res ) => {
         });
 
       if ( !thisSpot ) {
-                     res.json({ // CHECK BACK maybe next(err) instead?
+                     res.json({ // CHECK BACK next(err) instead
                        message: "Spot couldn't be found",
                        statusCode: 404,
                      });
@@ -85,39 +80,57 @@ router.get( "/:spotId", async ( req, res ) => {
       }
 } );
 
-// get all spots
+// get all spots //now with pagination and queryssssssss
 router.get( "/",  async ( req, res ) => {
         let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
       let errors = {};
-  if (page < 1){ errors.page = "Page must be greater than or equal to 1" }
-      if ( !page || Number.isNaN( page ) || page > 10 ) { page = 1 }
 
-      if ( size < 1 ) { errors.size = "Size must be greater than or equal to 1"; }
-    if (!size || Number.isNaN(size) || size > 20) { size = 20 }
+      if ( !page || page > 10 ) {
+     page = 1;
+      } if ( page < 1 || isNaN( page ) ) {
+            errors.page = "Page must be greater than or equal to 1"
+      }
 
-      if ( minLat < -90 || minLat > 90 ) {
-        errors.minLat = "Minimum latitude is invalid"
-      } if ( !minLat ) { minLat = -90 }
+      if (!size || size > 20) {
+        size = 20;
+      } if ( size < 1 || isNaN( size ) ) {
+        errors.size = "Size must be greater than or equal to 1";
+      }
 
-      if ( maxLat < -90 || maxLat > 90 ) {
-            errors.maxLat = "Minimum latitude is invalid"
-      } if ( !maxLat ) { maxLat = 90 }
+     if (!minLat) {
+       minLat = -90;
+     } if ( minLat < -90 || minLat > 90 || isNaN( minLat ) ) {
+        errors.minLat = "Minimum latitude is invalid";
+      }
 
-      if ( minLng < -180 || minLng > 180 ) {
-         errors.minLng = "Minimum latitude is invalid";
-      } if ( !minLng ) { minLng = -180 }
+      if ( !maxLat ) {
+            maxLat = 90;
+      }  if (maxLat < -90 || maxLat > 90 || isNaN(maxLat)) {
+        errors.maxLat = "Minimum latitude is invalid";
+      }
 
-      if ( maxLng < -180 || maxLng > 180 ) {
-       errors.maxLng = "Minimum latitude is invalid";
-      } if ( !maxLng ) { maxLng = 180 }
+   if (!minLng) {
+     minLng = -180;
+   }   if (minLng < -180 || minLng > 180 || isNaN(minLng)) {
+        errors.minLng = "Minimum latitude is invalid";
+      }
 
-      if ( minPrice < 0 ) {
-          errors.minPrice = "Minimum price must be greater than or equal to 0";
-      } if ( !minPrice ) { minPrice = 1 }
+     if (!maxLng) {
+       maxLng = 180;
+     } if ( maxLng < -180 || maxLng > 180 || isNaN( maxLng ) ) {
+        errors.maxLng = "Minimum latitude is invalid";
+      }
 
-      if (maxPrice < 0) {
+      if (!minPrice) {
+        minPrice = 1;
+      } if (minPrice < 0 || isNaN(size)) {
+        errors.minPrice = "Minimum price must be greater than or equal to 0";
+      }
+
+      if ( !maxPrice ) { maxPrice = 50000000000000;
+      } if (maxPrice < 0 || isNaN(size)) {
         errors.maxPrice = "Minimum price must be greater than or equal to 0";
-      }  if ( !maxPrice ) { maxPrice = 100000000 }
+      }
 
   if (Object.keys(errors).length) {
     return res.status(400).json({
@@ -214,14 +227,13 @@ router.post("/:id/images", requireAuth, async (req, res) => {
       const { url, preview } = req.body;
 
   const spot = await Spot.findByPk(req.params.id);
-// console.log(spot)
       if ( !spot ) {
     return res.status(404).json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
   }
-  //authorization required //CHECK BACK refactor into dynamic function in auth.js?
+  //authorization required //CHECK BACK refactor maybe into auth.js
   //only the spot owner can add an image
   if (spot.ownerId !== req.user.id) {
     return res.status(403).json({
@@ -238,14 +250,7 @@ router.post("/:id/images", requireAuth, async (req, res) => {
   let imageDefaultScope = await SpotImage.scope(["defaultScope"]).findByPk(
     image.id
   );
-  //CHECK BACK returning just image also included excluded attributes createdAt updatedAt
-      // res.json( {
-      //       id: image.id,
-      //       url: image.url,
-      //       preview: image.preview
-      // } );
     return  res.json(imageDefaultScope)
-  // res.json(image.scope()) totally made this up I guessss TypeError: image.scope is not a function
 } );
 
 const validateReview = [
@@ -264,7 +269,6 @@ router.post( "/:id/reviews", requireAuth, validateReview, async ( req, res ) => 
       const { review, stars } = req.body;
 
         const spot = await Spot.findByPk(req.params.id);
-        // console.log(spot)
         if (!spot) {
        return   res.status(404).json({
             message: "Spot couldn't be found",
@@ -298,7 +302,6 @@ router.post( "/:id/reviews", requireAuth, validateReview, async ( req, res ) => 
      handleValidationErrors
 ]
 //Create a Booking from a Spot based on the Spot's id
-
 router.post( "/:id/bookings", requireAuth, validateBookingReq, async ( req, res ) => {
   let { startDate, endDate } = req.body;
 
@@ -404,7 +407,7 @@ router.post("/", requireAuth, validateNewSpot, async (req, res) => {
   res.json(spot);
 } );
 
-
+// update spot
 router.put("/:id", requireAuth, validateNewSpot, async (req, res) => {
   const { name, description, price, address, city, state, country, lat, lng } =
         req.body;
@@ -441,7 +444,7 @@ let freshSpot = await spot.update({
   res.json(freshSpot);
 });
 
-
+//delete spot
 router.delete( "/:id", requireAuth, async ( req, res ) => {
 
       let spot = await Spot.findByPk(req.params.id)

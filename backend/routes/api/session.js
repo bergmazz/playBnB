@@ -1,6 +1,10 @@
 const express = require( "express" );
 
-const { setTokenCookie, restoreUser } = require("../../utils/auth");
+const {
+  setTokenCookie,
+  restoreUser,
+  requireAuth,
+} = require("../../utils/auth");
 const { User } = require( "../../db/models" );
 
 const { check } = require("express-validator");
@@ -30,19 +34,10 @@ router.post("/", validateLogin, async (req, res, next) => {
           message: "Invalid credentials",
           statusCode: 401,
         });
-//     const err = new Error("Login failed");
-//     err.status = 401;
-//     err.title = "Login failed";
-//     err.errors = ["The provided credentials were invalid."];
-//     return next(err);
   }
-
   await setTokenCookie(res, user);
-
       return res.json( {
-      //   user : { id, firstName, lastName, email, userName }
         user: user.toSafeObject()
-      //  should return  { id, firstName, lastName, email, userName },
   });
 });
 
@@ -58,7 +53,7 @@ router.delete(
 // Get current User // Restore session user
 router.get(
   '/',
-  restoreUser,
+  restoreUser, requireAuth,
   (req, res) => {
     const { user } = req;
     if (user) {
