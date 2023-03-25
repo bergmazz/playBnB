@@ -1,96 +1,153 @@
-import React, { useState } from "react";
-import { useDispatch} from "react-redux";
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
 import './SignupForm.css';
 
-function SignupFormModal() {
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-const { closeModal } = useModal();
+function SignupFormModal () {
+      const dispatch = useDispatch();
+      const [ email, setEmail ] = useState( "" );
+      const [ username, setUsername ] = useState( "" );
+      const [ firstName, setFirstName ] = useState( "" );
+      const [ lastName, setLastName ] = useState( "" );
+      const [ password, setPassword ] = useState( "" );
+      const [ confirmPassword, setConfirmPassword ] = useState( "" );
+      const [ errors, setErrors ] = useState( [] );
+      const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors([]);
-      return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
-         .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        });
-    }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
-  };
+      // const handleSubmit = ( e ) => {
+      //       e.preventDefault();
+      //       if ( password === confirmPassword ) {
+      //             setErrors( [] );
+      //             return dispatch( sessionActions.signup( { email, username, firstName, lastName, password } ) )
+      //                   .then( closeModal )
+      //                   .catch( async ( res ) => {
+      //                         const data = await res.json();
+      //                         if ( data && data.errors ) setErrors( data.errors );
+      //                   } );
+      //       }
+      //       return setErrors( [ 'Confirm Password field must be the same as the Password field' ] );
+      // };
+      const handleSubmit = async ( e ) => {
+            e.preventDefault();
+            if ( password === confirmPassword ) {
+                  setErrors( [] );
+                  const response = await dispatch(
+                        sessionActions.signup( { email, username, firstName, lastName, password } )
+                  );
+                  if ( response.ok ) {
+                        closeModal();
+                  } else {
+                        const data = await response.json();
+                        if ( data.errors ) {
+                              setErrors( data.errors );
+                        }
+                  }
+            } else {
+                  setErrors( [ 'Confirm Password field must be the same as the Password field' ] );
+            }
+      };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
-      <label>
-        Email
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Username
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        First Name
-        <input
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Last Name
-        <input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Confirm Password
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Sign Up</button>
-    </form>
-  );
+
+      const containerRef = useRef( null );
+
+      useEffect( () => {
+            if ( containerRef.current ) {
+                  containerRef.current.style.height = `${ containerRef.current.scrollHeight }px`;
+            }
+      }, [ errors ] );
+
+
+      return (
+            <div id="signup-container">
+
+                  <h1>Sign Up</h1>
+
+                  <form onSubmit={ handleSubmit }>
+
+                        { errors.length > 0 && (
+                              <div id="error-container">
+                                    { errors.map( ( error ) => (
+                                          <p key={ error }>{ error }</p>
+                                    ) ) }
+                              </div>
+                        ) }
+
+                        <label >
+                              <input
+                                    className="text-field-signup"
+                                    placeholder="Email"
+                                    type="text"
+                                    value={ email }
+                                    onChange={ ( e ) => setEmail( e.target.value ) }
+                                    required
+                              />
+                        </label>
+
+                        <label>
+                              <input
+                                    className="text-field-signup"
+                                    placeholder="Username"
+                                    type="text"
+                                    value={ username }
+                                    onChange={ ( e ) => setUsername( e.target.value ) }
+                                    required
+                              />
+                        </label>
+
+                        <label>
+                              <input
+                                    className="text-field-signup"
+                                    placeholder="First Name"
+                                    type="text"
+                                    value={ firstName }
+                                    onChange={ ( e ) => setFirstName( e.target.value ) }
+                                    required
+                              />
+                        </label>
+
+                        <label>
+                              <input
+                                    className="text-field-signup"
+                                    placeholder="Last Name"
+                                    type="text"
+                                    value={ lastName }
+                                    onChange={ ( e ) => setLastName( e.target.value ) }
+                                    required
+                              />
+                        </label>
+
+                        <label>
+                              <input
+                                    className="text-field-signup"
+                                    placeholder="Password"
+                                    type="password"
+                                    value={ password }
+                                    onChange={ ( e ) => setPassword( e.target.value ) }
+                                    required
+                              />
+                        </label>
+
+                        <label>
+                              <input
+                                    className="text-field-signup"
+                                    placeholder="Confirm Password"
+                                    type="password"
+                                    value={ confirmPassword }
+                                    onChange={ ( e ) => setConfirmPassword( e.target.value ) }
+                                    required
+                              />
+                        </label>
+
+                        <button type="submit"
+                              className="button-class-signup"
+                        >
+                              Sign Up
+                        </button>
+
+                  </form>
+            </div>
+      );
 }
 
 export default SignupFormModal;
