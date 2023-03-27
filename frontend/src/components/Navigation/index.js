@@ -33,9 +33,11 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <ul>
+        <ul>
+              <li>TinyTotsTravel</li>
       <li>
-        <NavLink exact to="/">Home</NavLink>
+                    <NavLink exact to="/"> Home
+                    </NavLink>
       </li>
       {isLoaded && sessionLinks}
     </ul>

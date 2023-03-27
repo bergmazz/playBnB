@@ -30,6 +30,7 @@ function SignupFormModal () {
       // };
       const handleSubmit = async ( e ) => {
             e.preventDefault();
+
             if ( password === confirmPassword ) {
                   setErrors( [] );
                   const response = await dispatch(
@@ -48,6 +49,13 @@ function SignupFormModal () {
             }
       };
 
+      const isSignupDisabled =
+            !email ||
+            !username ||
+            !firstName ||
+            !lastName ||
+            !password ||
+            !confirmPassword;
 
       const containerRef = useRef( null );
 
@@ -141,6 +149,7 @@ function SignupFormModal () {
 
                         <button type="submit"
                               className="button-class-signup"
+                              disabled={ isSignupDisabled }
                         >
                               Sign Up
                         </button>
