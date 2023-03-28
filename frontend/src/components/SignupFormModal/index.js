@@ -78,6 +78,7 @@ function SignupFormModal () {
                                     { errors.map( ( error ) => (
                                           <p key={ error }>{ error }</p>
                                     ) ) }
+                                    {/* { errors.map( ( error, idx ) => <p key={ idx }>{ error }</p> ) } */}
                               </div>
                         ) }
 

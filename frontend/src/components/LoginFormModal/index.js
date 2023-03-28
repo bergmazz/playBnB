@@ -23,33 +23,37 @@ const { closeModal } = useModal();
   }
 
       return (
-        <>
-
+            <div id="login-container">
+                  <h1>Log In</h1>
     <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-      </ul>
-      <label>
-        Username or Email
-        <input
+                        { errors.length > 0 && ( <div id="error-container">
+        {errors.map((error, idx) => <p key={idx}>{error}</p>)}
+      </div>)}
+                              <input
+                                    className="text-field-login"
+                                    placeholder='Username or Email'
           type="text"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Password
-        <input
+
+
+                              <input
+                              className="text-field-login"
+                              placeholder='Password'
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </label>
-      <button type="submit">Log In</button>
+
+                        <button type="submit"
+                              className="button-class-login"
+                              disabled={ !password || !credential}
+                        >Log In</button>
                   </form>
-                  </>
+                  </div>
   );
 }
 
