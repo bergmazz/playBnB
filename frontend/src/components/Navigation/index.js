@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {  useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
@@ -8,18 +8,23 @@ import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
-  const sessionUser = useSelector(state => state.session.user);
+      const sessionUser = useSelector( state => state.session.user );
+      const history = useHistory();
+
+      const handleHomeClick = () => {
+            history.push( '/' ); // use history.push to navigate to home page
+      };
 
   let sessionLinks;
   if (sessionUser) {
-    sessionLinks = (
-      <li>
+        sessionLinks = (
+              <div className="nav_session_links">
         <ProfileButton user={sessionUser} />
-      </li>
+               </div>
     );
   } else {
-    sessionLinks = (
-  <li>
+        sessionLinks = (
+              <div className= "nav_session_links">
         <OpenModalButton
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
@@ -28,19 +33,20 @@ function Navigation({ isLoaded }){
           buttonText="Sign Up"
                       modalComponent={ <SignupFormModal /> }
                 />
-      </li>
+      </div>
     );
   }
 
-  return (
-        <ul>
-              <li>TinyTotsTravel</li>
-      <li>
-                    <NavLink exact to="/"> Home
-                    </NavLink>
-      </li>
+      return (
+            <nav className='navbar'>
+
+                  <div onClick={ handleHomeClick } className="nav_home_icon"  style={ { color: "#461f51", } } >
+                              <i className="fa-solid fa-child-reaching" >play b n b</i>
+                  </div>
+
       {isLoaded && sessionLinks}
-    </ul>
+
+</nav>
   );
 }
 
