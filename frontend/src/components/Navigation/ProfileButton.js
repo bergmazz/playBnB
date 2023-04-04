@@ -37,7 +37,7 @@ function ProfileButton({ user }) {
   return (
     <div className="profile-button-container">
               <button className="profile-button" onClick={ openMenu } style={ { color: "#461f51", } }  >
-                    <i className="fa-solid fa-caret-down"><i className= " fa-solid fa-person-breastfeeding"/> </i>
+                    <i className="fa-solid fa-bars"> <i className= " fa-solid fa-person-breastfeeding"/> </i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
                     <li className="menu-item">{user.username}</li>
