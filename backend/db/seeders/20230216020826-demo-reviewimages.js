@@ -14,19 +14,19 @@ module.exports = {
  return queryInterface.bulkInsert(options, [
    {
      reviewId: 1,
-     url: 'media.wired.com/photos/5ca648a330f00e47fd82ae77/16:9/w_1391,h_782,c_limit/Culture_Matrix_Code_corridor.jpg'
+             url: 'https://media.istockphoto.com/id/507923189/photo/twinkle-toes.jpg?b=1&s=612x612&w=0&k=20&c=lJPQFqVD-R-7HbEsB8jeGdjksEaHLv2sRDMNxy3laeg='
    },
    {
      reviewId: 2,
-     url: "media.istockphoto.com/id/185113827/photo/child-playing-with-healthy-a-fruit-basket.jpg?s=612x612&w=0&k=20&c=xgXUS1rdxfQoVi2c5S1dDX89Q-dsPQ3SKA3brg6vQp8="
+         url: "https://images.pexels.com/photos/14283365/pexels-photo-14283365.jpeg?auto=compress&cs=tinysrgb&w=600"
    },
    {
      reviewId: 3,
-     url: 'www.homecinemachoice.com/sites/18/images/article_images_month/2015-09/chappie%2003.jpg'
+         url: 'https://media.istockphoto.com/id/1000993952/photo/explorer-kids-walking-through-the-jungle.jpg?b=1&s=612x612&w=0&k=20&c=zWA4QVf4SbTZp3S6eeMu1Qcn7-C1INJtFggo3i5lRcE='
    },
    {
      reviewId: 4,
-     url: "encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKscQQGJBhq8bT6jskTWMYZuXVqtQmv_tVPMuxwVXPVxA-T0oAal3TRskPcjeS8G-Hkmg&usqp=CAU",
+         url: "https://images.pexels.com/photos/2411916/pexels-photo-2411916.jpeg?auto=compress&cs=tinysrgb&w=600",
    },
  ]);
   },
