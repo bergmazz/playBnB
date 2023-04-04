@@ -11,6 +11,7 @@
       top: 30px;
       font-size: 2rem;
       cursor: pointer;
+      background-color: white;
 }
 
 .profile-dropdown {
@@ -19,7 +20,7 @@
       flex-direction: column;
       top: 60px;
       right: 2rem;
-      background-color: #fff;
+      background-color: white;
       border: 1px solid #ccc;
       border-radius: 5px;
       padding: 10px;

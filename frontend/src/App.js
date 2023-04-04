@@ -23,6 +23,7 @@ function App() {
                   { isLoaded && (
                         <Switch>
                               <Route exact path="/"> <LandingPage isLoaded={ isLoaded } /></Route>
+                              <Route exact path="/spots"> <LandingPage isLoaded={ isLoaded } /></Route>
                         </Switch>
                   ) }
             </>
