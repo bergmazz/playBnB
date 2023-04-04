@@ -19,7 +19,7 @@ const LandingPage = ({isLoaded}) => {
                         spots.spots.map( ( spot ) => (
                               <div className="card" key={ spot.id }>
                                     <NavLink to={ `/spots/${ spot.id }` }>
-                                          <img className="img" src={ `https://${spot.previewImage } `} alt={ spot.description } />
+                                          <img className="img" src={ spot.previewImage} alt={ spot.description } />
                                           <div className="info">
                                                 { spot.city }, { spot.state }
                                           </div>
