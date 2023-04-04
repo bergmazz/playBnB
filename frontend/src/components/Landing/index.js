@@ -8,7 +8,7 @@ const LandingPage = ({isLoaded}) => {
       const dispatch = useDispatch()
       let spots = useSelector( ( state ) => state.spots )
       // console.log( "----------state-------", spots ) // currently logging:
-      // console.log( "----------state spots-------", spots.spots ) // currently returning undefined
+      // console.log( "----------state spots-------", spots.spots ) // currently returning: undefined
 
       useEffect( () => {
             dispatch( spotActions.populateSpotsThunk() );
@@ -19,7 +19,7 @@ const LandingPage = ({isLoaded}) => {
                         spots.spots.map( ( spot ) => (
                               <div className="card" key={ spot.id }>
                                     <NavLink to={ `/spots/${ spot.id }` }>
-                                          <img className="img" src={ spot.previewImage } alt={ spot.description } />
+                                          <img className="img" src={ `https://${spot.previewImage } `} alt={ spot.description } />
                                           <div className="info">
                                                 { spot.city }, { spot.state }
                                           </div>

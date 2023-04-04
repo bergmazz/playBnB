@@ -15,6 +15,7 @@ function Navigation({ isLoaded }){
             history.push( '/' ); // use history.push to navigate to home page
       };
 
+
   let sessionLinks;
   if (sessionUser) {
         sessionLinks = (
