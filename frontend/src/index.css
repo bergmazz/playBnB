@@ -1,1 +1,11 @@
-/* TODO Add site wide styles */
+
+body {
+      font-family: 'Comfortaa', cursive;
+      font-weight: bold;
+      color: #333;
+}
+
+button {
+      font-family: 'Comfortaa', cursive;
+border-radius: 15px;
+}

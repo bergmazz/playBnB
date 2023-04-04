@@ -1,0 +1,44 @@
+.profile-button-container {
+      display: flex;
+      width: 200px;
+}
+
+.profile-button {
+      position: absolute;
+      background: none;
+            border: none;
+      right: 4rem;
+      top: 30px;
+      font-size: 2rem;
+      cursor: pointer;
+      background-color: white;
+}
+
+.profile-dropdown {
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      top: 60px;
+      right: 2rem;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      list-style: none;
+}
+
+.profile-dropdown.hidden {
+      display: none;
+}
+
+.button-mom{
+      display: flex;
+      align-items: center;
+       justify-content: center;
+}
+.logout-button{
+     margin-top:5px;
+}
+.menu-item {
+     justify-content: flex-start;
+}
