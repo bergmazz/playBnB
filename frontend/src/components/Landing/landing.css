@@ -17,6 +17,9 @@
       }
 }
 
+.loading{
+      font-size: 30px;
+}
 
 .card {
       border: 1px solid #ccc;

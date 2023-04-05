@@ -40,7 +40,7 @@ function LoginFormModal() {
                         { errors.length > 0 && ( <div id="error-container">
         {errors.map((error, idx) => <p key={idx}>{error}</p>)}
                         </div> ) }
-                        { submitted && (
+                        { submitted && errors.length > 0 && (
                               <p>The provided credentials were invalid</p>
                         ) }
                               <input
