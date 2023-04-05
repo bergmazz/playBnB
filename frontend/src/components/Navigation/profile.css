@@ -25,6 +25,7 @@
       border-radius: 5px;
       padding: 10px;
       list-style: none;
+      z-index: 5;
 }
 
 .profile-dropdown.hidden {

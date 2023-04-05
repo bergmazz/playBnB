@@ -19,7 +19,11 @@ const LandingPage = ({isLoaded}) => {
                         spots.spots.map( ( spot ) => (
                               <div className="card" key={ spot.id }>
                                     <NavLink to={ `/spots/${ spot.id }` }>
-                                          <img className="img" src={ spot.previewImage} alt={ spot.description } />
+                                          <div className="card-crop">
+                                          <div className = "img-crop">
+                                                <img className="img" src={ spot.previewImage } alt={ spot.description } />
+                                                </div>
+                                                <div className="info-container">
                                           <div className="info">
                                                 { spot.city }, { spot.state }
                                           </div>
@@ -27,7 +31,9 @@ const LandingPage = ({isLoaded}) => {
                                           <div className="star">
                                                 { spot.avgRating }
                                                 <i className="fa-solid fa-star" />
-                                          </div>
+                                                      </div>
+                                                      </div>
+                                                </div>
                                     </NavLink>
                               </div>
                         ) )
