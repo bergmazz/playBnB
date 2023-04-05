@@ -6,9 +6,8 @@ import './spotDetails.css'
 
 const SpotDetails = () => {
       const { id } = useParams()
-      console.log("--------line 9-----", id)
       const dispatch = useDispatch()
-      const spot = useSelector( ( state ) => state.spots.currentSpot )
+      const spot = useSelector( ( state ) => state.spots.current )
 
       useEffect( () => {
             dispatch(getSpotThunk( id ) )
@@ -19,37 +18,32 @@ const SpotDetails = () => {
                   { spot && ( <div className="spot-detail-container">
 
                         <div className="spot-info">
-                              <h2>{ spot.name }</h2>
-                              <p>{ spot.city },{ spot.state },{ spot.country }</p>
+                                    <h2>{ spot.name }</h2>
+                                    <p>{ spot.city }, { spot.state }, { spot.country }</p>
                         </div>
-                        <div className="spot-img">
-                              { spot.SpotImages && spot.SpotImages.map( image => (
-                                    <img key={ image.id } src={ image.url } alt={ spot.name }></img>
 
-                              ) ) }
-                              <div className="spot-descript">
-                                    <p>{ spot.description }</p>
-                              </div>
+                              <div className="spot-container">
+                                    { spot.SpotImages && spot.SpotImages.map( image => (
+                                          <img key={ image.id } src={ image.url } alt={ spot.name }></img>
+                                    ) ) }
+                                </div>
 
+                        <div className="owner">
+                                    <p>Hosted by { spot.Owner.firstName } { spot.Owner.lastName }</p>
                         </div>
-                        {/* <div className="owner">
-                              <p>Hosted by { spot.Owner.firstName } { spot.Owner.lastName }</p>
-                        </div> */}
-                        <div className="booking">
 
-                              <div className="book-price">
-                                    <p>${ spot.price } night</p>
-                              </div>
-                              <div class='book-star'>
-                                    <p><i class="fa-solid fa-star"></i>{ spot.avgStarRating }</p>
-                              </div>
-                              <div className="book-review-count" >
-                                    <p>{ spot.numReviews ? spot.numReviews : 'New' }</p>
-                              </div>
-                              <div btn-div>
-                                    <button className="RSVP-btn">Reserve</button>
-                              </div>
-                        </div>
+                                    <div className="booking">
+                                                <div className="book-price">
+                                                      <p>${ spot.price } night</p>
+                                                </div>
+                                                <div className='book-star'>
+                                                      <p><i className="fa-solid fa-star"></i>{ spot.avgStarRating }</p>
+                                                </div>
+                                                <div className="book-review-count" >
+                                                      <p>{ spot.numReviews ? spot.numReviews : 'New' }</p>
+                                                </div>
+                                          <button className="RSVP-btn">Reserve</button>
+                                    </div>
 
                         </div>
 

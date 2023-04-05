@@ -31,7 +31,7 @@ export const getSpotThunk = (spotId) => async ( dispatch ) => {
       const response = await fetch( `/api/spots/${ spotId }` )
       if ( response.ok ) {
             const spot = await response.json()
-            console.log("-----------thunk spot repsonse-----------", spot)
+            // console.log("-----------thunk spot repsonse-----------", spot)
             dispatch( spotDetails( spot ) )
       }
 }
@@ -41,21 +41,20 @@ const initialState = {
       spots: {},
       page: 1,
       size: 20,
-      currentSpot: {}
 };
 
 const spotReducer = ( state = initialState, action ) => {
-      console.log( 'action runnin', action.type );
+      // console.log( 'action runnin', action.type );
       let newState = { ...state }
 
       switch ( action.type ) {
             case POPULATE_SPOTS:
-                  newState.spots = action.payload.Spots;
+                  newState.spots["all"] = action.payload.Spots;
                   newState.page = action.payload.page;
                   newState.size = action.payload.size;
                   return { ...newState};
             case GET_SPOT:
-                  newState.spots.currentSpot = action.payload
+                  newState.spots['current'] = action.payload
                   return newState.spots
             default:
                   return newState

@@ -6,21 +6,27 @@ import './landing.css';
 
 const LandingPage = ({isLoaded}) => {
       const dispatch = useDispatch()
+      let spots = useSelector( ( state ) => state.spots);
+      // let spotValid = false
 
       useEffect( () => {
             dispatch( spotActions.populateSpotsThunk() );
-      }, [ dispatch ] )
+            // if ( Array.isArray( spots.spots ) ) {
+            //       console.log("------------array-------------",spots)
+            //       spotValid = true
+            // }
+      }, [ dispatch] ) //took spotvalid out of array
 
-      let spots = useSelector( ( state ) => state.spots )
+
       // console.log( "----------state-------", spots ) // currently logging:
-      console.log( "----------state spots-------", spots.spots ) // currently returning: undefined
+      console.log( "----------state spots-------", spots.all ) // currently returning: {}
       return (
             <div className="spots-container">
-                  { spots.spots === null || spots.spots === undefined ? (
+                  {spots.all === null || spots.all === undefined || !Array.isArray( spots.all ) ? (
                     <div className="loading">Loading spots...</div>
                  ):
                   isLoaded && (
-                        spots.spots.map( ( spot ) => (
+                        spots.all.map( ( spot ) => (
                               <div className="card" key={ spot.id }>
                                     <NavLink to={ `/spots/${ spot.id }` }>
                                           <div className="card-crop">

@@ -1,9 +1,9 @@
 import React from 'react';
 import {  useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import ProfileButton from './ProfileButton';
-import * as spotActions from '../../store/spots';
+// import * as spotActions from '../../store/spots';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
@@ -12,9 +12,9 @@ import './Navigation.css';
 function Navigation({ isLoaded }){
       const sessionUser = useSelector( state => state.session.user );
       const history = useHistory();
-        const dispatch = useDispatch();
+      //   const dispatch = useDispatch();
 const handleHomeClick = () => {
-            dispatch( spotActions.populateSpotsThunk() );
+            // dispatch( spotActions.populateSpotsThunk() );
             history.push( '/' ); // use history.push to navigate to home page
       };
 
