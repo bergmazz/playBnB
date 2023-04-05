@@ -5,6 +5,8 @@ import * as sessionActions from "./store/session";
 import * as spotActions from './store/spots';
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/Landing";
+import SpotDetails from "./components/SpotDetails";
+
 function App() {
   const dispatch = useDispatch();
       const [ isLoaded, setIsLoaded ] = useState( false );
@@ -24,6 +26,7 @@ function App() {
                         <Switch>
                               <Route exact path="/"> <LandingPage isLoaded={ isLoaded } /></Route>
                               <Route exact path="/spots"> <LandingPage isLoaded={ isLoaded } /></Route>
+                              <Route path={ `/spots/:id` } ><SpotDetails /></Route>
                         </Switch>
                   ) }
             </>

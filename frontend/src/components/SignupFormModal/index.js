@@ -12,28 +12,31 @@ function SignupFormModal () {
       const [ lastName, setLastName ] = useState( "" );
       const [ password, setPassword ] = useState( "" );
       const [ confirmPassword, setConfirmPassword ] = useState( "" );
-      const [ errors, setErrors ] = useState( [] );
+      const [ errors, setErrors ] = useState( {});
+      const [ submitted, setSubmitted ] = useState( false );
       const { closeModal } = useModal();
 
       const handleSubmit = async ( e ) => {
             e.preventDefault();
 
             if ( password === confirmPassword ) {
-                  setErrors( [] );
+                  setErrors( {} );
                   const response = await dispatch(
                         sessionActions.signup( { email, username, firstName, lastName, password } )
                   );
+                  // console.log( response );
                   if ( response.ok ) {
                         closeModal();
                   } else {
                         const data = await response.json();
                         if ( data.errors ) {
-                              console.log("-----------errors----------", data.errors)
-                             return  setErrors( data.errors );
+                              setSubmitted(true)
+                              // console.log("-----------errors----------", data.errors)
+                              setErrors( data.errors );
                         }
                   }
             } else {
-                  return setErrors( [ 'Confirm Password field must be the same as the Password field' ] );
+               setErrors( [ 'Confirm Password field must be the same as the Password field' ] );
             }
       };
 
@@ -61,9 +64,9 @@ function SignupFormModal () {
 
                   <form onSubmit={ handleSubmit }>
 
-                        { errors.length > 0 && (
+                        { submitted && (
                               <div id="error-container">
-                                    { errors.map( ( error ) => (
+                                    { Object.values(errors).map( ( error ) => (
                                           <p key={ error }>{ error }</p>
                                     ) ) }
                                     {/* { errors.map( ( error, idx ) => <p key={ idx }>{ error }</p> ) } */}
