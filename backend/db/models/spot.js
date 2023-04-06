@@ -157,7 +157,7 @@ module.exports = (sequelize, DataTypes) => {
         group: ["Spot.id", "SpotImages.url"],
       },
       scopes: {
-        allDetails: {
+            allDetails: {
           include: [
             {
               association: "Owner",
@@ -169,12 +169,11 @@ module.exports = (sequelize, DataTypes) => {
               required: false,
               attributes: ["id", "url", "preview"],
             },
-            {
-              association: "Reviews",
-              required: false,
-              attributes: [],
-            },
-          ],
+                    {
+                          association: "Reviews",
+                          required: false,
+                          attributes: [  "review", "stars", "userId" ],
+                    }],
           attributes: [
             [
               sequelize.fn(
