@@ -38,7 +38,7 @@ export const getSpotThunk = (spotId) => async ( dispatch ) => {
 
 
 const initialState = {
-      spots: {},
+      spots: { current: {}, all: [] },
       page: 1,
       size: 20,
 };
@@ -49,7 +49,8 @@ const spotReducer = ( state = initialState, action ) => {
 
       switch ( action.type ) {
             case POPULATE_SPOTS:
-                  newState.spots["all"] = action.payload.Spots;
+                  newState.spots[ "all" ] = action.payload.Spots;
+                  // newState.spots[ 'current' ] = {};
                   newState.page = action.payload.page;
                   newState.size = action.payload.size;
                   return { ...newState};

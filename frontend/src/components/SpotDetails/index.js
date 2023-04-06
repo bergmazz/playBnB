@@ -22,15 +22,17 @@ const SpotDetails = () => {
                                     <p>{ spot.city }, { spot.state }, { spot.country }</p>
                         </div>
 
-                              <div className="spot-container">
+                        <div className="spot-img-container">
+
+                              <img className="preview" src={ spot.previewImage } alt={ spot.name }></img>
                                     { spot.SpotImages && spot.SpotImages.map( image => (
                                           <img key={ image.id } src={ image.url } alt={ spot.name }></img>
                                     ) ) }
-                                </div>
+                        </div >
 
+             <div>
                         <div className="owner">
                                     <p>Hosted by { spot.Owner.firstName } { spot.Owner.lastName }</p>
-                        </div>
 
                                     <div className="booking">
                                                 <div className="book-price">
@@ -43,9 +45,10 @@ const SpotDetails = () => {
                                                       <p>{ spot.numReviews ? spot.numReviews : 'New' }</p>
                                                 </div>
                                           <button className="RSVP-btn">Reserve</button>
-                                    </div>
-
-                        </div>
+                                     </div>
+                              </div>
+                   </div>
+             </div>
 
                   )
                   }
