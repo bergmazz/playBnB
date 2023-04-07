@@ -1,23 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams} from "react-router-dom";
-import { getSpotThunk } from "../../store/spots";
+import * as spotActions from "../../store/spots";
+// import * as reviewActions from "../../store/reviews"
 import './spotDetails.css'
 
 const SpotDetails = () => {
       const { id } = useParams()
       const dispatch = useDispatch()
-      const spot = useSelector( ( state ) => state.spots.current )
+      const [ isLoaded, setIsLoaded ] = useState( false )
+      const spot = useSelector( ( state ) => state.spots )
 
       useEffect( () => {
-            dispatch(getSpotThunk( id ) )
-      }, [ dispatch, id, ] )
+            dispatch( spotActions.getSpotThunk(id) )
+                  // .then( dispatch( reviewActions.populateSpotReviews( spotId ) ) )
+                  .then( () => setIsLoaded( true ) )
+      }, [ dispatch, id ] )
+
+      const comingSoon = () => {
+            alert( "Feauture coming soon" );
+      }
 
       return (
-            <div>
-                  { spot && ( <div className="spot-detail-container">
 
-                        <div className="spot-info">
+         <div>
+                  { !spot ?
+                        (
+                        <div className="loading">Loading spot...</div>
+                  ) :
+                              isLoaded && ( <div className="spot-detail-container">
+                                    <div className="spot-info">
                                     <h2>{ spot.name }</h2>
                                     <p>{ spot.city }, { spot.state }, { spot.country }</p>
                         </div>
@@ -37,34 +49,39 @@ const SpotDetails = () => {
                               </div>
                                     <div className="book-container">
                                                 <div className="book-price">
-                                                      <p>${ spot.price } night</p>
+                                                <p className= "big">${ spot.price }</p> <p className="smol">  night</p>
                                                 </div>
                                                 <div className='book-star'>
-                                                      <p><i className="fa-solid fa-star"></i>{ spot.avgRating }</p>
+                                                <p><i className="fa-solid fa-star"></i>
+                                                      { !isNaN( spot.avgRating ) ? spot.avgRating.toFixed( 1 ) : spot.avgRating }
+                                                </p>
                                                 </div>
                                                 <div className="book-review-count" >
-                                                      <p>{ spot.numReviews } reviews</p>
+                                                <p>{ spot.Reviews.length } {spot.Reviews.length === 1 ? 'review' : 'reviews'}</p>
                                                 </div>
-                                          <button className="book-btn">Reserve</button>
+                                          <button onClick={comingSoon} className="book-btn">Reserve</button>
 
                               </div>
                         </div>
 
                          <div className='review-star'>
-                              <p><i className="fa-solid fa-star"></i>{ spot.avgRating }</p>
+                                    { isNaN( spot.avgRating ) ? ( <p><i className="fa-solid fa-star"></i> { spot.avgRating } </p> ) :
+                                          ( <p><i className="fa-solid fa-star"></i> { spot.avgRating.toFixed(1) }    ·    { spot.Reviews.length } { spot.Reviews.length === 1 ? 'review' : 'reviews' }</p> )
+                                    }
                         </div>
-                              <div className="review-count" >
-                                    <p>{ spot.numReviews } reviews</p>
+                              <div className="review-container">
+                                    { spot.Reviews && spot.Reviews.reverse().map( review => (
+                                          <div key={ review.id }>
+
+                                          </div>
+                                    ) ) }                              </div>
+
                               </div>
-
-
-             </div>
-
-                  )
-                  }
+                        )}
             </div>
-      )
+            )
 }
+
 
 
 export default SpotDetails

@@ -7,26 +7,20 @@ import './landing.css';
 const LandingPage = ({isLoaded}) => {
       const dispatch = useDispatch()
       let spots = useSelector( ( state ) => state.spots);
-      // let spotValid = false
 
       useEffect( () => {
             dispatch( spotActions.populateSpotsThunk() );
-            // if ( Array.isArray( spots.spots ) ) {
-            //       console.log("------------array-------------",spots)
-            //       spotValid = true
-            // }
-      }, [ dispatch] ) //took spotvalid out of array
-
+      }, [ dispatch] )
 
       // console.log( "----------state-------", spots ) // currently logging:
-      console.log( "----------state spots-------", spots.all ) // currently returning: {}
+      console.log( "----------state spots-------", spots ) // currently returning: {}
       return (
             <div className="spots-container">
-                  {spots.all === null || spots.all === undefined || !Array.isArray( spots.all ) ? (
+                  {spots === null || spots === undefined ? (
                     <div className="loading">Loading spots...</div>
                  ):
                   isLoaded && (
-                        spots.all.map( ( spot ) => (
+                        Object.values(spots).map( ( spot ) => (
                               <div className="card" key={ spot.id }>
                                     <NavLink to={ `/spots/${ spot.id }` }>
                                           <div className="card-crop">
@@ -39,8 +33,7 @@ const LandingPage = ({isLoaded}) => {
                                                       </div>
                                                       <div className="price">${ spot.price } night</div>
                                                       <div className="star">
-                                                            { spot.avgRating }
-                                                            <i className="fa-solid fa-star" />
+                                                            <i className="fa-solid fa-star"> { spot.avgRating }</i>
                                                       </div>
                                                 </div>
                                           </div>

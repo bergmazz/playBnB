@@ -15,10 +15,14 @@ display: block;
       font-size: 30px;
       font-weight: bold;
     color:  #FF5A5F;
+padding-left: 2%;
+      padding-right: 2%;
 }
 
 .spot-info p {
       font-size: 18px;
+      padding-left: 2%;
+            padding-right: 2%;
       /* color: #461f51 */
 }
 
@@ -77,14 +81,33 @@ padding-bottom: 8%;
      /* align-self: flex-end; */
       margin-top: 2%;
       position: relative;
-      width: 30%;
+      width: 300px;
+      height: 75px;
       box-sizing: content-box;
       border: 1px solid black;
       padding: 10px;
       border-radius: 5px;
       display: flex;
+      justify-content: space-between;
       flex-wrap: wrap;
-      font-size: 18px;
+      font-size: 14px;
+}
+
+@media screen and (max-width: 975px) {
+.more-info {
+            display: flex;
+            flex-wrap: wrap;
+            padding-left: 2%;
+            padding-right: 2%;
+            padding-bottom: 8%;
+      }
+
+}
+
+@media screen and (max-width: 575px) {
+      .book-star {
+                 margin-right: 30px;
+            }
 }
 
 .book-btn {
@@ -94,22 +117,49 @@ padding-bottom: 8%;
       margin: auto;
       background-color: rgb(176, 160, 246);
       font-weight: bold;
+      bottom: 25%;
 }
 
 .book-price {
       position: relative;
-      width: 25%;
-      font-size: 20px
+left: 5%;
+      /* font-size: 20px */
+}
+.big{
+      font-size: 18px;
+      position: relative;
+           bottom: 15%;
+      display: inline;
+      float: left
+}
+.smol{
+/* top: 10%; */
+display: inline;
+float: right;
+padding-left: 3px;
 }
 
 .book-review-count {
       position: relative;
-      width: 25%;
+      right: 2%;
+      top: 2%;
 }
 
 
 .book-star {
       position: relative;
-      width: 25%;
       color: rgb(102, 4, 102);
+      left: 10%;
+      top: 2%;
+      padding-right: 3px;
+}
+
+
+.review-star{
+      display: inline;
+            float: left;
+}
+.review-count{
+      display: inline;
+            float: right;
 }

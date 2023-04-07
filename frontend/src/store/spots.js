@@ -21,7 +21,7 @@ const spotDetails = ( spot ) => {
 }
 
 export const populateSpotsThunk = () => async (dispatch) => {
-      const response = await csrfFetch( "/api/spots", { method: 'GET', } )
+      const response = await fetch( "/api/spots", { method: 'GET', } )
       const list = await response.json();
             dispatch( populateSpots( list ) );
       return response;
@@ -38,9 +38,9 @@ export const getSpotThunk = (spotId) => async ( dispatch ) => {
 
 
 const initialState = {
-      spots: { current: {}, all: [] },
-      page: 1,
-      size: 20,
+      // spots: { current: {}, all: [] },
+      // page: 1,
+      // size: 20,
 };
 
 const spotReducer = ( state = initialState, action ) => {
@@ -49,14 +49,15 @@ const spotReducer = ( state = initialState, action ) => {
 
       switch ( action.type ) {
             case POPULATE_SPOTS:
-                  newState.spots[ "all" ] = action.payload.Spots;
-                  // newState.spots[ 'current' ] = {};
-                  newState.page = action.payload.page;
-                  newState.size = action.payload.size;
-                  return { ...newState};
+                  newState = {}
+                  Object.values( action.payload.Spots ).forEach( spot => newState[ spot.id ] = spot )
+                  return newState
             case GET_SPOT:
-                  newState.spots['current'] = action.payload
-                  return newState.spots
+                  newState[ action.payload.id ] = action.payload
+                  // if ( newState[ undefined ] ) {
+                  //       delete newState[ 'undefined' ]
+                  // }
+                  return newState[ action.payload.id ]
             default:
                   return newState
       }
