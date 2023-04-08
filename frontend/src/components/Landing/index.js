@@ -6,21 +6,20 @@ import './landing.css';
 
 const LandingPage = ({isLoaded}) => {
       const dispatch = useDispatch()
-      let spots = useSelector( ( state ) => state.spots);
+      let spots = {};
+      spots  = useSelector( ( state ) => state.spots );
 
       useEffect( () => {
             dispatch( spotActions.populateSpotsThunk() );
-      }, [ dispatch] )
+      }, [ dispatch, spots.length] )
 
-      // console.log( "----------state-------", spots ) // currently logging:
-      console.log( "----------state spots-------", spots ) // currently returning: {}
       return (
             <div className="spots-container">
                   {spots === null || spots === undefined ? (
                     <div className="loading">Loading spots...</div>
                  ):
                   isLoaded && (
-                        Object.values(spots).map( ( spot ) => (
+                              Object.values( spots ).map( ( spot ) => (
                               <div className="card" key={ spot.id }>
                                     <NavLink to={ `/spots/${ spot.id }` }>
                                           <div className="card-crop">
@@ -33,7 +32,7 @@ const LandingPage = ({isLoaded}) => {
                                                       </div>
                                                       <div className="price">${ spot.price } night</div>
                                                       <div className="star">
-                                                            <i className="fa-solid fa-star"> { spot.avgRating }</i>
+                                                            <i className="fa-solid fa-star"> { isNaN ( spot.avgRating) ? "New" : spot.avgRating  }</i>
                                                       </div>
                                                 </div>
                                           </div>
