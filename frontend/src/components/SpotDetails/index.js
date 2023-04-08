@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Reviews from "../Reviews";
 import * as spotActions from "../../store/spots";
-// import * as reviewActions from "../../store/reviews"
+import * as reviewActions from "../../store/reviews"
 import './spotDetails.css'
 
 const SpotDetails = () => {
@@ -10,16 +11,20 @@ const SpotDetails = () => {
       const dispatch = useDispatch()
       const [ isLoaded, setIsLoaded ] = useState( false )
       const spot = useSelector( ( state ) => state.spots )
+      // const currentUser = useSelector( ( state ) => state?.session?.user );
 
       useEffect( () => {
             dispatch( spotActions.getSpotThunk(id) )
-                  // .then( dispatch( reviewActions.populateSpotReviews( spotId ) ) )
+                  .then( dispatch( reviewActions.getReviewsThunk(id ) ) )
                   .then( () => setIsLoaded( true ) )
       }, [ dispatch, id ] )
 
       const comingSoon = () => {
             alert( "Feauture coming soon" );
       }
+
+      // console.log( "reviews-----------------------", reviews)
+      // const spotOwner = currentUser && spot && currentUser.id === spot.ownerId
 
       return (
 
@@ -37,9 +42,24 @@ const SpotDetails = () => {
                         <div className="spot-img-container">
 
                               <img className="preview" src={ spot.previewImage } alt={ spot.name }></img>
-                                    { spot.SpotImages && spot.SpotImages.map( image => (
+                                    {/* { spot.SpotImages && spot.SpotImages.map( image => (
                                           <img key={ image.id } src={ image.url } alt={ spot.name }></img>
-                                    ) ) }
+                                    ) ) } */}
+                                    { spot.SpotImages ? (
+                                          <>
+                                                { spot.SpotImages.map( ( image ) => (
+                                                      <img key={ image.id } src={ image.url } alt={ spot.name } />
+                                                ) ) }
+                                          </>
+                                    ) : (
+                                                            <>
+                                                      <img src={ spot.previewImage } alt={ spot.name } />
+                                                       <img src={ spot.previewImage } alt={ spot.name } />
+                                                        <img src={ spot.previewImage } alt={ spot.name } />
+                                                                  <img src={ spot.previewImage } alt={ spot.name } />
+                                                                 </>
+                                    ) }
+
                         </div >
 
              <div className="more-info">
@@ -70,11 +90,15 @@ const SpotDetails = () => {
                                     }
                         </div>
                               <div className="review-container">
-                                    { spot.Reviews && spot.Reviews.reverse().map( review => (
+                                    {/* { reviews && Object.values(reviews).map( review => (
                                           <div key={ review.id }>
-
+                                                <p>{ review.User }</p>
+                                                <p>{ review.createdAt && new Date( review.createdAt ).toLocaleDateString( 'en-US', { month: 'long', year: 'numeric' } ) }</p>
+                                                <p>{ review.review }</p>
                                           </div>
-                                    ) ) }                              </div>
+                                    ) ) } */}
+                                    <Reviews spotId={spot.id} />
+                              </div>
 
                               </div>
                         )}

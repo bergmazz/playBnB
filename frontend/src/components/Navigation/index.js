@@ -23,8 +23,13 @@ const handleHomeClick = () => {
   if (sessionUser) {
         sessionLinks = (
               <div className="nav_session_links">
-        <ProfileButton user={sessionUser} />
-               </div>
+                    <ProfileButton user={ sessionUser } />
+                    {/* <OpenModalButton
+                          buttonText="Create a new spot"
+                          modalComponent={ <LoginFormModal /> }
+                    /> */}
+              </div>
+
     );
   } else {
         sessionLinks = (
