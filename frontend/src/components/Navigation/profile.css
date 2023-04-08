@@ -18,8 +18,8 @@
       display: flex;
       position: absolute;
       flex-direction: column;
-      top: 60px;
-      right: 2rem;
+      top: 80px;
+      right: 3rem;
       background-color: white;
       border: 1px solid #ccc;
       border-radius: 5px;

@@ -21,3 +21,12 @@ display: none
 margin-right: 2rem;
       align-items: center;
 }
+
+
+.nav_session_links_logged Button:not(.logout-button, .profile-button){
+      margin-right: 10rem;
+}
+
+.nav_session_links_logged .profile-button {
+      margin-right: 1rem
+}

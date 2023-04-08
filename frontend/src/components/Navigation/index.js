@@ -7,6 +7,7 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import SpotFormModal from '../SpotFormModal';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -22,12 +23,13 @@ const handleHomeClick = () => {
   let sessionLinks;
   if (sessionUser) {
         sessionLinks = (
-              <div className="nav_session_links">
+              <div className="nav_session_links_logged">
                     <ProfileButton user={ sessionUser } />
-                    {/* <OpenModalButton
+
+                    <OpenModalButton
                           buttonText="Create a new spot"
-                          modalComponent={ <LoginFormModal /> }
-                    /> */}
+                          modalComponent={ <SpotFormModal /> }
+                    />
               </div>
 
     );

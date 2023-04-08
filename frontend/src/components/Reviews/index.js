@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getReviewsThunk } from "../../store/reviews";
 
 
-
 const Reviews = ( { spotId } ) => {
       const dispatch = useDispatch()
       const reviews = useSelector( state => state?.review?.Reviews )
-      const currentUser = useSelector( ( state ) => state?.session?.user );
+      // const currentUser = useSelector( ( state ) => state?.session?.user );
 
       useEffect( () => {
             dispatch( getReviewsThunk( spotId ) )

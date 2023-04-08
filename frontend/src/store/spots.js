@@ -3,7 +3,7 @@ import { csrfFetch } from './csrf';
 const POPULATE_SPOTS = 'spots/POPULATE_SPOTS';
 const GET_SPOT = 'spots/GET_SPOT';
 // const UPDATE_SPOT = 'spots/UPDATE_SPOT'
-// const ADD_SPOT = 'spots/ADD_SPOT'
+const ADD_SPOT = 'spots/ADD_SPOT'
 // const DELETE_SPOT = 'spots/DELETE_SPOT';
 
 const populateSpots = ( spots ) => {
@@ -35,6 +35,12 @@ export const getSpotThunk = (spotId) => async ( dispatch ) => {
             dispatch( spotDetails( spot ) )
       }
 }
+
+export const newSpotThunk = ( spotData ) => async ( dispatch ) => {
+
+
+ }
+
 
 
 const initialState = {
