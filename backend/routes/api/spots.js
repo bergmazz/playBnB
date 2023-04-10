@@ -228,10 +228,12 @@ router.get( "/",  async ( req, res ) => {
        .exists({ checkFalsy: true })
        .notEmpty()
        .withMessage("Country is required"),
-     check("lat")
+         check( "lat" )
+           .optional()
        .isFloat({ min: -90, max: 90 })
        .withMessage("Latitude is not valid"),
-     check("lng")
+         check( "lng" )
+               .optional()
        .isFloat({ min: -180, max: 180 })
        .withMessage("Longitude is not valid"),
      check("name")
