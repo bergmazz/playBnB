@@ -6,7 +6,7 @@ import { getReviewsThunk } from "../../store/reviews";
 const Reviews = ( { spotId } ) => {
       const dispatch = useDispatch()
       let reviews = {}
-      reviews = useSelector( state => state?.review?.Reviews )
+      reviews = useSelector( state => state?.review)
       // const currentUser = useSelector( ( state ) => state?.session?.user );
 
       useEffect( () => {

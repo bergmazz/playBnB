@@ -87,9 +87,10 @@ function SpotFormModal () {
             };
 
             let newSpot = await dispatch( newSpotThunk( payload ) )
+
             if ( newSpot ) {
                   let spotId = newSpot.id
-                  // history.push( `/spots/${ spotId }` );
+                   history.push( `/spots/${ spotId }` );
                   await dispatch( getSpotThunk( spotId ) ).then(closeModal)
             }
       };

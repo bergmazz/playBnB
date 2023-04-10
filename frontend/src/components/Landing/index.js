@@ -11,11 +11,11 @@ const LandingPage = ({isLoaded}) => {
 
       useEffect( () => {
             dispatch( spotActions.populateSpotsThunk() );
-      }, [ dispatch, spots.length] )
+      }, [ dispatch] )
 
       return (
             <div className="spots-container">
-                  {spots === null || spots === undefined ? (
+                  {spots === null || spots === undefined  ? (
                     <div className="loading">Loading spots...</div>
                  ):
                   isLoaded && (

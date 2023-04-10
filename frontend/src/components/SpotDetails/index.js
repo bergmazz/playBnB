@@ -29,7 +29,7 @@ const SpotDetails = () => {
       return (
 
          <div>
-                  { !spot ?
+                  { !spot || !spot.Owner ?
                         (
                         <div className="loading">Loading spot...</div>
                   ) :
@@ -90,14 +90,10 @@ const SpotDetails = () => {
                                     }
                         </div>
                               <div className="review-container">
-                                    {/* { reviews && Object.values(reviews).map( review => (
-                                          <div key={ review.id }>
-                                                <p>{ review.User }</p>
-                                                <p>{ review.createdAt && new Date( review.createdAt ).toLocaleDateString( 'en-US', { month: 'long', year: 'numeric' } ) }</p>
-                                                <p>{ review.review }</p>
-                                          </div>
-                                    ) ) } */}
-                                    <Reviews spotId={spot.id} />
+                                    { spot.Reviews.length > 0 ? (
+                                          <Reviews spotId={ spot.id } />
+                                    ) : ( <div classname="no-reviews"> Be the first to post a review</div> )
+                                    }
                               </div>
 
                               </div>

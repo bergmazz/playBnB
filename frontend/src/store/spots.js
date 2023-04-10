@@ -81,7 +81,7 @@ export const newSpotThunk = ( spotData ) => async ( dispatch ) => {
             } )
 
             for await ( let image of attachImages ) {
-                  console.log(image)
+                  // console.log(image)
                   const { preview, url } = image
                   // console.log( image, "IMAGE", previewImage, "PRE IMG", url, "URL" )
                   let imageRes = await csrfFetch( `/api/spots/${ newSpot.id }/images`, {
