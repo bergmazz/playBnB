@@ -40,9 +40,7 @@ export const postReviewThunk = ( reviewData ) => async ( dispatch ) => {
       const { review, stars, spotId } = reviewData
       const response = await csrfFetch( `/api/spots/${ spotId }/reviews`, {
             method: 'POST',
-
             body: JSON.stringify( { review, stars } )
-
       } )
       if ( response.ok ) {
             const newReview = await response.json()

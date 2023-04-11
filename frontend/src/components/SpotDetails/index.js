@@ -7,7 +7,7 @@ import OpenModalButton from '../OpenModalButton';
 import Reviews from "../Reviews";
 import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/reviews"
-import SpotFormModal from '../SpotFormModal';
+import ReviewFormModal from '../ReviewFormModal';
 import './spotDetails.css'
 
 const SpotDetails = () => {
@@ -96,7 +96,7 @@ const SpotDetails = () => {
                                     <div className = "review-btn">
                               <OpenModalButton
                                     buttonText="Post your review"
-                                    modalComponent={ <SpotFormModal /> }
+                                    modalComponent={ <ReviewFormModal /> }
                                     />
                                     </div>
 
