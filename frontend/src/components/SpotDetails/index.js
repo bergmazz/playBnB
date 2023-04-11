@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
+import OpenModalButton from '../OpenModalButton';
+
 import Reviews from "../Reviews";
 import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/reviews"
+import SpotFormModal from '../SpotFormModal';
 import './spotDetails.css'
 
 const SpotDetails = () => {
@@ -45,7 +49,7 @@ const SpotDetails = () => {
                                     {/* { spot.SpotImages && spot.SpotImages.map( image => (
                                           <img key={ image.id } src={ image.url } alt={ spot.name }></img>
                                     ) ) } */}
-                                    { spot.SpotImages ? (
+                                    { spot.SpotImages  ? (
                                           <>
                                                 { spot.SpotImages.map( ( image ) => (
                                                       <img key={ image.id } src={ image.url } alt={ spot.name } />
@@ -88,9 +92,16 @@ const SpotDetails = () => {
                                     { isNaN( spot.avgRating ) ? ( <p><i className="fa-solid fa-star"></i> { spot.avgRating } </p> ) :
                                           ( <p><i className="fa-solid fa-star"></i> { spot.avgRating.toFixed(1) }    ·    { spot.Reviews.length } { spot.Reviews.length === 1 ? 'review' : 'reviews' }</p> )
                                     }
-                        </div>
+                              </div>
+                                    <div className = "review-btn">
+                              <OpenModalButton
+                                    buttonText="Post your review"
+                                    modalComponent={ <SpotFormModal /> }
+                                    />
+                                    </div>
+
                               <div className="review-container">
-                                    { spot.Reviews.length > 0 ? (
+                                    { spot.Reviews[0]  ? (
                                           <Reviews spotId={ spot.id } />
                                     ) : ( <div classname="no-reviews"> Be the first to post a review</div> )
                                     }

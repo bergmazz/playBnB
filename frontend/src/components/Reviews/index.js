@@ -6,12 +6,14 @@ import { getReviewsThunk } from "../../store/reviews";
 const Reviews = ( { spotId } ) => {
       const dispatch = useDispatch()
       let reviews = {}
-      reviews = useSelector( state => state?.review)
-      // const currentUser = useSelector( ( state ) => state?.session?.user );
+      reviews = useSelector( state => state.review.Reviews)
+      // const currentUser = useSelector( ( state ) => state.session.user );
 
       useEffect( () => {
             dispatch( getReviewsThunk( spotId ) )
       }, [ dispatch, spotId ] )
+
+      // console.log("-------------------",reviews)
       return (
             <>
                 {  reviews.length>0 ?(
@@ -22,7 +24,7 @@ const Reviews = ( { spotId } ) => {
                               <p>{ review.review }</p>
                         </div>
                   ) )
-                  ) : ( <div classname="no-reviews"> Be the first to post a review</div>)
+                  ) : ( <div className="no-reviews"> Be the first to post a review</div>)
 }
             </>
       )

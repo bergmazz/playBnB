@@ -69,7 +69,7 @@ const reviewReducer = ( state = initialState, action ) => {
       let newState = {}
       switch ( action.type ) {
             case GET_REVIEWS:
-                  console.log( action.review )
+                  // console.log( action.review )
                   newState = { ...state, ...action.review }
                   // console.log( newState )
                   return newState

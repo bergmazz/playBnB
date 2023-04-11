@@ -164,8 +164,11 @@ padding-left: 3px;
             float: right;
 }
 
+.review-btn{
+    margin-top: 70px;
+}
 .review-container{
-      margin-top: 50px;
+      margin-top: 30px;
 }
 
 .rev{
