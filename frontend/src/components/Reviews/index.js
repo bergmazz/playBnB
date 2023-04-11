@@ -8,7 +8,7 @@ const Reviews = ( { spotId } ) => {
       const dispatch = useDispatch()
       let reviews = {}
       reviews = useSelector( state => state.review.Reviews )
-      console.log("---------------reviews", reviews)
+      // console.log("---------------reviews", reviews)
       // const currentUser = useSelector( ( state ) => state.session.user );
 
       useEffect( () => {

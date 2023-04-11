@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { postReviewThunk, getReviewsThunk } from "../../store/reviews";
 import { getSpotThunk} from "../../store/spots";
 import './ReviewForm.css';
 
 
-const ReviewFormModal = ( { spotId } ) => {
+const ReviewFormModal = ( {spotId} ) => {
+      // const { spotId } = useParams()
+      // console.log("-----------------------spotid----------------", spotId)
       const dispatch = useDispatch()
       // const history = useHistory()
       const { closeModal } = useModal();
@@ -44,7 +47,7 @@ const ReviewFormModal = ( { spotId } ) => {
 
             if ( newReview ) {
                   // history.push( `/spots/${ spotId }` )
-                  // await dispatch( getReviewsThunk( spotId ) );
+                  await dispatch( getReviewsThunk( spotId ) );
                   await dispatch( getSpotThunk( spotId ) ).then( closeModal )
             }
 
