@@ -7,7 +7,7 @@ import './landing.css';
 const LandingPage = ({isLoaded}) => {
       const dispatch = useDispatch()
       let spots = {};
-      spots  = useSelector( ( state ) => state.spots );
+      spots = useSelector( ( state ) => Object.values( state.spots ) );
 
       useEffect( () => {
             dispatch( spotActions.populateSpotsThunk() );
@@ -19,7 +19,7 @@ const LandingPage = ({isLoaded}) => {
                     <div className="loading">Loading spots...</div>
                  ):
                   isLoaded && (
-                              Object.values( spots ).map( ( spot ) => (
+                              spots.map( ( spot ) => (
                               <div className="card" key={ spot.id }>
                                     <NavLink to={ `/spots/${ spot.id }` }>
                                           <div className="card-crop">

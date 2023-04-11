@@ -71,6 +71,7 @@ export const newSpotThunk = ( spotData ) => async ( dispatch ) => {
                               preview: true,
                               url: image
                         }
+
                   } else {
                        attachImages[ i ] = {
                               preview: false,
@@ -80,7 +81,7 @@ export const newSpotThunk = ( spotData ) => async ( dispatch ) => {
                   i++
             } )
 
-            for await ( let image of attachImages ) {
+            for ( let image of attachImages ) {
                   // console.log(image)
                   const { preview, url } = image
                   // console.log( image, "IMAGE", previewImage, "PRE IMG", url, "URL" )
@@ -90,6 +91,7 @@ export const newSpotThunk = ( spotData ) => async ( dispatch ) => {
                   } )
                   imageRes = await imageRes.json()
             }
+            newSpot.previewImage = images[0]
             dispatch( spotDetails( newSpot ) )
             return newSpot
       }
@@ -108,7 +110,7 @@ const spotReducer = ( state = initialState, action ) => {
 
       switch ( action.type ) {
             case POPULATE_SPOTS:
-                  newState = {}
+                  // newState = {}
                   Object.values( action.payload.Spots ).forEach( spot => newState[ spot.id ] = spot )
                   return newState
             case GET_SPOT:
@@ -116,9 +118,12 @@ const spotReducer = ( state = initialState, action ) => {
                   // if ( newState[ undefined ] ) {
                   //       delete newState[ 'undefined' ]
                   // }
-                  return newState[ action.payload.id ]
+                  return newState
+                  // return newState[ action.payload.id ]
             case ADD_SPOT:
-                  return newState[ action.payload.id ] = action.payload
+                  // return newState[ action.payload.id ] = action.payload
+                  newState[ action.payload.id ] = action.payload
+                  return newState
             // case ADD_IMAGE:
             //       return newState[ action.payload.id ]['SpotImages'].push(action.payload)
             default:

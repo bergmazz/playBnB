@@ -10,7 +10,7 @@ const SpotDetails = () => {
       const { id } = useParams()
       const dispatch = useDispatch()
       const [ isLoaded, setIsLoaded ] = useState( false )
-      const spot = useSelector( ( state ) => state.spots )
+      const spot = useSelector( ( state ) => state.spots[id] )
       // const currentUser = useSelector( ( state ) => state?.session?.user );
 
       useEffect( () => {
