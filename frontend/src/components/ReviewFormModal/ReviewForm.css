@@ -12,26 +12,59 @@
       text-align: center;
 }
 
+textarea{
+      width: 350px;
+      height: 150px;
+      resize: none;
+}
+
+.star-rating {
+      display: flex;
+      align-items: center;
+      width: 160px;
+      flex-direction: row-reverse;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      margin-right: auto;
+      margin-left: auto;
+      justify-items: center;
+}
 
 .star-rating input {
       display: none;
 }
 
-.star-rating label.star {
-      display: inline-block;
-      font-size: 2rem;
-      color: #ccc;
-      transition: color .2s;
+.star-rating>label {
+      width: 30px;
+      height: 30px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 30px;
+      color:#FF5A5F;
+      transition: 0.2s ease;
 }
 
-.star-rating input:checked~label.star,
-.star-rating input:checked+label.star {
+.star-rating label:hover~label:before {
+      content: '\2606';
       color: #FF5A5F;
+      transition: 0.2s ease;
 }
 
-.star:hover,
-.star:hover~.star {
+.star-rating label:hover {
       color: #FF5A5F;
+      content: '\2605';
+      transition: 0.2s ease;
+}
+
+.star-rating label:before {
+      content: '\2606';
+      top: 0px;
+      line-height: 26px;
+}
+
+
+
+.star-rating input:checked~label:before {
+      content: '\2605'
 }
 
 .review-modal-btn {

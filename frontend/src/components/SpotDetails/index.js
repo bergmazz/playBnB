@@ -14,7 +14,8 @@ const SpotDetails = () => {
       const { id } = useParams()
       const dispatch = useDispatch()
       const [ isLoaded, setIsLoaded ] = useState( false )
-      const spot = useSelector( ( state ) => state.spots[id] )
+      const spot = useSelector( ( state ) => state.spots[ id ] )
+            // console.log( "spots-----------------------", spot)
       // const currentUser = useSelector( ( state ) => state?.session?.user );
 
       useEffect( () => {
@@ -33,7 +34,8 @@ const SpotDetails = () => {
       return (
 
          <div>
-                  { !spot || !spot.Owner ?
+                  { !spot || !spot.Owner
+                        ?
                         (
                         <div className="loading">Loading spot...</div>
                   ) :

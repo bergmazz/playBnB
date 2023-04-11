@@ -14,17 +14,17 @@ const ReviewFormModal = ( { spotId } ) => {
 
       const [ csrfToken, setCsrfToken ] = useState( '' )
       const [ stars, setStars ] = useState( 0 );
-      const [ description, setDescription ] = useState( '' );
+      const [ review, setReview ] = useState( '' );
       const [ errors, setErrors ] = useState( [] )
 
-      const updateStars = ( e ) => setStars( e.target.value );
-      const updateDescription = ( e ) => setDescription( e.target.value );
+      const updateStars = ( e ) => setStars( parseInt(e.target.value) );
+      const updateReview = ( e ) => setReview( e.target.value );
       const handleSubmit = async ( e ) => {
             e.preventDefault();
             setErrors( [] )
             let errorsArr = []
-            if ( description.length < 10 ) {
-                  errorsArr.push( 'Description needs a minimum of 10 characters' )
+            if ( review.length < 10 ) {
+                  errorsArr.push( 'Review needs a minimum of 10 characters' )
             }
             if ( stars < 1 ) {
                   errorsArr.push( "Please select a rating" )
@@ -36,7 +36,7 @@ const ReviewFormModal = ( { spotId } ) => {
             }
 
             const payload = {
-                  review: description,
+                  review,
                   stars,
                   spotId,
             };
@@ -44,9 +44,10 @@ const ReviewFormModal = ( { spotId } ) => {
 
             if ( newReview ) {
                   // history.push( `/spots/${ spotId }` )
+                  // await dispatch( getReviewsThunk( spotId ) );
                   await dispatch( getSpotThunk( spotId ) ).then( closeModal )
             }
-            // await dispatch( getReviewsThunk( spotId ) );
+
 
             return newReview;
       }
@@ -54,71 +55,33 @@ const ReviewFormModal = ( { spotId } ) => {
             <div className="review-modal-container">
                   <form className="review-modal" onSubmit={ handleSubmit }>
                         <h2>How was your stay?</h2>
-                        <input
+                        <textarea
                               type="text"
                               name="review"
                               placeholder="Leave your review here"
-                              onChange={ updateDescription }
+                              onChange={ updateReview }
                               required
                         />
                         <div className="star-rating">
-                              <input
-                                    type="radio"
-                                    id="star-5"
-                                    name="stars"
-                                    value="1"
-                                    onChange={ updateStars }
-                                    required
-                              />
-                              <label htmlFor="star-5">
-                                    <i className="fas fa-star"></i>
-                              </label>
-                              <input
-                                    type="radio"
-                                    id="star-4"
-                                    name="stars"
-                                    value="2"
-                                    onChange={ updateStars }
-                                    required
-                              />
-                              <label htmlFor="star-4">
-                                    <i className="fas fa-star"></i>
-                              </label>
-                              <input
-                                    type="radio"
-                                    id="star-3"
-                                    name="stars"
-                                    value="3"
-                                    onChange={ updateStars }
-                                    required
-                              />
-                              <label htmlFor="star-3">
-                                    <i className="fas fa-star"></i>
-                              </label>
-                              <input
-                                    type="radio"
-                                    id="star-2"
-                                    name="stars"
-                                    value="4"
-                                    onChange={ updateStars }
-                                    required
-                              />
-                              <label htmlFor="star-2">
-                                    <i className="fas fa-star"></i>
-                              </label>
-                              <input
-                                    type="radio"
-                                    id="star-1"
-                                    name="stars"
-                                    value="5"
-                                    onChange={ updateStars }
-                                    required
-                              />
-                              <label htmlFor="star-1">
-                                    <i className="fas fa-star"></i>
-                              </label>
+                              <input type="radio" name="stars" id="star-5" value={ 5 } onClick={ updateStars } />
+                              <label htmlFor="star-5"></label>
+
+                              <input type="radio" name="stars" id="star-4" value={ 4 } onClick={ updateStars } />
+                              <label htmlFor="star-4"></label>
+
+                              <input type="radio" name="stars" id="star-3" value={ 3 } onClick={ updateStars } />
+                              <label htmlFor="star-3"></label>
+
+                              <input type="radio" name="stars" id="star-2" value={ 2 } onClick={ updateStars } />
+                              <label htmlFor="star-2"></label>
+
+                              <input type="radio" name="stars" id="star-1" value={ 1 } onClick={ updateStars } />
+                              <label htmlFor="star-1"></label>
                         </div>
-                        <button className="review-modal-btn" type="submit">
+                        <button className="review-modal-btn" type="submit"
+                              disabled={ stars === 0 || review.length < 10 }
+                              onClick={ handleSubmit }
+                        >
                               Submit Your Review
                         </button>
                   </form>
