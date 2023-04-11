@@ -15,8 +15,9 @@ const SpotDetails = () => {
       const dispatch = useDispatch()
       const [ isLoaded, setIsLoaded ] = useState( false )
       const spot = useSelector( ( state ) => state.spots[ id ] )
+      const reviews = useSelector( ( state ) => state.review.Reviews )
             // console.log( "spots-----------------------", spot)
-      // const currentUser = useSelector( ( state ) => state?.session?.user );
+      const currentUser = useSelector( ( state ) => state.session.user );
 
       useEffect( () => {
             dispatch( spotActions.getSpotThunk(id) )
@@ -27,9 +28,19 @@ const SpotDetails = () => {
       const comingSoon = () => {
             alert( "Feauture coming soon" );
       }
-
       // console.log( "reviews-----------------------", reviews)
-      // const spotOwner = currentUser && spot && currentUser.id === spot.ownerId
+      const spotOwner = currentUser && spot && currentUser.id === spot.ownerId
+
+      let leftReview = false
+      if ( reviews) {
+              for ( let review of reviews ) {
+            if ( currentUser){
+            if ( currentUser.id === review.userId) {
+                leftReview = true
+            }}
+      }
+      }
+
 
       return (
 
@@ -95,12 +106,14 @@ const SpotDetails = () => {
                                           ( <p><i className="fa-solid fa-star"></i> { spot.avgRating.toFixed(1) }    ·    { spot.Reviews.length } { spot.Reviews.length === 1 ? 'review' : 'reviews' }</p> )
                                     }
                               </div>
-                                    <div className = "review-btn">
+                                  { !currentUser || !spotOwner || !leftReview &&
+                              <div className="review-btn">
                               <OpenModalButton
                                     buttonText="Post your review"
                                           modalComponent={ <ReviewFormModal spotId={ spot.id } /> }
                                     />
                                     </div>
+                              }
 
                               <div className="review-container">
                                     { spot.Reviews[0]  ? (
