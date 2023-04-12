@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import "./profile.css"
 
@@ -25,7 +26,9 @@ function ProfileButton({ user }) {
     document.addEventListener('click', closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  }, [ showMenu ] );
+
+      let current;
 
   const logout = (e) => {
     e.preventDefault();
@@ -41,7 +44,12 @@ function ProfileButton({ user }) {
       </button>
               <ul className={ ulClassName } ref={ ulRef }>
                     <li className="menu-item">Hello, { user.firstName }!</li>
-                    <li className="menu-item">{user.email}</li>
+                    <li className="menu-item">{ user.email }</li>
+                    {
+                          current ? ( <li className="current"><NavLink to="/spots/current">Manage your spots</NavLink></li> ):(
+                                <li className="create"><NavLink to="/spots/current">Manage your spots</NavLink></li>
+                         )
+                    }
                     <li className="button-mom">
                           <button onClick={ logout } className="logout-button">Log Out</button>
                     </li>

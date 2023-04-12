@@ -29,8 +29,16 @@ function LoginFormModal() {
         if (data && data.errors) setErrors(data.errors);
       });
         }
-
   }
+
+      const demoUserLogin = ( e ) => {
+            e.preventDefault()
+            return dispatch( sessionActions.login( {
+                  credential: 'Demo-lition',
+                  password: 'password'
+            } ) ).then( closeModal )
+
+      }
 
       return (
             <div id="login-container">
@@ -67,6 +75,9 @@ function LoginFormModal() {
                               // disabled={ !formValid}
                         >Log In</button>
                   </form>
+
+                  <button className="demo" onClick={ demoUserLogin }>Demo Login</button>
+
                   </div>
   );
 }
