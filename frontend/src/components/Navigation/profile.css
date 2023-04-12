@@ -26,12 +26,19 @@
       padding: 10px;
       list-style: none;
       z-index: 5;
+      text-align: center;
 }
 
 .profile-dropdown.hidden {
       display: none;
 }
 
+.current{
+      margin-top: 6px;
+      margin-bottom: 6px;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;;
+}
 .button-mom{
       display: flex;
       align-items: center;
@@ -39,6 +46,7 @@
 }
 .logout-button{
      margin-top:5px;
+     cursor: pointer;
 }
 .menu-item {
      justify-content: flex-start;

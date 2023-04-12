@@ -2,10 +2,10 @@ import { csrfFetch } from './csrf';
 
 const POPULATE_SPOTS = 'spots/POPULATE_SPOTS';
 const GET_SPOT = 'spots/GET_SPOT';
-// const UPDATE_SPOT = 'spots/UPDATE_SPOT'
+const UPDATE_SPOT = 'spots/UPDATE_SPOT'
 const ADD_SPOT = 'spots/ADD_SPOT'
 // const ADD_IMAGE = 'spots/ADD_IMAGE'
-// const DELETE_SPOT = 'spots/DELETE_SPOT';
+const DELETE_SPOT = 'spots/DELETE_SPOT';
 
 const populateSpots = ( spots ) => {
       return {
@@ -28,6 +28,19 @@ const addSpot = (spot) => {
       }
 }
 
+const editSpot = ( spot ) => {
+      return {
+            type: UPDATE_SPOT,
+            payload: spot
+      }
+}
+
+const deleteSpot = ( spot ) => {
+      return {
+            type: DELETE_SPOT,
+            payload: spot
+      }
+}
 // const addImageToSpot = ( spotId, image ) => {
 //       return {
 //             type: ADD_IMAGE,
@@ -96,8 +109,37 @@ export const newSpotThunk = ( spotData ) => async ( dispatch ) => {
             dispatch( spotDetails( newSpot ) )
             return newSpot
       }
+}
 
- }
+export const editSpotThunk = ( spot ) => async dispatch => {
+
+      const { address, city, state, country, name, description, price, spotId } = spot
+
+      const response = await csrfFetch( `/api/spots/${ spotId }`, {
+            method: 'PUT',
+            body: JSON.stringify( { address, city, state, country,  name, description, price } )
+      } )
+
+      const data = await response.json()
+
+      if ( response.ok ) {
+            return dispatch( editSpot( data ) )
+      }
+
+
+}
+
+export const deleteSpotThunk = ( spot ) => async dispatch => {
+      const response = await csrfFetch( `/api/spots/${ spot.id }`, {
+            method: 'DELETE'
+      } )
+      const data = await response.json()
+      if ( response.ok ) {
+            dispatch( deleteSpot( data ) )
+      }
+}
+
+
 
 const initialState = {
       // spots: { current: {}, all: [] },
@@ -116,17 +158,18 @@ const spotReducer = ( state = initialState, action ) => {
                   return newState
             case GET_SPOT:
                   newState[ action.payload.id ] = action.payload
-                  // if ( newState[ undefined ] ) {
-                  //       delete newState[ 'undefined' ]
-                  // }
                   return newState
-                  // return newState[ action.payload.id ]
             case ADD_SPOT:
-                  // return newState[ action.payload.id ] = action.payload
                   newState[ action.payload.id ] = action.payload
                   return newState
             // case ADD_IMAGE:
             //       return newState[ action.payload.id ]['SpotImages'].push(action.payload)
+            case UPDATE_SPOT:
+                  newState[ action.payload.id ] = action.payload
+                  return newState
+            case DELETE_SPOT:
+                  delete newState[ action.spot.id ]
+                  return newState
             default:
                   return newState
       }

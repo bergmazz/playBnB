@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import "./profile.css"
 
-function ProfileButton({ user }) {
+function ProfileButton ( { user } ) {
+      const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -28,10 +30,10 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [ showMenu ] );
 
-      let current;
 
   const logout = (e) => {
-    e.preventDefault();
+        e.preventDefault();
+              history.push( '/' ); // use history.push to navigate to home page
     dispatch(sessionActions.logout());
   };
 
@@ -45,11 +47,7 @@ function ProfileButton({ user }) {
               <ul className={ ulClassName } ref={ ulRef }>
                     <li className="menu-item">Hello, { user.firstName }!</li>
                     <li className="menu-item">{ user.email }</li>
-                    {
-                          current ? ( <li className="current"><NavLink to="/spots/current">Manage your spots</NavLink></li> ):(
-                                <li className="create"><NavLink to="/spots/current">Manage your spots</NavLink></li>
-                         )
-                    }
+                 <li className="current"><NavLink to="/spots/current">Manage your spots</NavLink></li>
                     <li className="button-mom">
                           <button onClick={ logout } className="logout-button">Log Out</button>
                     </li>

@@ -30,3 +30,7 @@ margin-right: 2rem;
 .nav_session_links_logged .profile-button {
       margin-right: 1rem
 }
+
+button{
+      cursor: pointer;
+}
