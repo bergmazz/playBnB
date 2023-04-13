@@ -1,7 +1,7 @@
 .delete-container {
        background-color: white;
        display: flex;
-       height: 30vh;
+       height: 300px;
        width: 700px;
        flex-direction: column;
        justify-content: center;

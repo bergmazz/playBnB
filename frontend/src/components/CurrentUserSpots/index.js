@@ -12,17 +12,21 @@ import './current.css'
 function CurrentUserSpots () {
       const dispatch = useDispatch()
       const [ isLoaded, setIsLoaded ] = useState( false )
-      const [ showMenu, setShowMenu ] = useState( false );
+      // const [ showMenu, setShowMenu ] = useState( false );
+      const [ userSpots, setUserSpots ] = useState( [] );
       let spots = useSelector( ( state ) => state.spots )
       let user = useSelector( ( state ) => state.session )
-      spots = Object.values( spots )
-      spots = spots.filter( spot => spot.ownerId === user.user.id )
 
       useEffect( () => {
             dispatch( spotActions.populateSpotsThunk() ).then( () => setIsLoaded( true ) )
       }, [ dispatch ] )
 
-      const closeMenu = () => setShowMenu( false );
+      useEffect( () => {
+            const  spotsArr = Object.values( spots )
+    setUserSpots(spotsArr.filter( spot => spot.ownerId === user.user.id ))
+      }, [ spots ] )
+
+      // const closeMenu = () => setShowMenu( false );
 
       return (
             <div>
@@ -39,7 +43,7 @@ function CurrentUserSpots () {
                               <div className="loading">Loading spots...</div>
                         ) :
                               isLoaded && (
-                                    spots.map( ( spot ) => (
+                                    userSpots.map( ( spot ) => (
                                           <div className="card" key={ spot.id }>
                                                 <NavLink to={ `/spots/${ spot.id }` }>
                                                       <div className="card-crop">
@@ -69,7 +73,7 @@ function CurrentUserSpots () {
                                                       <OpenModalButton
                                                             buttonText="Delete"
                                                             className='delete'
-                                                            modalComponent={ <DeleteSpotModal prop={ spot } /> }
+                                                            modalComponent={ <DeleteSpotModal spot= { spot}  /> }
                                                     />
                                                 </div>
                                           </div>

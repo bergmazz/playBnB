@@ -16,7 +16,6 @@ console.log("------------------------", spot)
 
       useEffect( () => {
             dispatch( getSpotThunk( spotId ) )
-                  // .then( () => setIsLoaded( true ) )
       }, [ dispatch, spotId ] )
 
       const [ name, setName ] = useState( spot.name );

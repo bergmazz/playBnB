@@ -9,9 +9,10 @@ function DeleteSpotModal ( {spot}) {
       const { closeModal } = useModal();
       let user = useSelector( ( state ) => state.session )
 
-      const handleSubmit = ( e ) => {
+      const handleSubmit = async ( e ) => {
             e.preventDefault();
-            return dispatch( spotActions.deleteSpotThunk( spot ) )
+           await dispatch( spotActions.deleteSpotThunk( spot ) );
+               await    dispatch( spotActions.populateSpotsThunk( ) )
                   .then( closeModal )
                   .catch(
             );
