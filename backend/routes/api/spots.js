@@ -186,7 +186,8 @@ router.get( "/",  async ( req, res ) => {
         },
         {
             model: SpotImage,
-        }],
+                  } ],
+            group: [ 'Spot.id', 'Reviews.id' ],
       //   offset: (page - 1) * size,
       //   limit: size,
       });
