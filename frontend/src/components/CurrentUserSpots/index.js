@@ -61,7 +61,7 @@ function CurrentUserSpots () {
                                                             </div>
                                                       </div>
                                                 </NavLink>
-                                                <div>
+                                                <div className="buttonz">
                                                       {/* <button className="button-class-update-spot"><NavLink to={ `/spots/${ spot.id }/edit` }>UPDATE</NavLink></button>
                                                       */}
                                                       <OpenModalButton
