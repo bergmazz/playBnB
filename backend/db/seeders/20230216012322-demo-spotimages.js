@@ -16,23 +16,182 @@ module.exports = {
      {
        spotId: 1,
        preview: true,
-       url: "assets-global.website-files.com/5dcc7f8c449e597ed83356b8/5faae1191b673c881b077e1f_ogaa-min.png",
-     },
+               url: "https://images.unsplash.com/photo-1618767689160-da3fb810aad7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+         },
      {
        spotId: 2,
        preview: true,
-       url: "images.contentstack.io/v3/assets/bltb428ce5d46f8efd8/blt163f6c374ab5b090/5e1cc881b282e90da2c90cb1/020619-Plus_Host-Kelly-02287_JL1.jpg?crop=100p,84p,x0,y15p&width=720&height=405&auto=webp",
+           url: "https://media.istockphoto.com/id/478291754/photo/pirate-ship-in-adventure-playground.jpg?b=1&s=612x612&w=0&k=20&c=QatRpynZuJ0z0MoWfnCE9g54y4AKCbfbzOxh1uSUJfs=",
      },
      {
        spotId: 2,
        preview: false,
-       url: "cdn.home-designing.com/wp-content/uploads/2022/03/sophisticated-table-centerpiece-ideas-for-home-affordable-high-end-designer-vases-double-sided-matte-colorful-glass-footed-bowl-and-vase-set-terracotta-coloration.jpg",
+           url: "https://images.pexels.com/photos/10949649/pexels-photo-10949649.jpeg?auto=compress&cs=tinysrgb&w=600",
      },
      {
        spotId: 3,
        preview: true,
-       url: "substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F03c041e5-05d4-4cae-b8ec-4e68dc6fbea0_1280x720.jpeg",
-     },
+           url: "https://media.istockphoto.com/id/641269044/photo/jungle-kids-room-with-hammock.jpg?b=1&s=612x612&w=0&k=20&c=owW88WZQUa7i_FDxfu0gDKiQzW6KvYsSrBJ32f3qTQY=",
+         },
+         {
+               spotId: 2,
+               preview: false,
+               url: "https://images.pexels.com/photos/3209049/pexels-photo-3209049.jpeg?auto=compress&cs=tinysrgb&w=600",
+         },
+         {
+               spotId: 1,
+               preview: false,
+               url: "https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZmFpcnklMjBjb3R0YWdlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 1,
+               preview: false,
+               url: "https://images.pexels.com/photos/414144/pexels-photo-414144.jpeg?auto=compress&cs=tinysrgb&w=600",
+         },
+         {
+               spotId: 1,
+               preview: false,
+               url: "https://images.pexels.com/photos/2640604/pexels-photo-2640604.jpeg?auto=compress&cs=tinysrgb&w=600",
+         },
+         {
+               spotId: 1,
+               preview: false,
+               url: "https://images.pexels.com/photos/13986983/pexels-photo-13986983.jpeg?auto=compress&cs=tinysrgb&w=600",
+         },
+         {
+               spotId: 2,
+               preview: false,
+               url: "https://images.unsplash.com/photo-1631528858266-5ebeb8bfc6f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGJlYWNoJTIwaG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 2,
+               preview: false,
+               url: "https://images.unsplash.com/photo-1596900779744-2bdc4a90509a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxpdmluZyUyMHJvb218ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 3,
+               preview: false,
+               url: "https://img.freepik.com/free-photo/interior-kids-room-decoration-with-toys_23-2149096016.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais",
+         },
+         {
+               spotId: 3,
+               preview: false,
+               url: "https://img.freepik.com/premium-photo/creative-cozy-scandi-child-room-interior-design-with-toys-other-accessories-template_431307-4394.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais",
+         },
+         {
+               spotId: 3,
+               preview: false,
+               url: "https://media.istockphoto.com/id/474648228/photo/on-safari.jpg?b=1&s=612x612&w=0&k=20&c=Q4GAh7GI49f-xsv_KQYugG6EFf0nzaucRy50PVsUpAc=",
+         },
+         {
+               spotId: 3,
+               preview: false,
+               url: "https://media.istockphoto.com/id/641269142/photo/kids-room-with-play-tent.jpg?b=1&s=612x612&w=0&k=20&c=p7gdyFCG3C62UsyOrkYmXBjOahCtX59irYdl_zRlPrg=",
+         },
+         {
+               spotId: 4,
+               preview: true,
+               url:"https://img.freepik.com/premium-photo/luxurious-expensive-interior-design-room-old-baroque-style-beige-colors_267786-820.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais"
+        },
+         {
+               spotId: 4,
+               preview: false,
+               url: "https://media.istockphoto.com/id/1059655678/photo/girl-acting-as-princess-in-castle.jpg?b=1&s=612x612&w=0&k=20&c=KTtEEb3WNy7vZAzZjqtyR3ZSicGnKQYrB_sTLUIrS7E=",
+         },
+         {
+               spotId: 4,
+               preview: false,
+               url: "https://images.unsplash.com/photo-1506003814204-7eba0a3a6600?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJpbmNlc3MlMjB0b3lzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 4,
+               preview: false,
+               url: "https://img.freepik.com/premium-photo/interior-luxury-bedroom-light-colors_537415-618.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais",
+         },
+         {
+               spotId: 4,
+               preview: false,
+               url: "https://img.freepik.com/premium-photo/boudoir-table-details-interior-bedroom-girls-make-up-hairstyles-with-mirror_85672-574.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais",
+         },
+         {
+               spotId: 5,
+               preview: true,
+               url: "https://img.freepik.com/free-photo/play-dough-background-with-sea-animals_23-2149700367.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais",
+         },
+         {
+               spotId: 6,
+               preview: true,
+               url: "https://images.pexels.com/photos/11190692/pexels-photo-11190692.jpeg?auto=compress&cs=tinysrgb&w=600",
+         },
+         {
+               spotId: 7,
+               preview: true,
+               url: "https://media.istockphoto.com/id/1168766129/photo/toy-childrens-horse-for-a-child-horse-in-a-cap.jpg?b=1&s=612x612&w=0&k=20&c=YPhMtsgBf7aKGkaw6zX04mmb2j3TVPfxurPgZyxkj80=",
+         },
+         {
+               spotId: 8,
+               preview: true,
+               url: "https://images.unsplash.com/photo-1629122558657-d5dc4c30ca60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2lyY3VzJTIwdGVudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 9,
+               preview: true,
+               url: "https://images.pexels.com/photos/3661261/pexels-photo-3661261.jpeg?auto=compress&cs=tinysrgb&w=600",
+         },
+         {
+               spotId: 10,
+               preview: true,
+               url: "https://images.unsplash.com/photo-1638913367147-b657c72051fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGdpbmdlcmJyZWFkJTIwaG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 11,
+               preview: true,
+               url: "https://images.unsplash.com/photo-1596716148130-f95f2b735a92?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGtuaWdodHMlMjBhcm1vdXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 12,
+               preview: true,
+               url: "https://img.freepik.com/premium-photo/brass-antique-compass-wooden-background_488220-30655.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais",
+         },
+         {
+               spotId: 13,
+               preview: true,
+               url: "https://images.pexels.com/photos/7055873/pexels-photo-7055873.jpeg?auto=compress&cs=tinysrgb&w=600",
+         },
+         {
+               spotId: 14,
+               preview: true,
+               url: "https://images.unsplash.com/photo-1610568781018-995405522539?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VwZXJoZXJvJTIwbGFpcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 15,
+               preview: true,
+               url: "https://media.istockphoto.com/id/1258724062/photo/interior-of-a-modern-kindergarten-classroom.jpg?b=1&s=612x612&w=0&k=20&c=n2ac8kS83jX2xrkga3jb4vyRseoybOS8FDzinXmnpxw=",
+         },
+         {
+               spotId: 16,
+               preview: true,
+               url: "https://images.unsplash.com/photo-1504730655501-24c39ac53f0e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHRpa2klMjBodXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+         },
+         {
+               spotId: 17,
+               preview: true,
+               url: "https://images.unsplash.com/photo-1625686081220-a15407e872b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdpemFyZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+         }, {
+               spotId: 18,
+               preview: true,
+               url: "https://img.freepik.com/premium-photo/colorful-kids-toys-carpet_392895-187923.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais",
+         },
+         {
+               spotId: 19,
+               preview: true,
+               url: "https://images.pexels.com/photos/9044079/pexels-photo-9044079.jpeg?auto=compress&cs=tinysrgb&w=600",
+         },
+         {
+               spotId: 20,
+               preview: true,
+               url: "https://images.pexels.com/photos/39896/space-station-moon-landing-apollo-15-james-irwin-39896.jpeg?auto=compress&cs=tinysrgb&w=600",
+         }
    ],
    options
  );

@@ -1,4 +1,4 @@
-.spots-container {
+.current-spots-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       grid-gap: 20px;
@@ -9,6 +9,13 @@
       grid-auto-rows: 1fr;
 }
 
+.top{
+      padding-left: 2%;
+      /* height:10% */
+}
+.top h1{
+      padding-top:0px;
+}
 
 @media screen and (min-width: 900px) {
       .spots-container {
@@ -18,23 +25,24 @@
 }
 
 @media screen and (max-width: 550px) {
-.card {
+      .card {
             border: 1px solid #ccc;
             position: relative;
             max-height: 600px;
       }
-            .star {
-                  /* position: absolute; */
-                  bottom: 0;
-                  right: 0;
-                  /* margin-right: 10%;
+
+      .star {
+            /* position: absolute; */
+            bottom: 0;
+            right: 0;
+            /* margin-right: 10%;
                   margin-bottom:0%;
                   margin-top: 10px; */
-                  color: gold;
-            }
+            color: gold;
+      }
 }
 
-.loading{
+.loading {
       font-size: 30px;
 }
 
@@ -43,11 +51,12 @@
       position: relative;
       max-height: 500px;
 }
+
 .card-crop {
-   padding-top:10%;
-padding-left: 10%;
+      padding-top: 10%;
+      padding-left: 10%;
       padding-right: 10%;
-padding-bottom: 15%;
+      padding-bottom: 2%;
 }
 
 .img-crop {
@@ -63,16 +72,17 @@ padding-bottom: 15%;
       left: 0;
       right: 0;
       bottom: 0;
-    object-fit: contain;
-            object-position: center bottom;
+      object-fit: contain;
+      object-position: center bottom;
 }
 
 .img {
- padding-bottom:20%;
+      padding-bottom: 20%;
 }
+
 .info {
       bottom: 0;
-            left: 0;
+      left: 0;
       padding-top: 20px;
       /* margin-top: 3px; */
 }
@@ -81,20 +91,42 @@ padding-bottom: 15%;
 .price {
       font-weight: bold;
       bottom: 0;
-            left: 0;
-            padding: 2px;
+      left: 0;
+      padding: 2px;
 }
 
-a{
+a {
       text-decoration: none;
-      color:black;
+      color: black;
 }
 
 .star {
       position: absolute;
-    bottom:10px;
+      bottom: 65px;
       right: 0;
       margin-right: 10%;
-      margin-bottom: 18%;
+      margin-bottom: 10%;
       color: gold;
+}
+
+.buttonz Button{
+      text-align: center;
+            display: inline-block;
+            width: 100px;
+            margin-bottom: 30px;
+            margin-left: 10%;
+            /* margin-right: 5%; */
+            /* margin: auto; */
+}
+
+.update{
+      display: inline-block;
+      /* margin-left: 10%; */
+
+}
+
+.delete{
+      display: inline-block;
+      width: 100px;
+            /* margin-right: 10%; */
 }

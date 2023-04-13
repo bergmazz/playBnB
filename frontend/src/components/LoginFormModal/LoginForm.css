@@ -1,7 +1,7 @@
 #login-container {
       background-color: white;
       display: flex;
-      max-height: 80vh;
+      height: 30vh;
       width: 400px;
       flex-direction: column;
       justify-content: center;
@@ -36,3 +36,13 @@
       height: 20px;
       width: 350px;
 }
+
+.demo{
+      margin-bottom: 15px;
+}
+/* button:disabled,
+button[disabled] {
+      border: 1px solid #999999;
+      background-color: #cccccc;
+      color: #666666;
+} */

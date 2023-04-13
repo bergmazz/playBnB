@@ -23,7 +23,8 @@ router.get('/:id/reviews', async(req,res)=>{
 let spot = await Spot.findByPk( req.params.id )
           if (spot) {
                const reviews = await Review.scope(["defaultScope","perSpot"]).findAll({
-                 where: { spotId: req.params.id },
+                     where: { spotId: req.params.id },
+                     order: [ [ 'createdAt', 'DESC' ] ]
                });
             return  res.json({"Reviews": reviews} );
           } else {
@@ -64,71 +65,102 @@ router.get( "/:id/bookings", requireAuth, async ( req, res ) => {
 //get spot details by spot id // Get details of a Spot from an id
 router.get( "/:spotId", async ( req, res ) => {
 
-      let thisSpot = await Spot.scope(["defaultScope", "allDetails"])
-        .findOne({
-          where: { id: req.params.spotId },
-          group: ["Spot.id", "SpotImages.id", "Reviews.id", "Owner.id"],
-        });
+         const spot = await Spot.scope("allDetails", "lessDetail").findOne({
+      where: { id: req.params.spotId },
+         } );
 
-      if ( !thisSpot ) {
+      let i = 0;
+      for ( let image of spot.SpotImages ) {
+                  if ( image.dataValues.preview ) {
+                        spot.dataValues.previewImage = image.url;
+                            spot.SpotImages.splice(i,1)
+                  }
+                  if ( !spot.dataValues.previewImage ) {
+                      spot.dataValues.previewImage = "No preview image";
+                  }
+                  i++        //  delete spot.dataValues.SpotImages;
+            };
+
+            let average = 0;
+            for ( let review of spot.Reviews ) {
+                  average += review.dataValues.stars;
+
+            };
+            average = average / spot.Reviews.length;
+      spot.dataValues.avgRating = average;
+
+            if ( !spot.dataValues.avgRating ) {
+                  spot.dataValues.avgRating = "New"
+            }
+            // delete spot.dataValues.Reviews;
+      if ( spot.numReviews !== spot.Reviews.length ) {
+            spot.numReviews === spot.Reviews.length
+      }
+      if ( !spot ) {
                      res.json({ // CHECK BACK next(err) instead
                        message: "Spot couldn't be found",
                        statusCode: 404,
                      });
       } else {
-           res.json(thisSpot);
+           res.json(spot);
       }
 } );
 
 // get all spots //now with pagination and queryssssssss
 router.get( "/",  async ( req, res ) => {
-        let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
+      let {
+            // page, size,
+            minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
       let errors = {};
 
-      if ( !page || page > 10 ) {
-     page = 1;
-      } if ( page < 1 || isNaN( page ) ) {
-            errors.page = "Page must be greater than or equal to 1"
-      }
+//       if ( !page || page > 10 ) {
+//      page = 1;
+//       } if ( page < 1 || isNaN( page ) ) {
+//             errors.page = "Page must be greater than or equal to 1"
+//       }
 
-      if (!size || size > 20) {
-        size = 20;
-      } if ( size < 1 || isNaN( size ) ) {
-        errors.size = "Size must be greater than or equal to 1";
-      }
+      // if (!size || size > 20) {
+      //   size = 20;
+      // } if ( size < 1 || isNaN( size ) ) {
+      //   errors.size = "Size must be greater than or equal to 1";
+      // }
 
-     if (!minLat) {
-       minLat = -90;
-     } if ( minLat < -90 || minLat > 90 || isNaN( minLat ) ) {
-        errors.minLat = "Minimum latitude is invalid";
-      }
+//      if (!minLat) {
+//        minLat = -90;
+//      } if ( minLat < -90 || minLat > 90 || isNaN( minLat ) ) {
+//         errors.minLat = "Minimum latitude is invalid";
+//       }
 
-      if ( !maxLat ) {
-            maxLat = 90;
-      }  if (maxLat < -90 || maxLat > 90 || isNaN(maxLat)) {
-        errors.maxLat = "Minimum latitude is invalid";
-      }
+//       if ( !maxLat ) {
+//             maxLat = 90;
+//       }  if (maxLat < -90 || maxLat > 90 || isNaN(maxLat)) {
+//         errors.maxLat = "Minimum latitude is invalid";
+//       }
 
-   if (!minLng) {
-     minLng = -180;
-   }   if (minLng < -180 || minLng > 180 || isNaN(minLng)) {
-        errors.minLng = "Minimum latitude is invalid";
-      }
+//    if (!minLng) {
+//      minLng = -180;
+//    }   if (minLng < -180 || minLng > 180 || isNaN(minLng)) {
+//         errors.minLng = "Minimum latitude is invalid";
+//       }
 
-     if (!maxLng) {
-       maxLng = 180;
-     } if ( maxLng < -180 || maxLng > 180 || isNaN( maxLng ) ) {
-        errors.maxLng = "Minimum latitude is invalid";
-      }
+//      if (!maxLng) {
+//        maxLng = 180;
+//      } if ( maxLng < -180 || maxLng > 180 || isNaN( maxLng ) ) {
+//         errors.maxLng = "Minimum latitude is invalid";
+//       }
 
       if (!minPrice) {
         minPrice = 1;
-      } if (minPrice < 0 || isNaN(size)) {
+      } if ( minPrice < 0
+            // || isNaN( minPrice )
+      ) {
         errors.minPrice = "Minimum price must be greater than or equal to 0";
       }
 
       if ( !maxPrice ) { maxPrice = 50000000000000;
-      } if (maxPrice < 0 || isNaN(size)) {
+      } if ( maxPrice < 0
+            // || isNaN( minPrice )
+      ) {
         errors.maxPrice = "Minimum price must be greater than or equal to 0";
       }
 
@@ -140,13 +172,13 @@ router.get( "/",  async ( req, res ) => {
     });
   }
 
-      page = Number( page )
-    size = Number(size)
+//       page = Number( page )
+//     size = Number(size)
 
       const spots = await Spot.scope("lessDetail").findAll({
         where: {
-          lat: { [Op.between]: [minLat, maxLat] },
-          lng: { [Op.between]: [minLng, maxLng] },
+      //     lat: { [Op.between]: [minLat, maxLat] },
+      //     lng: { [Op.between]: [minLng, maxLng] },
           price: { [Op.between]: [minPrice, maxPrice] },
             },
                   include: [{
@@ -155,33 +187,32 @@ router.get( "/",  async ( req, res ) => {
         {
             model: SpotImage,
         }],
-        offset: (page - 1) * size,
-        limit: size,
+      //   offset: (page - 1) * size,
+      //   limit: size,
       });
 
       for ( let spot of spots ) {
-            for ( let image of spot.SpotImages ) {
-                  if ( image.dataValues.preview ) {
-                        spot.dataValues.previewImage = image.url;
-                  }
-                  if ( !spot.dataValues.previewImage ) {
-                      spot.dataValues.previewImage = "No preview image";
-                  }
-                         delete spot.dataValues.SpotImages;
-            };
+
+            const previewImage = await SpotImage.findOne(
+                  { where: { spotId:spot.id, preview:true}}
+            )
+            spot.dataValues.previewImage = previewImage.url
 
             let average = 0;
             for ( let review of spot.Reviews ) {
                   average += review.dataValues.stars;
             };
             average = average / spot.Reviews.length;
-            spot.dataValues.avgRating = average;
+            spot.dataValues.avgRating = average.toFixed(1);
             if ( !spot.dataValues.avgRating ) {
-                  spot.dataValues.avgRating = "No reviews yet"
+                  spot.dataValues.avgRating = "New"
             }
             delete spot.dataValues.Reviews;
       }
-  return res.json({ "Spots": spots, page, size });
+      return res.json( {
+            "Spots": spots,
+            // page, size
+      } );
 } );
 
 
@@ -202,10 +233,12 @@ router.get( "/",  async ( req, res ) => {
        .exists({ checkFalsy: true })
        .notEmpty()
        .withMessage("Country is required"),
-     check("lat")
+         check( "lat" )
+           .optional()
        .isFloat({ min: -90, max: 90 })
        .withMessage("Latitude is not valid"),
-     check("lng")
+         check( "lng" )
+               .optional()
        .isFloat({ min: -180, max: 180 })
        .withMessage("Longitude is not valid"),
      check("name")

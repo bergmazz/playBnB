@@ -1,26 +1,37 @@
 import React from 'react';
 import {  useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+// import { useDispatch } from "react-redux";
 import ProfileButton from './ProfileButton';
+// import * as spotActions from '../../store/spots';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import SpotFormModal from '../SpotFormModal';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
       const sessionUser = useSelector( state => state.session.user );
       const history = useHistory();
-
-      const handleHomeClick = () => {
+      //   const dispatch = useDispatch();
+const handleHomeClick = () => {
+            // dispatch( spotActions.populateSpotsThunk() );
             history.push( '/' ); // use history.push to navigate to home page
       };
+
 
   let sessionLinks;
   if (sessionUser) {
         sessionLinks = (
-              <div className="nav_session_links">
-        <ProfileButton user={sessionUser} />
-               </div>
+              <div className="nav_session_links_logged">
+                    <ProfileButton user={ sessionUser } />
+
+                    <OpenModalButton
+                          buttonText="Create a new spot"
+                          modalComponent={ <SpotFormModal /> }
+                    />
+              </div>
+
     );
   } else {
         sessionLinks = (
