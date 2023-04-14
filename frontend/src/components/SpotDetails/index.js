@@ -8,6 +8,7 @@ import Reviews from "../Reviews";
 import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/reviews"
 import ReviewFormModal from '../ReviewFormModal';
+
 import './spotDetails.css'
 
 const SpotDetails = () => {
@@ -23,10 +24,10 @@ const SpotDetails = () => {
             dispatch( spotActions.getSpotThunk(id) )
                   .then( dispatch( reviewActions.getReviewsThunk(id ) ) )
                   .then( () => setIsLoaded( true ) )
-      }, [ dispatch, id ] )
+      }, [ dispatch, id] )
 
       const comingSoon = () => {
-            alert( "Feauture coming soon" );
+            alert( "Feature coming soon" );
       }
       // console.log( "reviews-----------------------", reviews)
       const spotOwner = currentUser && spot && currentUser.id === spot.ownerId
@@ -59,9 +60,6 @@ const SpotDetails = () => {
                         <div className="spot-img-container">
 
                               <img className="preview" src={ spot.previewImage } alt={ spot.name }></img>
-                                    {/* { spot.SpotImages && spot.SpotImages.map( image => (
-                                          <img key={ image.id } src={ image.url } alt={ spot.name }></img>
-                                    ) ) } */}
                                     { spot.SpotImages  ? (
                                           <>
                                                 { spot.SpotImages.map( ( image ) => (
@@ -106,7 +104,7 @@ const SpotDetails = () => {
                                           ( <p><i className="fa-solid fa-star"></i> { spot.avgRating.toFixed(1) }    ·    { spot.Reviews.length } { spot.Reviews.length === 1 ? 'review' : 'reviews' }</p> )
                                     }
                               </div>
-                                  { !currentUser || !spotOwner || !leftReview &&
+                                  { (!currentUser || !spotOwner || !leftReview) &&
                               <div className="review-btn">
                               <OpenModalButton
                                     buttonText="Post your review"

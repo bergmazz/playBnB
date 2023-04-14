@@ -1,13 +1,14 @@
 import React from "react";
 import * as spotActions from "../../store/spots";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import './delete.css'
 
 function DeleteSpotModal ( {spot}) {
       const dispatch = useDispatch();
       const { closeModal } = useModal();
-      let user = useSelector( ( state ) => state.session )
+      // let user = useSelector( ( state ) => state.session )
 
       const handleSubmit = async ( e ) => {
             e.preventDefault();

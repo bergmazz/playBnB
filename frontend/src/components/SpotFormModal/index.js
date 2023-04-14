@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
+// import { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { useModal } from "../../context/Modal";
@@ -10,8 +11,7 @@ function SpotFormModal () {
       const history = useHistory()
       const { closeModal } = useModal();
 
-      const [ csrfToken, setCsrfToken ] = useState( '' )
-
+      // const [ csrfToken, setCsrfToken ] = useState( '' )
       const [ name, setName ] = useState( '' );
       const [ description, setDescription ] = useState( '' );
       const [ price, setPrice ] = useState( "" );

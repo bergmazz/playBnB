@@ -38,8 +38,9 @@ export const getReviewsThunk = ( spotId ) => async ( dispatch ) => {
 
 export const postReviewThunk = ( reviewData ) => async ( dispatch ) => {
       const { review, stars, spotId } = reviewData
-      console.log( "-----------------------------stringify-------------",JSON.stringify( { review, stars } ) )
-      const response = await csrfFetch( `/api/spots/${spotId}/reviews`, {
+      // console.log( "-----------------------------stringify-------------",JSON.stringify( { review, stars } ) )
+
+      const response = await csrfFetch( `/api/spots/${ spotId }/reviews`, {
             method: 'POST',
             body: JSON.stringify( { review, stars } )
       } )
@@ -57,7 +58,7 @@ export const removeReviewThunk = ( reviewId ) => async ( dispatch ) => {
       } )
       if ( response.ok ) {
             const review = await response.json()
-            dispatch( deleteReview( review ) )
+            dispatch( deleteReview( reviewId ) )
             return review
       }
 }

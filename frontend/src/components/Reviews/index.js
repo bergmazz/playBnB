@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getReviewsThunk } from "../../store/reviews";
-
+import { getReviewsThunk} from "../../store/reviews";
+import OpenModalButton from '../OpenModalButton';
+import DeleteReviewModal from '../DeleteReviewModal'
 
 const Reviews = ( { spotId } ) => {
 
@@ -9,7 +10,7 @@ const Reviews = ( { spotId } ) => {
       let reviews = {}
       reviews = useSelector( state => state.review.Reviews )
       // console.log("---------------reviews", reviews)
-      // const currentUser = useSelector( ( state ) => state.session.user );
+      const currentUser = useSelector( ( state ) => state.session.user );
 
       useEffect( () => {
             dispatch( getReviewsThunk( spotId ) )
@@ -23,7 +24,11 @@ const Reviews = ( { spotId } ) => {
                         <div key={ review.id } className="rev">
                               <h2>{ review.User.firstName }</h2>
                               <h3>{ review.createdAt && new Date( review.createdAt ).toLocaleDateString( 'en-US', { month: 'long', year: 'numeric' } ) }</h3>
-                              <p>{ review.review }</p>
+                          <p>{ review.review }</p>
+                          {currentUser.id === review.userId && ( <OpenModalButton
+                               buttonText="Delete"
+                                modalComponent={ <DeleteReviewModal reviewId={ review.id } /> }
+                          /> ) }
                         </div>
               ))
 }

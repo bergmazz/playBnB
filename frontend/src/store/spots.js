@@ -143,14 +143,7 @@ export const deleteSpotThunk = ( spot ) => async dispatch => {
       }
 }
 
-
-
-const initialState = {
-      // spots: { current: {}, all: [] },
-      // page: 1,
-      // size: 20,
-};
-
+const initialState = {};
 const spotReducer = ( state = initialState, action ) => {
       // console.log( 'action runnin', action.type );
       let newState = { ...state }
