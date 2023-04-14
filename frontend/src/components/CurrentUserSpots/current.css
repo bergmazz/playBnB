@@ -1,10 +1,10 @@
 .current-spots-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      grid-gap: 20px;
+      grid-gap: 0px;
       padding-top: 2%;
       padding-bottom: 2%;
-      padding-left: 2%;
+      padding-left: 1%;
       padding-right: 2%;
       grid-auto-rows: 1fr;
 }
@@ -26,7 +26,7 @@
 
 @media screen and (max-width: 550px) {
       .card {
-            border: 1px solid #ccc;
+            /* border: 1px solid #ccc; */
             position: relative;
             max-height: 600px;
       }
@@ -47,17 +47,17 @@
 }
 
 .card {
-      border: 1px solid #ccc;
+      /* border: 1px solid #ccc; */
       position: relative;
       max-height: 500px;
 }
 
-.card-crop {
-      padding-top: 10%;
-      padding-left: 10%;
-      padding-right: 10%;
-      padding-bottom: 2%;
-}
+/* .card-crop {
+padding-top: 5%;
+      padding-left: 5%;
+      padding-right: 5%;
+      padding-bottom: 10%;
+} */
 
 .img-crop {
       position: relative;
@@ -80,19 +80,18 @@
       padding-bottom: 20%;
 }
 
+.info-container {
+      margin-top: 20px;
+      display: block
+}
+
 .info {
-      bottom: 0;
-      left: 0;
-      padding-top: 20px;
-      /* margin-top: 3px; */
+      float: left;
 }
 
 
 .price {
-      font-weight: bold;
-      bottom: 0;
-      left: 0;
-      padding: 2px;
+      margin-top: 45px;
 }
 
 a {
@@ -100,33 +99,22 @@ a {
       color: black;
 }
 
-.star {
-      position: absolute;
-      bottom: 65px;
-      right: 0;
-      margin-right: 10%;
-      margin-bottom: 10%;
-      color: gold;
-}
 
 .buttonz Button{
       text-align: center;
             display: inline-block;
-            width: 100px;
+            width: 45%;
+            /* margin-top:60px; */
             margin-bottom: 30px;
-            margin-left: 10%;
+            margin-left: 3%;
             /* margin-right: 5%; */
             /* margin: auto; */
 }
 
 .update{
       display: inline-block;
-      /* margin-left: 10%; */
-
 }
 
 .delete{
       display: inline-block;
-      width: 100px;
-            /* margin-right: 10%; */
 }

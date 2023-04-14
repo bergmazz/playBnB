@@ -54,11 +54,12 @@ function CurrentUserSpots () {
                                                                   <div className="info">
                                                                         { spot.city }, { spot.state }
                                                                   </div>
-                                                                  <div className="price">${ spot.price } night</div>
+
                                                                   <div className="star">
                                                                         <i className="fa-solid fa-star"> { isNaN( spot.avgRating ) ? "New" : spot.avgRating }</i>
                                                                   </div>
                                                             </div>
+                                                            <div className="price">${ spot.price } night</div>
                                                       </div>
                                                 </NavLink>
                                                 <div className="buttonz">

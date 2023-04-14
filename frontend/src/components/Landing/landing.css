@@ -1,10 +1,10 @@
 .spots-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      grid-gap: 20px;
+      grid-gap: 0px;
       padding-top: 2%;
       padding-bottom: 2%;
-      padding-left: 2%;
+      padding-left: 1%;
       padding-right: 2%;
       grid-auto-rows: 1fr;
 }
@@ -19,17 +19,13 @@
 
 @media screen and (max-width: 550px) {
 .card {
-            border: 1px solid #ccc;
+
             position: relative;
             max-height: 600px;
       }
             .star {
-                  /* position: absolute; */
                   bottom: 0;
                   right: 0;
-                  /* margin-right: 10%;
-                  margin-bottom:0%;
-                  margin-top: 10px; */
                   color: gold;
             }
 }
@@ -39,15 +35,14 @@
 }
 
 .card {
-      border: 1px solid #ccc;
       position: relative;
       max-height: 500px;
 }
 .card-crop {
-   padding-top:10%;
-padding-left: 10%;
-      padding-right: 10%;
-padding-bottom: 15%;
+   padding-top:5%;
+padding-left: 5%;
+      padding-right: 5%;
+padding-bottom: 10%;
 }
 
 .img-crop {
@@ -70,19 +65,19 @@ padding-bottom: 15%;
 .img {
  padding-bottom:20%;
 }
+
+.info-container{
+      margin-top: 20px;
+      display:block
+}
 .info {
-      bottom: 0;
-            left: 0;
-      padding-top: 20px;
-      /* margin-top: 3px; */
+  float:left;
 }
 
 
 .price {
-      font-weight: bold;
-      bottom: 0;
-            left: 0;
-            padding: 2px;
+      margin-top:45px;
+/* float: left; */
 }
 
 a{
@@ -91,10 +86,6 @@ a{
 }
 
 .star {
-      position: absolute;
-    bottom:10px;
-      right: 0;
-      margin-right: 10%;
-      margin-bottom: 18%;
+      float:right;
       color: gold;
 }
