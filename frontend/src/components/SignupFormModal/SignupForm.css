@@ -7,20 +7,32 @@ background-color: white;
       justify-content: center;
       align-items: center;
       align-content: center;
-      border: solid #FF5A5F 3px;
+      border: solid#461f51 3px;
 border-radius: 25px;
 text-align: center;
 overflow-y: auto;
 }
 
+h1{
+     color: #FF5A5F;
+     font-family: Amatic SC;
+     font-size: 60px;
+text-shadow: none;
+margin: 40px 10px 20px 10px;
+ /* border-bottom: dotted#461f51 2px; */
+}
 #error-container{
       width: 350px;
  margin-left:25px;
+ margin-top: 0px;
+margin-bottom: 30px;
+ border-top: dotted#461f51 2px;
+ /* padding-top: 10px; */
 }
 .button-class-signup {
-      margin: 10px;
+      margin: 30px 10px 20px 10px;
       height: 50px;
-      width: 350px;
+      width: 250px;
       font-size: 15px;
       color: white;
       background-color: #FF5A5F;
@@ -31,12 +43,27 @@ overflow-y: auto;
       cursor: pointer;
 }
 
-.button-class-signup:active {
-      background-color: #767676;
+.button-class-signup:disabled {
+      background-color: #c29898;
+      color:#6b5151;
 }
 
+.button-class-signup:disabled:hover {
+      background-color: #a07e7e;
+}
 .text-field-signup {
-      margin: 5px;
-      height: 20px;
-      width: 350px;
+      margin: 7px;
+      height: 25px;
+      width: 300px;
+      font-family: Comfortaa;
+}
+
+
+input::placeholder {
+color: #a07e7e;
+background-color: #f3ecec;
+/* padding: 0px 0px 0px 0px; */
+/* margin: 0px; */
+/* height: 25px; */
+border: 1px solid #f3ecec;
 }

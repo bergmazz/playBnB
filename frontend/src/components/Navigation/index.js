@@ -36,7 +36,7 @@ const handleHomeClick = () => {
   } else {
         sessionLinks = (
               <div className= "nav_session_links">
-        <OpenModalButton
+                    <OpenModalButton
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
         />

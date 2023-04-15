@@ -51,7 +51,7 @@ const deleteSpot = ( spotId ) => {
 export const populateSpotsThunk = () => async (dispatch) => {
       const response = await fetch( "/api/spots", { method: 'GET', } )
       const list = await response.json();
-      console.log("----------------list------------",list)
+      // console.log("----------------list------------",list)
             dispatch( populateSpots( list ) );
       return response;
 }

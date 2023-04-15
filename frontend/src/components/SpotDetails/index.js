@@ -30,7 +30,9 @@ const SpotDetails = () => {
             alert( "Feature coming soon" );
       }
       // console.log( "reviews-----------------------", reviews)
-      const spotOwner = currentUser && spot && currentUser.id === spot.ownerId
+      let spotOwner = false;
+      if ( currentUser )
+    {  spotOwner =  spot && currentUser.id === spot.ownerId}
 
       let leftReview = false
       if ( reviews) {
@@ -52,7 +54,8 @@ const SpotDetails = () => {
                         <div className="loading">Loading spot...</div>
                   ) :
                               isLoaded && ( <div className="spot-detail-container">
-                                    <div className="spot-info">
+                              <div className="spot-info">
+                                    {/* <h1>Play pretend in</h1> */}
                                     <h2>{ spot.name }</h2>
                                     <p>{ spot.city }, { spot.state }, { spot.country }</p>
                         </div>
@@ -90,11 +93,12 @@ const SpotDetails = () => {
                                                 <p><i className="fa-solid fa-star"></i>
                                                       { !isNaN( spot.avgRating ) ? spot.avgRating.toFixed( 1 ) : spot.avgRating }
                                                 </p>
-                                                </div>
+                                          </div>
+                                          {/* <p> · </p> */}
                                                 <div className="book-review-count" >
-                                                <p>{ spot.Reviews.length } {spot.Reviews.length === 1 ? 'review' : 'reviews'}</p>
+                                                <p> · { spot.Reviews.length } {spot.Reviews.length === 1 ? 'review' : 'reviews'}</p>
                                                 </div>
-                                          <button onClick={comingSoon} className="book-btn">book now & play later</button>
+                                          <button onClick={comingSoon} className="book-btn">stay & play</button>
 
                               </div>
                         </div>
@@ -104,7 +108,7 @@ const SpotDetails = () => {
                                           ( <p><i className="fa-solid fa-star"></i> { spot.avgRating.toFixed(1) }    ·    { spot.Reviews.length } { spot.Reviews.length === 1 ? 'review' : 'reviews' }</p> )
                                     }
                               </div>
-                                  { (!currentUser || !spotOwner || !leftReview) &&
+                                  { (currentUser && (!spotOwner || !leftReview)) &&
                               <div className="review-btn">
                               <OpenModalButton
                                     buttonText="Post your review"
