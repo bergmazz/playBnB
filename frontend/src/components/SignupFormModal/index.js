@@ -12,30 +12,30 @@ function SignupFormModal () {
       const [ lastName, setLastName ] = useState( "" );
       const [ password, setPassword ] = useState( "" );
       const [ confirmPassword, setConfirmPassword ] = useState( "" );
-      const [ errors, setErrors ] = useState( {});
+      const [ errors, setErrors ] = useState([]);
       const [ submitted, setSubmitted ] = useState( false );
       const { closeModal } = useModal();
 
-      const handleSubmit = async ( e ) => {
+      const handleSubmit =  ( e ) => {
             e.preventDefault();
 
             if ( password === confirmPassword ) {
-                  setErrors( {} );
-                  const response = await dispatch(
+                 return dispatch(
                         sessionActions.signup( { email, username, firstName, lastName, password } )
-                  );
-                  // console.log( response );
-                  if ( response.ok ) {
-                        closeModal();
-                  } else {
-                        const data = await response.json();
-                        if ( data.errors ) {
-                              setSubmitted(true)
-                              // console.log("-----------errors----------", data.errors)
-                              setErrors( data.errors );
-                        }
-                  }
-            } else {
+                  )
+                        .then( closeModal )
+            .catch( async ( res ) => {
+                  const data = await res.json();
+                  console.log("----------------", data)
+                  if ( data && data.message )
+                        // if ( data.message === "Validation error" ) {
+                              setErrors(Object.values(data.errors))
+                        // } else {
+                        //        setErrors( [ data.message ] );
+                        // }
+            } );
+            }
+            else{
                setErrors( [ 'Confirm Password field must be the same as the Password field' ] );
             }
       };
@@ -44,17 +44,11 @@ function SignupFormModal () {
             !email ||
             !username ||
             !firstName ||
+            password.length < 6 ||
+            username.length < 4 ||
             !lastName ||
             !password ||
             !confirmPassword;
-
-      const containerRef = useRef( null );
-
-      useEffect( () => {
-            if ( containerRef.current ) {
-                  containerRef.current.style.height = `${ containerRef.current.scrollHeight }px`;
-            }
-      }, [ errors ] );
 
 
       return (
@@ -64,14 +58,11 @@ function SignupFormModal () {
 
                   <form onSubmit={ handleSubmit }>
 
-                        { submitted && (
                               <div id="error-container">
                                     { Object.values(errors).map( ( error ) => (
                                           <p key={ error }>{ error }</p>
                                     ) ) }
-                                    {/* { errors.map( ( error, idx ) => <p key={ idx }>{ error }</p> ) } */}
                               </div>
-                        ) }
 
                         <label >
                               <input

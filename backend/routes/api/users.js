@@ -17,7 +17,7 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
     .withMessage("Username is required"),
-  check("username").not().isEmail().withMessage("Username cannot be an email."),
+  check("username").not().isEmail().withMessage("Username cannot be an email"),
   check("firstName")
     .exists({ checkFalsy: true })
     .withMessage("First Name is required"),
@@ -27,7 +27,7 @@ const validateSignup = [
   check("password")
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
-    .withMessage("Password must be 6 characters or more."),
+    .withMessage("Password must be 6 characters or more"),
   handleValidationErrors,
 ];
 
@@ -42,26 +42,20 @@ router.post(
          let existingUserName;
 
       existingEmail = await User.findOne({ where: { email: email }} );
-
        existingUserName =  await User.findOne( { where: { username: username}} );
 
-        if ( existingEmail ) {
-         return  res.status(403).json({
-             message: "User already exists",
-             statusCode: 403,
-             errors: {
-               email: "User with that email already exists",
-             },
-           });
-        }
+        let errors = {};
 
-        if ( existingUserName ) {
-            return  res.status( 403 ).json(  {
-            message: "User already exists",
-            statusCode: 403,
-            errors: {
-              username: "User with that username already exists"
-            }
+        if ( existingEmail ) errors[ "email" ] = "User with that email already exists";
+      //   if ( !email.isEmail() ) errors[ "emailValid" ] = "Invalid email";
+        if ( existingUserName ) errors[ "username" ] = "User with that username already exists";
+      //   if ( !email.isEmail() ) errors[ "userNameValid" ] = "Invalid username";
+
+        if ( existingEmail || existingUserName ) {
+              return res.status( 403 ).json( {
+                    message: "User already exists",
+                    statusCode: 403,
+                    errors
               } )
         }
 

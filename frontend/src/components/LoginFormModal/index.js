@@ -10,26 +10,25 @@ function LoginFormModal() {
   const [password, setPassword] = useState('');
       const [ errors, setErrors ] = useState( [] );
       const [ formValid, setFormValid ] = useState( false );
-      const [ submitted, setSubmitted ] = useState( false );
       const { closeModal } = useModal();
 
       useEffect( () => {
-            setFormValid( credential && password && password.length >= 6 && credential.length >= 4 );
+            setFormValid( (password.length >= 6) && (credential.length >= 4) );
       }, [ credential, password ] );
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-        setErrors( [] );
-        setSubmitted( true )
-        if ( formValid ) {
-             return dispatch( sessionActions.login( { credential, password } ) )
-          .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      });
-        }
-  }
+
+      const handleSubmit = ( e ) => {
+            e.preventDefault();
+            setErrors( [] );
+            return dispatch( sessionActions.login( { credential, password } ) )
+                  .then( closeModal )
+                  .catch( async ( res ) => {
+                        const data = await res.json();
+                        // console.log("----------------", data)
+                        if ( data && data.message ) setErrors( [data.message] );
+                  } );
+      };
+
 
       const demoUserLogin = ( e ) => {
             e.preventDefault()
@@ -45,12 +44,12 @@ function LoginFormModal() {
                   <h1>Log In</h1>
 
     <form onSubmit={handleSubmit}>
-                        { errors.length > 0 && ( <div id="error-container">
-        {errors.map((error, idx) => <p key={idx}>{error}</p>)}
-                        </div> ) }
-                        { submitted && errors.length > 0 && (
-                              <p>The provided credentials were invalid</p>
-                        ) }
+         <div id="error-container">
+                              { errors.map( ( error ) => (
+                                    <p key={ errors.indexOf( error ) }>{ error }</p>
+                              ) ) }
+             </div>
+
                               <input
                                     className="text-field-login"
                                     placeholder='Username or Email'
@@ -72,7 +71,7 @@ function LoginFormModal() {
 
                         <button type="submit"
                               className="button-class-login"
-                              // disabled={ !formValid}
+                              disabled={ !formValid}
                         >Log In</button>
                   </form>
 

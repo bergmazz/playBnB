@@ -1,7 +1,7 @@
 #signup-container {
 background-color: white;
       display: flex;
-      max-height: 80vh;
+      /* max-height: 80vh; */
       width: 400px;
       flex-direction: column;
       justify-content: center;
