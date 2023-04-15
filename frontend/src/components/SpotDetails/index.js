@@ -32,13 +32,16 @@ const SpotDetails = () => {
       // console.log( "reviews-----------------------", reviews)
       let spotOwner = false;
       if ( currentUser )
-    {  spotOwner =  spot && currentUser.id === spot.ownerId}
+    {  spotOwner =  spot && (currentUser.id === spot.ownerId)}
 
       let leftReview = false
       if ( reviews) {
               for ( let review of reviews ) {
-            if ( currentUser){
-            if ( currentUser.id === review.userId) {
+                    if ( currentUser ) {
+                        //   console.log( "------currentUser----", currentUser.id )
+                        //   console.log( "------revUser----", review.userId )
+                          if ( currentUser.id === review.userId ) {
+                  // console.log("getting THRU")
                 leftReview = true
             }}
       }
@@ -98,7 +101,7 @@ const SpotDetails = () => {
                                                 <div className="book-review-count" >
                                                 <p> · { spot.Reviews.length } {spot.Reviews.length === 1 ? 'review' : 'reviews'}</p>
                                                 </div>
-                                          <button onClick={comingSoon} className="book-btn">stay & play</button>
+                                          <button onClick={comingSoon} className="book-btn">Book to stay and play</button>
 
                               </div>
                         </div>
@@ -108,7 +111,7 @@ const SpotDetails = () => {
                                           ( <p><i className="fa-solid fa-star"></i> { spot.avgRating.toFixed(1) }    ·    { spot.Reviews.length } { spot.Reviews.length === 1 ? 'review' : 'reviews' }</p> )
                                     }
                               </div>
-                                  { (currentUser && (!spotOwner || !leftReview)) &&
+                                  { (currentUser && spotOwner && leftReview) &&
                               <div className="review-btn">
                               <OpenModalButton
                                     buttonText="Post your review"
@@ -120,7 +123,7 @@ const SpotDetails = () => {
                               <div className="review-container">
                                     { spot.Reviews[0]  ? (
                                           <Reviews spotId={ spot.id } />
-                                    ) : ( <div classname="no-reviews"> Be the first to post a review</div> )
+                                    ) : ( <div className="no-reviews"> Be the first to post a review</div> )
                                     }
                               </div>
 

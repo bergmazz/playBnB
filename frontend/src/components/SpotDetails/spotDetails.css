@@ -25,12 +25,12 @@ color: black;
 .spot-info h2 {
       font-family: Amatic SC;
             /* font-family: Schoolbell; */
-      font-size: 40px;
+      font-size: 43px;
       font-weight: bold;
     color:  #FF5A5F;
 padding-left: 2%;
       padding-right: 2%;
-      margin-bottom: 0px;
+      margin-bottom: 10px;
       margin-top: 20px;
 }
 
@@ -82,8 +82,8 @@ display: flex;
 justify-content: space-between;
 padding-left: 2%;
  padding-right: 2%;
-padding-bottom: 8%;
- border-bottom: 3px solid #FF5A5F;;
+padding-bottom: 5%;
+ border-bottom: 3px solid #FF5A5F;
 }
 
 .owner {
@@ -99,12 +99,12 @@ padding-bottom: 8%;
      /* align-self: flex-end; */
       margin-top: 2%;
       position: relative;
-      width: 275px;
+      width: 255px;
       height: 100px;
       box-sizing: content-box;
-      border: 1px solid black;
+      border: 2px solid #461f51;
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 17px;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
@@ -130,26 +130,28 @@ padding-bottom: 8%;
 
 .book-btn {
       position: relative;
-      width: 80%;
-      padding:3px;
+      width: 90%;
+      padding: 8px 3px;
       margin: auto;
-      background-color:#c29898;
+      /* background-color:#c29898; */
       /* font-weight: bold; */
+      background-color: #461f51;
+      color: white;
       bottom: 10%;
-      font-size: 20px;
-      font-family: Schoolbell;
+      font-size: 17px;
+      /* font-family: Schoolbell; */
 }
 
 .book-price {
       position: relative;
-left: 5%;
+      left: 5%;
       /* font-size: 20px */
-
 }
+
 .big{
       font-size: 18px;
       position: relative;
-           bottom: 10%;
+           bottom: 9%;
       display: inline;
       float: left
 }
@@ -158,22 +160,23 @@ left: 5%;
 display: inline;
 float: right;
 padding-left: 3px;
+margin-top: 18px;
 margin-bottom: 5px;
 }
 
 .book-review-count {
       position: relative;
-      right: 2%;
-      top: 2%;
+      right: 3%;
+      top: 4%;
 }
 
 
 .book-star {
       position: relative;
       color: rgb(102, 4, 102);
-      left: 13%;
-      top: 2%;
-      padding-right: 3px;
+      left: 9%;
+      top: 4%;
+      padding-right: 5px;
 }
 
 
