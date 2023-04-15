@@ -1,13 +1,13 @@
 #login-container {
       background-color: white;
       display: flex;
-      height: 30vh;
+      height: 275px;
       width: 400px;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       align-content: center;
-      border: solid #FF5A5F 3px;
+      border: solid #461f51 3px;
       border-radius: 25px;
       text-align: center;
       overflow-y: auto;
@@ -38,7 +38,7 @@
 }
 
 .demo{
-      margin-bottom: 15px;
+      margin-bottom: 20px;
 }
 /* button:disabled,
 button[disabled] {

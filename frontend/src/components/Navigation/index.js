@@ -52,7 +52,8 @@ const handleHomeClick = () => {
             <nav className='navbar'>
 
                   <div onClick={ handleHomeClick } className="nav_home_icon"  style={ { color: "#461f51", } } >
-                              <i className="fa-solid fa-child-reaching" >play b n b</i>
+                        <i className="fa-solid fa-child-reaching" />PlayBnB
+                        {/* <i className="fa-sharp fa-light fa-duck"/>PlayBnB */}
                   </div>
 
       {isLoaded && sessionLinks}

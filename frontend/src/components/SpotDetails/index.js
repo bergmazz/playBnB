@@ -94,7 +94,7 @@ const SpotDetails = () => {
                                                 <div className="book-review-count" >
                                                 <p>{ spot.Reviews.length } {spot.Reviews.length === 1 ? 'review' : 'reviews'}</p>
                                                 </div>
-                                          <button onClick={comingSoon} className="book-btn">Reserve</button>
+                                          <button onClick={comingSoon} className="book-btn">book now & play later</button>
 
                               </div>
                         </div>
