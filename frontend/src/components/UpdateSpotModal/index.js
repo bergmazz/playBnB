@@ -67,7 +67,7 @@ console.log("------------------------", spot)
             if ( !name.length ) {
                   errorsArr.push( 'Name is required' )
             }
-            if ( !price.length || price === 0 ) {
+            if (  price === 0 ) {
                   errorsArr.push( 'Price is required' )
             }
             // if ( !previewImage.length ) {

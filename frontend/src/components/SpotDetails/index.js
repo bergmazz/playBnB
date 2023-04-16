@@ -31,8 +31,7 @@ const SpotDetails = () => {
       }
       // console.log( "reviews-----------------------", reviews)
       let spotOwner = false;
-      if ( currentUser )
-    {  spotOwner =  spot && (currentUser.id === spot.ownerId)}
+      if ( currentUser ) { spotOwner = (currentUser.id === spot.ownerId) }
 
       let leftReview = false
       if ( reviews) {
@@ -66,7 +65,7 @@ const SpotDetails = () => {
                         <div className="spot-img-container">
 
                               <img className="preview" src={ spot.previewImage } alt={ spot.name }></img>
-                                    { spot.SpotImages  ? (
+                                    { spot.SpotImages.length > 1  ? (
                                           <>
                                                 { spot.SpotImages.map( ( image ) => (
                                                       <img key={ image.id } src={ image.url } alt={ spot.name } />
@@ -111,7 +110,7 @@ const SpotDetails = () => {
                                           ( <p><i className="fa-solid fa-star"></i> { spot.avgRating.toFixed(1) }    ·    { spot.Reviews.length } { spot.Reviews.length === 1 ? 'review' : 'reviews' }</p> )
                                     }
                               </div>
-                                  { (currentUser && spotOwner && leftReview) &&
+                                  { (currentUser && !spotOwner && !leftReview) &&
                               <div className="review-btn">
                               <OpenModalButton
                                     buttonText="Post your review"

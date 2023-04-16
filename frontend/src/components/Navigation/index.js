@@ -27,7 +27,7 @@ const handleHomeClick = () => {
                     <ProfileButton user={ sessionUser } />
 
                     <OpenModalButton
-                          buttonText="Create a new spot"
+                          buttonText="Create a spot"
                           modalComponent={ <SpotFormModal /> }
                     />
               </div>

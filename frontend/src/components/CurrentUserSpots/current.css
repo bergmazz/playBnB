@@ -94,7 +94,7 @@ padding-top: 5%;
       margin-top: 45px;
 } */
 
-a {
+.card a {
       text-decoration: none;
       color: black;
 }
