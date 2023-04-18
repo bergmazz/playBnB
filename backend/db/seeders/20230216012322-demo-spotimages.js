@@ -13,10 +13,10 @@ module.exports = {
  return queryInterface.bulkInsert(
    options,
    [
-     {
-       spotId: 1,
-       preview: true,
-               url: "https://images.unsplash.com/photo-1618767689160-da3fb810aad7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+         {
+               spotId: 1,
+               preview: true,
+               url: "https://images.unsplash.com/photo-1517383037120-c93dcf1a4973?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHN0cmluZyUyMGxpZ2h0c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60"
          },
      {
        spotId: 2,
@@ -41,7 +41,7 @@ module.exports = {
          {
                spotId: 1,
                preview: false,
-               url: "https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZmFpcnklMjBjb3R0YWdlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+               url: "https://images.unsplash.com/photo-1618767689160-da3fb810aad7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
          },
          {
                spotId: 1,
@@ -121,7 +121,8 @@ module.exports = {
          {
                spotId: 6,
                preview: true,
-               url: "https://images.pexels.com/photos/11190692/pexels-photo-11190692.jpeg?auto=compress&cs=tinysrgb&w=600",
+            //    url: "https://images.pexels.com/photos/11190692/pexels-photo-11190692.jpeg?auto=compress&cs=tinysrgb&w=600",
+            url: "https://images.unsplash.com/photo-1603621760091-d7b12c66549a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDR8fHNwYWNlc2hpcCUyMHRveXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60"
          },
          {
                spotId: 7,
@@ -131,17 +132,17 @@ module.exports = {
          {
                spotId: 8,
                preview: true,
-               url: "https://images.unsplash.com/photo-1629122558657-d5dc4c30ca60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2lyY3VzJTIwdGVudHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+               url: "https://images.pexels.com/photos/2002338/pexels-photo-2002338.jpeg?auto=compress&cs=tinysrgb&w=600"
          },
          {
                spotId: 9,
                preview: true,
-               url: "https://images.pexels.com/photos/3661261/pexels-photo-3661261.jpeg?auto=compress&cs=tinysrgb&w=600",
+               url: "https://img.freepik.com/free-photo/close-up-spooky-halloween-toys-with-confetti_23-2148609849.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais"
          },
          {
                spotId: 10,
                preview: true,
-               url: "https://images.unsplash.com/photo-1638913367147-b657c72051fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGdpbmdlcmJyZWFkJTIwaG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+               url: "https://images.unsplash.com/photo-1604601638406-edc29b54dcf7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y290dGFnZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60"
          },
          {
                spotId: 11,
@@ -151,7 +152,7 @@ module.exports = {
          {
                spotId: 12,
                preview: true,
-               url: "https://img.freepik.com/premium-photo/brass-antique-compass-wooden-background_488220-30655.jpg?size=626&ext=jpg&ga=GA1.1.2082271488.1680582282&semt=ais",
+               url: "https://images.unsplash.com/photo-1629551609641-462683917a13?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHBpcmF0ZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60"
          },
          {
                spotId: 13,
@@ -161,7 +162,7 @@ module.exports = {
          {
                spotId: 14,
                preview: true,
-               url: "https://images.unsplash.com/photo-1610568781018-995405522539?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VwZXJoZXJvJTIwbGFpcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+               url: "https://images.unsplash.com/photo-1631901999319-efd71a712378?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjZ8fGdsYXNzJTIwaG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=700&q=60"
          },
          {
                spotId: 15,
