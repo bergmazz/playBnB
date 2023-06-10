@@ -1,11 +1,10 @@
-
 body {
-      font-family: 'Comfortaa', cursive;
-      font-weight: bold;
-      color: #170a1b
+  font-family: "Comfortaa", cursive;
+  font-weight: bold;
+  color: #170a1b;
 }
 
 button {
-      font-family: 'Comfortaa', cursive;
-border-radius: 15px;
+  font-family: "Comfortaa", cursive;
+  border-radius: 15px;
 }

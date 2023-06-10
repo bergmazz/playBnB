@@ -1,30 +1,30 @@
 .spot-form-container {
-      background-color: white;
-      display: flex;
-      max-height: 90vh;
-      width: 400px;
-       padding-left: 20px;
-      padding-right: 10px;
-      flex-direction: column;
-      /* align-items: center; */
-      align-content: center;
-      border: solid #FF5A5F 3px;
-      border-radius: 25px;
-      overflow-y: auto;
+  background-color: white;
+  display: flex;
+  max-height: 90vh;
+  width: 400px;
+  padding-left: 20px;
+  padding-right: 10px;
+  flex-direction: column;
+  /* align-items: center; */
+  align-content: center;
+  border: solid #ff5a5f 3px;
+  border-radius: 25px;
+  overflow-y: auto;
 }
 
 .error-div {
-      color: #FF5A5F;
+  color: #ff5a5f;
 }
 
-.spot-form-container h1{
-      /* border-bottom: dotted#6d3c7a 2px; */
-      font-size: 75px;
+.spot-form-container h1 {
+  /* border-bottom: dotted#6d3c7a 2px; */
+  font-size: 75px;
 }
 
 .spot-form-container h2 {
-      /* border-bottom: dotted#6d3c7a 2px; */
-      margin-bottom: 5px;
+  /* border-bottom: dotted#6d3c7a 2px; */
+  margin-bottom: 5px;
 }
 /* h1{
 text-shadow: 0px 0px 1px black;
@@ -34,43 +34,43 @@ padding-top: 4%;
 /* check signup form */
 
 input {
-      /* margin: 5px; */
-      margin-bottom: 15px;
-      margin-top: 5px;
-      height: 25px;
-      width: 370px;
-      font-family: 'Courier New', Courier, monospace;
+  /* margin: 5px; */
+  margin-bottom: 15px;
+  margin-top: 5px;
+  height: 25px;
+  width: 370px;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .city {
-      width: 184px;
+  width: 184px;
 }
 .state {
-      margin-left: 2px;
-      width: 184px;
+  margin-left: 2px;
+  width: 184px;
 }
 
-.describe{
-      height: 120px;
-      vertical-align: text-top;
-      width: 370px;
-      /* align-content: top; */
-      resize: none;
+.describe {
+  height: 120px;
+  vertical-align: text-top;
+  width: 370px;
+  /* align-content: top; */
+  resize: none;
 }
 
 .button-class-new-spot {
-      margin: 20px 20px 30px 40px;
-      height: 50px;
-      width: 300px;
-      font-size: 15px;
-      color: white;
-      background-color: #FF5A5F;
+  margin: 20px 20px 30px 40px;
+  height: 50px;
+  width: 300px;
+  font-size: 15px;
+  color: white;
+  background-color: #ff5a5f;
 }
 
-.button-class-new-spot:disabled{
-      background-color: #FF5A5F;
+.button-class-new-spot:disabled {
+  background-color: #ff5a5f;
 }
 
 .button-class-new-spot:hover {
-      background-color: #FF5A5F;
+  background-color: #ff5a5f;
 }

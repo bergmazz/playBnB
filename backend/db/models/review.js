@@ -1,26 +1,23 @@
-'use strict';
-const {
-  Model
-} = require( 'sequelize' );
+"use strict";
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
-
     static associate(models) {
-          Review.belongsTo( models.User, {
-                foreignKey: "userId"
-          } );
-          Review.belongsTo( models.Spot, {
-                foreignKey: "spotId",
-            //     onDelete: "CASCADE" //pretty sure this caused following errors
-            //     ERROR: cannot drop table airbnb."Spots" because other objects depend on it
-            //        ERROR DETAIL: constraint Reviews_spotId_fkey on table airbnb."Reviews" depends on table airbnb."Spots"
-          } );
-       Review.hasMany(models.ReviewImage, {
-         foreignKey: "reviewId",
-         onDelete: "cascade",
-         hooks: true,
-       });
+      Review.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+      Review.belongsTo(models.Spot, {
+        foreignKey: "spotId",
+        //     onDelete: "CASCADE" //pretty sure this caused following errors
+        //     ERROR: cannot drop table airbnb."Spots" because other objects depend on it
+        //        ERROR DETAIL: constraint Reviews_spotId_fkey on table airbnb."Reviews" depends on table airbnb."Spots"
+      });
+      Review.hasMany(models.ReviewImage, {
+        foreignKey: "reviewId",
+        onDelete: "cascade",
+        hooks: true,
+      });
     }
   }
   Review.init(
@@ -81,7 +78,6 @@ module.exports = (sequelize, DataTypes) => {
             },
           ],
         },
-
       },
     }
   );

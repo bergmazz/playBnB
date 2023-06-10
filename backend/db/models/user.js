@@ -1,57 +1,56 @@
 "use strict";
-const { Model, Validator } = require( "sequelize" );
+const { Model, Validator } = require("sequelize");
 const bcrypt = require("bcryptjs");
 
-
 module.exports = (sequelize, DataTypes) => {
-class User extends Model {
-  toSafeObject() {
-    const { id, firstName, lastName, username, email } = this;
-    return { id, firstName, lastName, email, username };
-  }
+  class User extends Model {
+    toSafeObject() {
+      const { id, firstName, lastName, username, email } = this;
+      return { id, firstName, lastName, email, username };
+    }
 
-  validatePassword(password) {
-    return bcrypt.compareSync(password, this.hashedPassword.toString());
-  }
-// get current user // aka get currentUser
-  static getCurrentUserById(id) {
-    return User.scope("currentUser").findByPk(id);
-  }
+    validatePassword(password) {
+      return bcrypt.compareSync(password, this.hashedPassword.toString());
+    }
+    // get current user // aka get currentUser
+    static getCurrentUserById(id) {
+      return User.scope("currentUser").findByPk(id);
+    }
 
-  static async login({ credential, password }) {
-    const { Op } = require("sequelize");
-    const user = await User.scope("loginUser").findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential,
+    static async login({ credential, password }) {
+      const { Op } = require("sequelize");
+      const user = await User.scope("loginUser").findOne({
+        where: {
+          [Op.or]: {
+            username: credential,
+            email: credential,
+          },
         },
-      },
-    });
-    if (user && user.validatePassword(password)) {
+      });
+      if (user && user.validatePassword(password)) {
+        return await User.scope("currentUser").findByPk(user.id);
+      }
+    }
+
+    static async signup({ username, email, password, firstName, lastName }) {
+      const hashedPassword = bcrypt.hashSync(password);
+      const user = await User.create({
+        username,
+        email,
+        firstName,
+        lastName,
+        hashedPassword,
+      });
       return await User.scope("currentUser").findByPk(user.id);
     }
-  }
 
-  static async signup({ username, email, password, firstName, lastName }) {
-    const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({
-      username,
-      email,
-      firstName,
-      lastName,
-      hashedPassword,
-    });
-    return await User.scope("currentUser").findByPk(user.id);
-  }
-
-  static associate(models) {
-     User.hasMany(models.Spot, {
-       foreignKey: "ownerId",
-       as: "OwnedSpots", // creates getOwnedSpots method
-       onDelete: "CASCADE",
-       hooks: true,
-     });
+    static associate(models) {
+      User.hasMany(models.Spot, {
+        foreignKey: "ownerId",
+        as: "OwnedSpots", // creates getOwnedSpots method
+        onDelete: "CASCADE",
+        hooks: true,
+      });
       User.hasMany(models.Review, {
         foreignKey: "userId",
         onDelete: "cascade",
@@ -62,8 +61,8 @@ class User extends Model {
         onDelete: "cascade",
         hooks: true,
       });
+    }
   }
-}
 
   User.init(
     {
@@ -128,7 +127,13 @@ class User extends Model {
         },
         forBooking: {
           attributes: {
-            exclude: ["hashedPassword", "username","email", "createdAt", "updatedAt"],
+            exclude: [
+              "hashedPassword",
+              "username",
+              "email",
+              "createdAt",
+              "updatedAt",
+            ],
           },
         },
       },

@@ -1,66 +1,66 @@
 .profile-button-container {
-      display: flex;
-      width: 200px;
+  display: flex;
+  width: 200px;
 }
 
 .profile-button {
-      position: absolute;
-      background: none;
-            border: none;
-      right: 2rem;
-      top: 45px;
-      font-size: 2rem;
-      cursor: pointer;
-      background-color: white;
+  position: absolute;
+  background: none;
+  border: none;
+  right: 2rem;
+  top: 45px;
+  font-size: 2rem;
+  cursor: pointer;
+  background-color: white;
 }
 
 .profile-dropdown {
-      display: flex;
-      position: absolute;
-      flex-direction: column;
-      top: 80px;
-      right: 3rem;
-      background-color: white;
-      border: 1px solid #a07e7e;
-      border-radius: 5px;
-      padding: 10px;
-      list-style: none;
-      z-index: 5;
-      text-align: center;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  top: 80px;
+  right: 3rem;
+  background-color: white;
+  border: 1px solid #a07e7e;
+  border-radius: 5px;
+  padding: 10px;
+  list-style: none;
+  z-index: 5;
+  text-align: center;
 }
 
 .profile-dropdown.hidden {
-      display: none;
+  display: none;
 }
 
-.current{
-      margin-top: 6px;
-      margin-bottom: 6px;
-      padding: 3px 0px;
-      border-top: 1px solid #a07e7e;
-      border-bottom: 1px solid #a07e7e;;
+.current {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding: 3px 0px;
+  border-top: 1px solid #a07e7e;
+  border-bottom: 1px solid #a07e7e;
 }
 
-.profile-dropdown a{
-      text-decoration: none;
-      color: #FF5A5F;
+.profile-dropdown a {
+  text-decoration: none;
+  color: #ff5a5f;
 }
 
-.button-mom{
-      display: flex;
-      align-items: center;
-       justify-content: center;
+.button-mom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.logout-button{
-     margin-top:5px;
-     cursor: pointer;
-      background-color: #461f51;
-      color: white;
-      font-size: 15px;
-      padding: 6px 10px;
+.logout-button {
+  margin-top: 5px;
+  cursor: pointer;
+  background-color: #461f51;
+  color: white;
+  font-size: 15px;
+  padding: 6px 10px;
 }
 
 .menu-item {
-     justify-content: flex-start;
-     margin: 3px;
+  justify-content: flex-start;
+  margin: 3px;
 }

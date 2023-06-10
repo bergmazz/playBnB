@@ -1,12 +1,12 @@
 .Button {
-      border-radius: 20px;
-      padding: 8px 16px;
-      margin: 2px;
-      background-color: #461f51;
-      color: #fff;
-      border: 1px solid #461f51;
-      font-size: 16px;
-      display: flex;
-      justify-content: center;
-      filter: drop-shadow(2px 2px 2px #CCCCCC);
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin: 2px;
+  background-color: #461f51;
+  color: #fff;
+  border: 1px solid #461f51;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  filter: drop-shadow(2px 2px 2px #cccccc);
 }

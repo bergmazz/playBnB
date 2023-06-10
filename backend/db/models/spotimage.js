@@ -1,17 +1,13 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-      class SpotImage extends Model {
-
+  class SpotImage extends Model {
     static associate(models) {
       SpotImage.belongsTo(models.Spot, {
         foreignKey: "spotId",
       });
     }
-
- }
+  }
 
   SpotImage.init(
     {
@@ -33,9 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "SpotImage",
       defaultScope: {
         attributes: {
-                  exclude: [ "createdAt", "updatedAt", "spotId" ],
-            },
-
+          exclude: ["createdAt", "updatedAt", "spotId"],
+        },
       },
     }
   );

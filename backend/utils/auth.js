@@ -16,11 +16,11 @@ const setTokenCookie = (res, user) => {
   const isProduction = process.env.NODE_ENV === "production";
 
   // Set the token cookie
-  res.cookie('token', token, {
+  res.cookie("token", token, {
     maxAge: expiresIn * 1000, // maxAge in milliseconds
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction && "Lax"
+    sameSite: isProduction && "Lax",
   });
 
   return token;
@@ -53,7 +53,7 @@ const restoreUser = (req, res, next) => {
 const requireAuth = function (req, _res, next) {
   if (req.user) return next();
 
-//pt 1 authentication required response
+  //pt 1 authentication required response
   const err = new Error("Authentication required");
   err.title = "Authentication required";
   err.errors = ["Authentication required"];

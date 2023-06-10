@@ -1,57 +1,55 @@
-.hidden{
-display: none
+.hidden {
+  display: none;
 }
 
 .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 100px;
-      border-bottom: 2px solid #6d3c7a;
-      border-image: linear-gradient(to right, #6d3c7a, #FF5A5F) 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  border-bottom: 2px solid #6d3c7a;
+  border-image: linear-gradient(to right, #6d3c7a, #ff5a5f) 2;
 }
 
 .nav_home_icon {
-      font-size: 2rem;
-      margin-left: 2rem;
-            cursor: pointer;
-            font-family: Amatic SC;
-            font-size: 45px;
+  font-size: 2rem;
+  margin-left: 2rem;
+  cursor: pointer;
+  font-family: Amatic SC;
+  font-size: 45px;
 }
 
 .nav-home-icon h1 {
-font-size: 50px;
-/* border-bottom: 2px solid #6d3c7a;
+  font-size: 50px;
+  /* border-bottom: 2px solid #6d3c7a;
 border-image: linear-gradient(to left, #6d3c7a, #FF5A5F) 2; */
 }
 
 .nav_session_links {
-      display: flex;
-margin-right: 2rem;
-      align-items: center;
-      margin-top:10px;
+  display: flex;
+  margin-right: 2rem;
+  align-items: center;
+  margin-top: 10px;
 }
 
-.nav_session_links Button{
-      width: 100px;
+.nav_session_links Button {
+  width: 100px;
 }
 
-
-.nav_session_links_logged Button:not(.logout-button, .profile-button){
-      margin-right: 10rem;
-      margin-top: .5rem;
-      font-size: 15px;
+.nav_session_links_logged Button:not(.logout-button, .profile-button) {
+  margin-right: 10rem;
+  margin-top: 0.5rem;
+  font-size: 15px;
 }
-
 
 /* .make-that-spot-boi {
       margin-top: 8px;
 } */
 
 .nav_session_links_logged .profile-button {
-      margin-right: 1rem
+  margin-right: 1rem;
 }
 
-button{
-      cursor: pointer;
+button {
+  cursor: pointer;
 }

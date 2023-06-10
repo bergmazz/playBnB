@@ -16,7 +16,9 @@ const { application } = require("express");
 const router = express.Router();
 
 router.delete("/:id", requireAuth, async (req, res) => {
-      const image = await SpotImage.findByPk( req.params.id, { include: Spot.scope( "lessDetail" ) } );
+  const image = await SpotImage.findByPk(req.params.id, {
+    include: Spot.scope("lessDetail"),
+  });
 
   if (!image) {
     return res.status(404).json({
@@ -30,7 +32,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
       statusCode: 403,
     });
   }
-      await image.destroy();
+  await image.destroy();
 
   return res.status(200).json({
     message: "Successfully deleted",

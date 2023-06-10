@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     /**
@@ -10,12 +8,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-       Booking.belongsTo(models.User, {
-         foreignKey: "userId",
-       });
-       Booking.belongsTo(models.Spot, {
-         foreignKey: "spotId",
-       });
+      Booking.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+      Booking.belongsTo(models.Spot, {
+        foreignKey: "spotId",
+      });
     }
   }
   Booking.init(
@@ -37,33 +35,33 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Booking",
       defaultScope: {
-            attributes: [
-                  "id",
-                  "spotId",
-                  "userId",
-       "startDate",
-        "endDate",
+        attributes: [
+          "id",
+          "spotId",
+          "userId",
+          "startDate",
+          "endDate",
           "createdAt",
           "updatedAt",
         ],
       },
-          scopes: {
-                justDateNoSeconds: {
-                   attributes: [
-                  "id",
-                  "spotId",
-                  "userId",
-          [sequelize.fn("DATE", sequelize.col("startDate")), "startDate"],
-          [sequelize.fn("DATE", sequelize.col("endDate")), "endDate"],
-          "createdAt",
-          "updatedAt",
-        ],
-            },
+      scopes: {
+        justDateNoSeconds: {
+          attributes: [
+            "id",
+            "spotId",
+            "userId",
+            [sequelize.fn("DATE", sequelize.col("startDate")), "startDate"],
+            [sequelize.fn("DATE", sequelize.col("endDate")), "endDate"],
+            "createdAt",
+            "updatedAt",
+          ],
+        },
         notOwned: {
           attributes: [
-                    "spotId",
-                    "startDate",
-                "endDate"
+            "spotId",
+            "startDate",
+            "endDate",
             // [sequelize.fn("DATE", sequelize.col("startDate")), "startDate"],
             // [sequelize.fn("DATE", sequelize.col("endDate")), "endDate"],
           ],

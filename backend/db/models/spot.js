@@ -1,36 +1,30 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
-
-
-
     static associate(models) {
-          Spot.belongsTo(models.User, {
-            as: "Owner",
-            foreignKey: "ownerId",
-          });
+      Spot.belongsTo(models.User, {
+        as: "Owner",
+        foreignKey: "ownerId",
+      });
 
-          Spot.hasMany(models.Review, {
-            foreignKey: "spotId",
-            onDelete: "cascade",
-            hooks: true,
-          } );
+      Spot.hasMany(models.Review, {
+        foreignKey: "spotId",
+        onDelete: "cascade",
+        hooks: true,
+      });
 
-          Spot.hasMany(models.SpotImage, {
-            foreignKey: "spotId",
-            onDelete: "cascade",
-            hooks: true,
-          } );
+      Spot.hasMany(models.SpotImage, {
+        foreignKey: "spotId",
+        onDelete: "cascade",
+        hooks: true,
+      });
 
-          Spot.hasMany(models.Booking, {
-            foreignKey: "spotId",
-            onDelete: "cascade",
-            hooks: true,
-          } );
-
+      Spot.hasMany(models.Booking, {
+        foreignKey: "spotId",
+        onDelete: "cascade",
+        hooks: true,
+      });
     }
   }
   Spot.init(
@@ -157,7 +151,7 @@ module.exports = (sequelize, DataTypes) => {
         group: ["Spot.id", "SpotImages.url"],
       },
       scopes: {
-            allDetails: {
+        allDetails: {
           include: [
             {
               association: "Owner",
@@ -169,11 +163,12 @@ module.exports = (sequelize, DataTypes) => {
               required: false,
               attributes: ["id", "url", "preview"],
             },
-                    {
-                          association: "Reviews",
-                          required: false,
-                          attributes: [  "review", "stars", "userId" ],
-                    }],
+            {
+              association: "Reviews",
+              required: false,
+              attributes: ["review", "stars", "userId"],
+            },
+          ],
           attributes: [
             [
               sequelize.fn(
@@ -184,7 +179,7 @@ module.exports = (sequelize, DataTypes) => {
               "numReviews",
             ],
           ],
-          group: ["Spot.id","SpotImages.id", "Reviews.id", "Owner.id"],
+          group: ["Spot.id", "SpotImages.id", "Reviews.id", "Owner.id"],
         },
         lessDetail: {
           attributes: [
