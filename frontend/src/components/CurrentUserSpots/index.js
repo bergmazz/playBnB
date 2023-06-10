@@ -23,7 +23,7 @@ function CurrentUserSpots() {
   useEffect(() => {
     const spotsArr = Object.values(spots);
     setUserSpots(spotsArr.filter((spot) => spot.ownerId === user.user.id));
-  }, [spots]);
+  }, [ spots, user ] );
 
   // const closeMenu = () => setShowMenu( false );
 

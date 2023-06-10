@@ -64,6 +64,7 @@ export const getSpotThunk = (spotId) => async (dispatch) => {
     dispatch(spotDetails(spot));
     dispatch(addSpot(spot));
   }
+  return
 };
 
 export const newSpotThunk = (spotData) => async (dispatch) => {
@@ -85,22 +86,19 @@ export const newSpotThunk = (spotData) => async (dispatch) => {
 
   if (response.ok) {
     const newSpot = await response.json();
-    let i = 0;
-    const attachImages = [];
-    images.map((image) => {
-      if (i === 0) {
-        attachImages[i] = {
+    const attachImages = images.map( ( image, i ) => {
+      if ( i === 0 ) {
+        return {
           preview: true,
           url: image,
         };
       } else {
-        attachImages[i] = {
+        return {
           preview: false,
           url: image,
         };
       }
-      i++;
-    });
+    } );
 
     for (let image of attachImages) {
       // console.log(image)
@@ -151,7 +149,7 @@ export const deleteSpotThunk = (spot) => async (dispatch) => {
   });
 
   if (response.ok) {
-    const data = await response.json();
+    // const data = await response.json();
     dispatch(deleteSpot(id));
   }
 };
